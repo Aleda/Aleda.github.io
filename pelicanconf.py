@@ -37,4 +37,3 @@ DEFAULT_PAGINATION = 10
 
 # THEME
 THEME = "pelican-elegant"
-#THEME = "html5-dopetrope"

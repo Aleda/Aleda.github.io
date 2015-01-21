@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
+
 from __future__ import unicode_literals
 
 AUTHOR = u'Aleda'
-SITENAME = u'Aleda\xe2\x80\x94\xe2\x80\x94Personal Blog'
+SITENAME = u'Aleda——Personal Blog'
 SITEURL = ''
 
 PATH = 'content'
@@ -35,4 +36,5 @@ DEFAULT_PAGINATION = 10
 #RELATIVE_URLS = True
 
 # THEME
-THEME="twenty-pelican-html5up"
+THEME = "pelican-elegant"
+#THEME = "html5-dopetrope"

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Aleda | Make Different</title><link href="http://aleda.cn/" rel="alternate"></link><link href="http://aleda.cn/feeds/dailynotes.atom.xml" rel="self"></link><id>http://aleda.cn/</id><updated>2015-01-22T11:19:00+08:00</updated><entry><title>入住github</title><link href="http://aleda.cn/dailynotes/dailynotes.html" rel="alternate"></link><updated>2015-01-22T11:19:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-22:dailynotes/dailynotes.html</id><summary type="html">&lt;h1&gt;入住github&lt;/h1&gt;
+&lt;h3&gt;一、 随笔&lt;/h3&gt;
+&lt;p&gt;玩github，而且用pelican生成好费事啊，还是自己笨啊！&lt;/p&gt;
+&lt;h3&gt;二、 时间规划&lt;/h3&gt;</summary><category term="dailynotes"></category></entry></feed>

@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Aleda | Make Different</title><link href="/" rel="alternate"></link><link href="/feeds/dailynotes.atom.xml" rel="self"></link><id>/</id><updated>2015-01-22T11:19:00+08:00</updated><entry><title>入住github</title><link href="/dailynotes.html" rel="alternate"></link><updated>2015-01-22T11:19:00+08:00</updated><author><name>Aleda</name></author><id>tag:,2015-01-22:dailynotes.html</id><summary type="html">&lt;h1&gt;入住github&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Aleda | Make Different</title><link href="http://aleda.cn/" rel="alternate"></link><link href="http://aleda.cn/feeds/dailynotes.atom.xml" rel="self"></link><id>http://aleda.cn/</id><updated>2015-01-22T11:19:00+08:00</updated><entry><title>入住github</title><link href="http://aleda.cn/dailynotes.html" rel="alternate"></link><updated>2015-01-22T11:19:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-22:dailynotes.html</id><summary type="html">&lt;h1&gt;入住github&lt;/h1&gt;
+&lt;hr /&gt;
 &lt;h3&gt;一、 随笔&lt;/h3&gt;
-&lt;p&gt;玩github，而且用pelican生成好费事啊，还是自己笨啊！&lt;/p&gt;
-&lt;h3&gt;二、 时间规划&lt;/h3&gt;</summary><category term="dailynotes"></category></entry></feed>
+&lt;p&gt;总算也是有点眉目了，整整花了一天加一早上的时间，真的是有点费事啊，下午必须开始高强度的学习了，
+要不真的完不成这周的任务了。&lt;/p&gt;
+&lt;h3&gt;二、 时间规划&lt;/h3&gt;
+&lt;h4&gt;2.1 上午&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;上午把这个pelican的配置文件学学。
+&lt;em&gt;时间要求：&lt;/em&gt; &lt;strong&gt;2h&lt;/strong&gt; |  &lt;em&gt;优先级：&lt;/em&gt; &lt;code&gt;high&lt;/code&gt; | &lt;em&gt;状态：&lt;/em&gt; &lt;code&gt;running&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</summary><category term="dailynotes"></category></entry></feed>

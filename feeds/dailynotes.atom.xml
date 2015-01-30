@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Aleda | Make Different</title><link href="http://aleda.cn/" rel="alternate"></link><link href="http://aleda.cn/feeds/dailynotes.atom.xml" rel="self"></link><id>http://aleda.cn/</id><updated>2015-01-23T10:20:00+08:00</updated><entry><title>做一个思维占有的人</title><link href="http://aleda.cn/article/2015/01/dailynotes_150123/" rel="alternate"></link><updated>2015-01-23T10:20:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-23:article/2015/01/dailynotes_150123/</id><summary type="html">&lt;h1&gt;做一个思维占有的人&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Aleda | Make Different</title><link href="http://aleda.cn/" rel="alternate"></link><link href="http://aleda.cn/feeds/dailynotes.atom.xml" rel="self"></link><id>http://aleda.cn/</id><updated>2015-01-30T10:19:00+08:00</updated><entry><title>离梦想的距离</title><link href="http://aleda.cn/article/2015/01/dailynotes_150130/" rel="alternate"></link><updated>2015-01-30T10:19:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-30:article/2015/01/dailynotes_150130/</id><summary type="html">&lt;h1&gt;离梦想的距离&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;h3&gt;一、 随笔&lt;/h3&gt;
+&lt;p&gt;你所在的地方不重要，你干的事情也不重要；   &lt;br /&gt;
+重要的是你在想什么，你的理想是什么，你有没有为它做计划； &lt;br /&gt;
+有没有一种骚动的心在等待着改变。    &lt;/p&gt;
+&lt;h3&gt;二、 时间规划&lt;/h3&gt;
+&lt;p&gt;2.1 上午
+&lt;em&gt; 完成本周项目周报。  &lt;br /&gt;
+&lt;/em&gt;时间要求：&lt;em&gt; &lt;code&gt;40min&lt;/code&gt; | &lt;/em&gt;details:* `` |      &lt;/p&gt;</summary><category term="dailynotes"></category></entry><entry><title>就是爱编程</title><link href="http://aleda.cn/article/2015/01/dailynotes_150129/" rel="alternate"></link><updated>2015-01-29T13:44:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-29:article/2015/01/dailynotes_150129/</id><summary type="html">&lt;h1&gt;就是爱编程&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;h3&gt;一、 随笔&lt;/h3&gt;
+&lt;p&gt;从未怀疑过自己对编程的热爱，而也只有自己在编程的时候才能享受编程的乐趣:
+工作到多晚自己都喜欢，自己都愿意。
+做好自己的分析，每做一件事都要做到最好！
+我也是醉了，改代码真不是一件容易事呢。所以做好当时的代码是非常重要的！&lt;/p&gt;
+&lt;p&gt;上午开了topic规划会，下午去开了年会，基本上没有时间学习。&lt;/p&gt;
+&lt;p&gt;给上级看自己发的东西的时候，一定要注明如果没有充分的时间阅读就只看重点结论就行。&lt;/p&gt;</summary><category term="dailynotes"></category></entry><entry><title>2015春节年货准备</title><link href="http://aleda.cn/article/2015/01/sundies_nianhuo/" rel="alternate"></link><updated>2015-01-26T10:00:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-26:article/2015/01/sundies_nianhuo/</id><summary type="html">&lt;h1&gt;年货准备&lt;/h1&gt;
+&lt;h3&gt;一、 前景&lt;/h3&gt;
+&lt;h3&gt;二、 年货单&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;桂圆&lt;/li&gt;
+&lt;li&gt;阿林瓜子&lt;/li&gt;
+&lt;li&gt;夏威夷果&lt;/li&gt;
+&lt;li&gt;火锅底料&lt;/li&gt;
+&lt;li&gt;巧克力&lt;/li&gt;
+&lt;li&gt;rio鸡尾酒&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="dailynotes"></category></entry><entry><title>做一个思维占有的人</title><link href="http://aleda.cn/article/2015/01/dailynotes_150123/" rel="alternate"></link><updated>2015-01-23T10:20:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-23:article/2015/01/dailynotes_150123/</id><summary type="html">&lt;h1&gt;做一个思维占有的人&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;h3&gt;一、 随笔&lt;/h3&gt;
 &lt;p&gt;身处一个变化最快，又都是高素质人聚集的行业，有时候你不能紧跟脚步，就会
@@ -25,7 +53,18 @@ Alibaba和Microsoft的面试就是见证，有时候你完全可以去挑战一�
 &lt;li&gt;上传自己的module文档。
 &lt;em&gt;时间要求：&lt;/em&gt; &lt;strong&gt;20min&lt;/strong&gt; | &lt;em&gt;details：&lt;/em&gt; &lt;strong&gt;16:05-16:35&lt;/strong&gt; | &lt;em&gt;优先级：&lt;/em&gt; &lt;code&gt;high&lt;/code&gt; | &lt;em&gt;状态：&lt;/em&gt; &lt;code&gt;Done&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/blockquote&gt;</summary><category term="dailynotes"></category></entry><entry><title>鲁棒性代码的重要性</title><link href="http://aleda.cn/article/2015/01/dailynotes_150122/" rel="alternate"></link><updated>2015-01-22T14:44:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-22:article/2015/01/dailynotes_150122/</id><summary type="html">&lt;h1&gt;鲁棒性代码的重要性&lt;/h1&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;三、 任务详情&lt;/h3&gt;
+&lt;p&gt;:::text
+&lt;em&gt; list
+  * sublist
+  * sublist
+&lt;/em&gt; list&lt;/p&gt;
+&lt;p&gt;:::python&lt;/p&gt;
+&lt;h1&gt;include &lt;stdio.h&gt;&lt;/h1&gt;
+&lt;p 0_="0;
+" World_="World!&amp;quot;" _="&amp;lt;&amp;lt;" _Hello="&amp;quot;Hello" return="return" std::cout="std::cout" std::endl_="std::endl;
+"&gt;int main(int argc, char* argv[])&lt;/p&gt;</summary><category term="dailynotes"></category></entry><entry><title>鲁棒性代码的重要性</title><link href="http://aleda.cn/article/2015/01/dailynotes_150122/" rel="alternate"></link><updated>2015-01-22T14:44:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-22:article/2015/01/dailynotes_150122/</id><summary type="html">&lt;h1&gt;鲁棒性代码的重要性&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;h3&gt;一、 随笔记录&lt;/h3&gt;
 &lt;p&gt;今天又在改自己的以前写的代码，写的跟个&lt;strong&gt;shit&lt;/strong&gt;一样，没办法看啊！
@@ -96,5 +135,29 @@ $$ 代表单行的公式&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;上午把这个pelican的配置文件学学。
 &lt;em&gt;时间要求：&lt;/em&gt; &lt;strong&gt;2h&lt;/strong&gt; |  &lt;em&gt;优先级：&lt;/em&gt; &lt;code&gt;high&lt;/code&gt; | &lt;em&gt;状态：&lt;/em&gt; &lt;code&gt;running&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</summary><category term="dailynotes"></category></entry><entry><title>你想要什么样的生活</title><link href="http://aleda.cn/article/2014/01/dailynotes_150126/" rel="alternate"></link><updated>2014-01-26T10:00:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2014-01-26:article/2014/01/dailynotes_150126/</id><summary type="html">&lt;h1&gt;你想要什么样的生活&lt;/h1&gt;
+&lt;h3&gt;一、 随笔&lt;/h3&gt;
+&lt;p&gt;今天看到知乎上的一篇关于硅谷的码农的生活现景，感触颇多。
+自己向来就不是一个安分，求稳定的人，内心很大，但实际行动
+好像又进行的非常少。或者这样说————眼高手低！
+好像自己又是蛮喜欢安定的，又挺想努力的，但是自己又是如此
+的依赖环境。有时候也是蛮埋怨的。
+归根，想让自己的环境，想让自己的眼界更开阔一些！那就趁着
+自己还年轻，就好好去规划一下，好好的去狂想，好好的做一把吧！&lt;/p&gt;
+&lt;p&gt;自己内心有想法，可以自己存在心里，别随便轻易说出来啊。
+这样给人的印象就是轻浮。&lt;/p&gt;
+&lt;h3&gt;二、 时间规划&lt;/h3&gt;
+&lt;p&gt;2.1 上午&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;看一下goagent是怎么回事。可以解决代理的问题么，自己研究一下吧。
+先不研究吧，这个还是比较麻烦的。linkedin领英就是类似大街网的求职社区。
+&lt;em&gt;时间要求：&lt;/em&gt; &lt;strong&gt;10-20min&lt;/strong&gt; | &lt;em&gt;details：&lt;/em&gt; &lt;strong&gt;10:26-10:54&lt;/strong&gt; | &lt;em&gt;优先级：&lt;/em&gt; &lt;code&gt;high&lt;/code&gt; | &lt;em&gt;状态：&lt;/em&gt; &lt;code&gt;Done&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;case追查工具的问题，尽量今天早上完成，最迟中午2点前。
+&lt;em&gt;时间要求：&lt;/em&gt; &lt;strong&gt;2h&lt;/strong&gt; | &lt;em&gt;details：&lt;/em&gt; &lt;strong&gt;&lt;em&gt;* | &lt;/em&gt;优先级：&lt;em&gt; &lt;code&gt;high&lt;/code&gt; |  &lt;/em&gt;状态：&lt;em&gt; &lt;code&gt;running&lt;/code&gt;
+2.2 下午
+开始构思整体的设计，并严格按照百度的设计文档进行文档的编写。
+&lt;/em&gt;时间要求：* &lt;/strong&gt;4h&lt;strong&gt; | *detials: * &lt;/strong&gt;&lt;em&gt;&lt;em&gt; | &lt;/em&gt;优先级：&lt;/em&gt; &lt;code&gt;high&lt;/code&gt; | &lt;em&gt;状态：&lt;/em&gt; &lt;code&gt;running&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/blockquote&gt;</summary><category term="dailynotes"></category></entry></feed>

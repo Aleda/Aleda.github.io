@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Aleda | Make Different</title><link href="http://aleda.cn/" rel="alternate"></link><link href="http://aleda.cn/feeds/all.atom.xml" rel="self"></link><id>http://aleda.cn/</id><updated>2015-01-30T10:19:00+08:00</updated><entry><title>离梦想的距离</title><link href="http://aleda.cn/article/2015/01/dailynotes_150130/" rel="alternate"></link><updated>2015-01-30T10:19:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-30:article/2015/01/dailynotes_150130/</id><summary type="html">&lt;h1&gt;离梦想的距离&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Aleda | Make Different</title><link href="http://aleda.cn/" rel="alternate"></link><link href="http://aleda.cn/feeds/all.atom.xml" rel="self"></link><id>http://aleda.cn/</id><updated>2015-02-06T15:21:00+08:00</updated><entry><title>感谢我还活着</title><link href="http://aleda.cn/article/2015/02/dailynotes_150206/" rel="alternate"></link><updated>2015-02-06T15:21:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-02-06:article/2015/02/dailynotes_150206/</id><summary type="html">&lt;h1&gt;感谢我还活着&lt;/h1&gt;
+&lt;h3&gt;一、 随笔&lt;/h3&gt;
+&lt;p&gt;我已经好久没有写过博客了，这几天每天自己都加班到凌晨两、三点，感谢自己活了起来。  &lt;br /&gt;
+spider覆盖率这个team是真的累。但他们工作的事情对我来说干的却不是技术人员做的事情。技术人员最需要具备的能力就我自己感觉来说就是用最少的人力，去完成最伟大的事情。
+可这个team所做的好多工作却是人力来维持。累的我的mentor都不行不行的了！   &lt;br /&gt;
+有问题，确实是有问题！   &lt;/p&gt;
+&lt;p&gt;这几天自己还有一些别的见解：比如说，不是为了敲代码而敲代码，如果你仅仅是喜欢敲代码就一直傻傻的敲代码，你不可见的错误就接踵而至了，而你去弥补这些错误的时间完全大于你写代码时候的思考时间。所以，你要多动脑，多去思考，怎么写出鲁棒的、稳定的代码去解决一件很棒的事情！ &lt;br /&gt;
+而且，你注意，你每一项要应用到实际的代码，程序，都要有相应的文档或者简洁的说明，并附上自己的单测代码！   &lt;br /&gt;
+这是为了自己，也是为了别人！  &lt;br /&gt;
+以后一定要注意！ &lt;/p&gt;
+&lt;p&gt;另外，自己的脖子真的有点疼，自己真想去看看。   &lt;/p&gt;
+&lt;p&gt;真的有点严重了，要不这样决定吧，回家之后去看看！   &lt;/p&gt;
+&lt;h3&gt;二、 时间规划&lt;/h3&gt;</summary><category term="dailynotes"></category></entry><entry><title>离梦想的距离</title><link href="http://aleda.cn/article/2015/01/dailynotes_150130/" rel="alternate"></link><updated>2015-01-30T10:19:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-30:article/2015/01/dailynotes_150130/</id><summary type="html">&lt;h1&gt;离梦想的距离&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;h3&gt;一、 随笔&lt;/h3&gt;
 &lt;p&gt;你所在的地方不重要，你干的事情也不重要；   &lt;br /&gt;
 重要的是你在想什么，你的理想是什么，你有没有为它做计划； &lt;br /&gt;
 有没有一种骚动的心在等待着改变。    &lt;/p&gt;
+&lt;p&gt;多看别人的代码吧，自己写的代码跟一坨shit一样，bug无处不在啊！&lt;/p&gt;
 &lt;h3&gt;二、 时间规划&lt;/h3&gt;
-&lt;p&gt;2.1 上午
-&lt;em&gt; 完成本周项目周报。  &lt;br /&gt;
-&lt;/em&gt;时间要求：&lt;em&gt; &lt;code&gt;40min&lt;/code&gt; | &lt;/em&gt;details:* `` |      &lt;/p&gt;</summary><category term="dailynotes"></category></entry><entry><title>就是爱编程</title><link href="http://aleda.cn/article/2015/01/dailynotes_150129/" rel="alternate"></link><updated>2015-01-29T13:44:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-29:article/2015/01/dailynotes_150129/</id><summary type="html">&lt;h1&gt;就是爱编程&lt;/h1&gt;
+&lt;p&gt;2.1 上午   &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;完成本周项目周报。  &lt;br /&gt;
+&lt;em&gt;时间要求：&lt;/em&gt; &lt;code&gt;40min&lt;/code&gt; | &lt;em&gt;details:&lt;/em&gt; ** |      &lt;/li&gt;
+&lt;li&gt;对自己的竞品提链工具有时间再调试一下，看一下效果。  &lt;br /&gt;
+&lt;em&gt;时间要求：&lt;/em&gt; &lt;code&gt;40min&lt;/code&gt; | &lt;em&gt;details:&lt;/em&gt; ****&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;2.2 下午  &lt;br /&gt;
+那个提链工具的bug改不了了！我也是想死，怎么会出现这种烦心事啊！！！烦死我了都  &lt;br /&gt;
+还是得看代码啊！不看别人的代码自己真的什么都干不了啊！！！烦烦烦！！&lt;/p&gt;</summary><category term="dailynotes"></category></entry><entry><title>就是爱编程</title><link href="http://aleda.cn/article/2015/01/dailynotes_150129/" rel="alternate"></link><updated>2015-01-29T13:44:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-01-29:article/2015/01/dailynotes_150129/</id><summary type="html">&lt;h1&gt;就是爱编程&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;h3&gt;一、 随笔&lt;/h3&gt;
 &lt;p&gt;从未怀疑过自己对编程的热爱，而也只有自己在编程的时候才能享受编程的乐趣:

@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Aleda | Make Different</title><link href="http://aleda.cn/" rel="alternate"></link><link href="http://aleda.cn/feeds/all.atom.xml" rel="self"></link><id>http://aleda.cn/</id><updated>2015-02-06T15:21:00+08:00</updated><entry><title>感谢我还活着</title><link href="http://aleda.cn/article/2015/02/dailynotes_150206/" rel="alternate"></link><updated>2015-02-06T15:21:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-02-06:article/2015/02/dailynotes_150206/</id><summary type="html">&lt;h1&gt;感谢我还活着&lt;/h1&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Aleda | Make Different</title><link href="http://aleda.cn/" rel="alternate"></link><link href="http://aleda.cn/feeds/all.atom.xml" rel="self"></link><id>http://aleda.cn/</id><updated>2015-02-09T10:21:00+08:00</updated><entry><title>年关将近</title><link href="http://aleda.cn/article/2015/02/dailynotes_150209/" rel="alternate"></link><updated>2015-02-09T10:21:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-02-09:article/2015/02/dailynotes_150209/</id><summary type="html">&lt;h3&gt;一、 随笔&lt;/h3&gt;
+&lt;p&gt;突然幸福感爆棚，对于过年自己有一点点小期待呢还。&lt;/p&gt;
+&lt;h3&gt;二、 时间规划&lt;/h3&gt;
+&lt;p&gt;按照程序的milestone进行一步步的跟进，包括:  &lt;br /&gt;
+1. 正确率的再测；
+2. 给出各个环节的文档，包括：理清工具运行环境、工具依赖、部署、配置等关系，形成文档。    &lt;br /&gt;
+编写策略更改的步骤代码，让没有接受这个模块的人员也能快速的着手这个模块，进行策略编写和更改。   &lt;br /&gt;
+3. 对一些case继续进行分析，将整体的正确率再提升一个档次。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;正确率的再次提升。
+10:35 - &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;三、 总结&lt;/h3&gt;</summary><category term="dailynotes"></category></entry><entry><title>感谢我还活着</title><link href="http://aleda.cn/article/2015/02/dailynotes_150206/" rel="alternate"></link><updated>2015-02-06T15:21:00+08:00</updated><author><name>Aleda</name></author><id>tag:aleda.cn,2015-02-06:article/2015/02/dailynotes_150206/</id><summary type="html">&lt;h1&gt;感谢我还活着&lt;/h1&gt;
 &lt;h3&gt;一、 随笔&lt;/h3&gt;
 &lt;p&gt;我已经好久没有写过博客了，这几天每天自己都加班到凌晨两、三点，感谢自己活了起来。  &lt;br /&gt;
 spider覆盖率这个team是真的累。但他们工作的事情对我来说干的却不是技术人员做的事情。技术人员最需要具备的能力就我自己感觉来说就是用最少的人力，去完成最伟大的事情。

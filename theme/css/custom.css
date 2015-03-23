@@ -1,0 +1,8 @@
+body {
+    font-family:"Microsoft YaHei","Microsoft JhengHei",STHeiti,MingLiu;
+    text-shadow: 0 0 5px #FAF0E6, 0 0 10px #8B8989, 0 0 15px #FAF0E6, 0 0 40px #FAF0E6, 0 0 70px #FAF0E6;
+}
+.article-content {
+    font-family:"Microsoft YaHei";
+    text-shadow: 0 0 5px #FAF0E6, 0 0 10px #8B8989, 0 0 15px #FAF0E6, 0 0 40px #FAF0E6, 0 0 70px #FAF0E6;
+}

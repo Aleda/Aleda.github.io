@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Aleda" />
+        <meta name="copyright" content="Aleda" />
+
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary">
+
+<meta name="keywords" content="experience, experience, " />
+
+<meta property="og:title" content="常用的linux-tools的配置文件汇总 "/>
+<meta property="og:url" content="http://cq01-rdqa-dev098.cq01.baidu.com:8000/article/2015/03/experience_150327/" />
+<meta property="og:description" content="Linux下的terminal_tmux配置 Content of Table 1. Linux-Tools-Configure 1.1 Introduction 1.2 Tmux 1.3 Screen 1.4 Vim 1.5 Emacs 1. Linux-Tools-Configure 1.1 Introduction *inux对于做后端的工程师来说是会天天打交道的，理所应当的，Linux是 我们的首选； Linux下的许多工具的使用是很讲究技巧性的，有很多黑技能能够使得 你的开发效率比别人快上几倍！ 这里列出来，我日常经常会用到的工具，以及他的一些常规性的配置。 1.2 Tmux tmux是我用过的第二个terminal工具，以前一直是screen，但是有一点是 screen并不能竖向切屏，而tmux提供更友好的切屏，所以我尝试去使用它。 在create windows方面上，两者的使用上也是没有什么很大的区别的 ..." />
+<meta property="og:site_name" content="Aleda | Make Different" />
+<meta property="og:article:author" content="Aleda" />
+<meta property="og:article:published_time" content="2015-03-27T10:12:00+08:00" />
+<meta name="twitter:title" content="常用的linux-tools的配置文件汇总 ">
+<meta name="twitter:description" content="Linux下的terminal_tmux配置 Content of Table 1. Linux-Tools-Configure 1.1 Introduction 1.2 Tmux 1.3 Screen 1.4 Vim 1.5 Emacs 1. Linux-Tools-Configure 1.1 Introduction *inux对于做后端的工程师来说是会天天打交道的，理所应当的，Linux是 我们的首选； Linux下的许多工具的使用是很讲究技巧性的，有很多黑技能能够使得 你的开发效率比别人快上几倍！ 这里列出来，我日常经常会用到的工具，以及他的一些常规性的配置。 1.2 Tmux tmux是我用过的第二个terminal工具，以前一直是screen，但是有一点是 screen并不能竖向切屏，而tmux提供更友好的切屏，所以我尝试去使用它。 在create windows方面上，两者的使用上也是没有什么很大的区别的 ...">
+
+        <title>常用的linux-tools的配置文件汇总  · Aleda | Make Different
+</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://cq01-rdqa-dev098.cq01.baidu.com:8000/theme/css/pygments.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://cq01-rdqa-dev098.cq01.baidu.com:8000/theme/tipuesearch/tipuesearch.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://cq01-rdqa-dev098.cq01.baidu.com:8000/theme/css/elegant.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://cq01-rdqa-dev098.cq01.baidu.com:8000/theme/css/custom.css" media="screen">
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://cq01-rdqa-dev098.cq01.baidu.com:8000/"><span class=site-name><span style="color:black;">Aleda</span> |  <span style="color:#AA1032;"> Make Different </span></span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://cq01-rdqa-dev098.cq01.baidu.com:8000">Home</a></li>
+                            <li ><a href="http://cq01-rdqa-dev098.cq01.baidu.com:8000/categories.html">Categories</a></li>
+                            <li ><a href="http://cq01-rdqa-dev098.cq01.baidu.com:8000/tags.html">Tags</a></li>
+                            <li ><a href="http://cq01-rdqa-dev098.cq01.baidu.com:8000/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://cq01-rdqa-dev098.cq01.baidu.com:8000/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page-header span10 offset2">
+    <h1><a href="http://cq01-rdqa-dev098.cq01.baidu.com:8000/article/2015/03/experience_150327/"> 常用的linux-tools的配置文件汇总  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            
+            <h1>Linux下的terminal_tmux配置</h1>
+<hr />
+<h3><strong>Content of Table</strong></h3>
+<ul>
+<li><strong>1. Linux-Tools-Configure</strong>     <ul>
+<li><strong>1.1 Introduction</strong>    </li>
+<li><strong>1.2 Tmux</strong>     </li>
+<li><strong>1.3 Screen</strong>      </li>
+<li><strong>1.4 Vim</strong>    </li>
+<li><strong>1.5 Emacs</strong>     </li>
+</ul>
+</li>
+</ul>
+<h3><strong>1. Linux-Tools-Configure</strong></h3>
+<h4><strong>1.1 Introduction</strong></h4>
+<p>*inux对于做后端的工程师来说是会天天打交道的，理所应当的，Linux是
+我们的首选；   <br />
+Linux下的许多工具的使用是很讲究技巧性的，有很多<strong>黑</strong>技能能够使得
+你的开发效率比别人快上几倍！  <br />
+这里列出来，我日常经常会用到的工具，以及他的一些常规性的配置。    </p>
+<h4><strong>1.2 Tmux </strong></h4>
+<p>tmux是我用过的第二个terminal工具，以前一直是screen，但是有一点是
+screen并不能竖向切屏，而tmux提供更友好的切屏，所以我尝试去使用它。 <br />
+在create windows方面上，两者的使用上也是没有什么很大的区别的，tmux可
+以把prefix key变换成C-a。  <br />
+在其他方面，我发现两者对于不同的终端模拟有着不同的展现，我自己
+在使用secrecrt上使用xterm的方式时，screen表现正常，而对于tmux
+却在<em>刷屏</em>上出现有些bug，对于自己是一个强迫症的人来说，这是不能容忍的。   <br />
+在不换secrecrt，不换我那公司配的22寸的小屏幕的前提下，
+目前我没有再继续使用tmux。但对于tmux的常用配置还是要了解的。  <br />
+这里推荐几篇关于tmux的配置讲解的blog，个人感觉看了这几篇，就不用看我的了。    </p>
+<ul>
+<li><a href="http://foocoder.com/blog/zhong-duan-huan-jing-zhi-tmux.html/">http://foocoder.com/blog/zhong-duan-huan-jing-zhi-tmux.html/</a>     </li>
+<li><a href="http://mingxinglai.com/cn/2012/09/tmux/">http://mingxinglai.com/cn/2012/09/tmux/</a>    </li>
+</ul>
+<p>以下是自己的tmux配置，基本上是为了与screen保持一致的配置：    </p>
+<div class="highlight"><pre><span class="c1">##! BRIEF : tmux configure</span>
+<span class="c1">##! AUTHOR: Aleda(aledalee@foxmail.com | aleda.cn)</span>
+<span class="c1">##! DATE  : 2015-03-24 13:18</span>
+<span class="c1">##! NOTICE: If impede your use, please change it and just take a mail to me.</span>
+<span class="c1">##! [base configure]</span>
+<span class="c1">##! 这里和你的终端模拟保持一致</span>
+<span class="s-Atom">set</span> <span class="o">-</span><span class="s-Atom">g</span> <span class="s-Atom">default</span><span class="o">-</span><span class="s-Atom">terminal</span> <span class="s2">&quot;xterm&quot;</span>
+<span class="s-Atom">set</span> <span class="o">-</span><span class="s-Atom">g</span> <span class="s-Atom">base</span><span class="o">-</span><span class="s-Atom">index</span> <span class="mi">1</span>
+<span class="s-Atom">set</span> <span class="o">-</span><span class="s-Atom">g</span> <span class="s-Atom">pane</span><span class="o">-</span><span class="s-Atom">base</span><span class="o">-</span><span class="s-Atom">index</span> <span class="mi">1</span>
+<span class="s-Atom">set</span> <span class="o">-</span><span class="s-Atom">g</span> <span class="s-Atom">status</span><span class="o">-</span><span class="s-Atom">utf8</span> <span class="s-Atom">on</span> 
+<span class="s-Atom">setw</span> <span class="o">-</span><span class="s-Atom">g</span> <span class="s-Atom">mode</span><span class="o">-</span><span class="s-Atom">keys</span> <span class="s-Atom">vi</span>
+<span class="c1">##! set pane</span>
+<span class="s-Atom">set</span> <span class="o">-</span><span class="s-Atom">g</span> <span class="s-Atom">pane</span><span class="o">-</span><span class="s-Atom">border</span><span class="o">-</span><span class="s-Atom">bg</span> <span class="s-Atom">green</span>
+<span class="s-Atom">set</span> <span class="o">-</span><span class="s-Atom">g</span> <span class="s-Atom">pane</span><span class="o">-</span><span class="s-Atom">border</span><span class="o">-</span><span class="s-Atom">fg</span> <span class="s-Atom">black</span>
+<span class="s-Atom">set</span> <span class="o">-</span><span class="s-Atom">g</span> <span class="s-Atom">pane</span><span class="o">-</span><span class="s-Atom">active</span><span class="o">-</span><span class="s-Atom">border</span><span class="o">-</span><span class="s-Atom">bg</span> <span class="s-Atom">red</span>
+<span class="s-Atom">set</span> <span class="o">-</span><span class="s-Atom">g</span> <span class="s-Atom">pane</span><span class="o">-</span><span class="s-Atom">active</span><span class="o">-</span><span class="s-Atom">border</span><span class="o">-</span><span class="s-Atom">fg</span> <span class="s-Atom">black</span>
+<span class="c1">##! same as screen</span>
+<span class="s-Atom">set</span> <span class="o">-</span><span class="s-Atom">g</span> <span class="s-Atom">prefix</span> <span class="nv">C</span><span class="o">-</span><span class="s-Atom">a</span>
+<span class="s-Atom">unbind</span> <span class="nv">C</span><span class="o">-</span><span class="s-Atom">b</span>
+<span class="c1">##! C-x - split window</span>
+<span class="s-Atom">unbind</span> <span class="s-Atom">&#39;&quot;&#39;</span>
+<span class="s-Atom">bind</span> <span class="o">-</span> <span class="s-Atom">splitw</span> <span class="o">-</span><span class="s-Atom">v</span>
+<span class="c1">##! C-x | vsplit window</span>
+<span class="s-Atom">unbind</span> <span class="c1">%</span>
+<span class="s-Atom">bind</span> <span class="p">|</span> <span class="s-Atom">splitw</span> <span class="o">-</span><span class="s-Atom">h</span>
+<span class="c1">##! C-x k,j,h,l select pane</span>
+<span class="s-Atom">bind</span> <span class="s-Atom">k</span> <span class="s-Atom">selectp</span> <span class="o">-</span><span class="nv">U</span>
+<span class="s-Atom">bind</span> <span class="s-Atom">j</span> <span class="s-Atom">selectp</span> <span class="o">-</span><span class="nv">D</span>
+<span class="s-Atom">bind</span> <span class="s-Atom">h</span> <span class="s-Atom">selectp</span> <span class="o">-</span><span class="nv">L</span>
+<span class="s-Atom">bind</span> <span class="s-Atom">l</span> <span class="s-Atom">selectp</span> <span class="o">-</span><span class="nv">R</span>
+<span class="c1">##! C-x q kill pane</span>
+<span class="s-Atom">bind</span> <span class="s-Atom">q</span> <span class="s-Atom">killp</span>
+<span class="c1">##! C-q kill window</span>
+<span class="s-Atom">bind</span> <span class="nv">C</span><span class="o">-</span><span class="s-Atom">q</span> <span class="s-Atom">killw</span>
+<span class="c1">##! C-a cycles choose windows</span>
+<span class="s-Atom">bind</span><span class="o">-</span><span class="s-Atom">key</span> <span class="s2">&quot;C-a&quot;</span> <span class="s-Atom">select</span><span class="o">-</span><span class="s-Atom">window</span> <span class="o">-</span><span class="nf">t</span> <span class="o">:-</span>
+<span class="c1">##!  swap pane</span>
+<span class="c1">##! swap with the previous pane (prefix Ctrl+u)</span>
+<span class="s-Atom">bind</span> <span class="s-Atom">^u</span> <span class="s-Atom">swapp</span> <span class="o">-</span><span class="nv">U</span>
+<span class="c1">##! swap with the next pane (prefix Ctrl+d)</span>
+<span class="s-Atom">bind</span> <span class="s-Atom">^d</span> <span class="s-Atom">swapp</span> <span class="o">-</span><span class="nv">D</span>
+<span class="c1">##! C-a A rename window</span>
+<span class="c1">#bind A command-prompt -I #W &quot;rename-window &#39;%%&#39;&quot;</span>
+<span class="c1">##! copy mode</span>
+<span class="c1">##! enter copy mode (prefix Escape)</span>
+<span class="s-Atom">bind</span> <span class="nv">Escape</span> <span class="s-Atom">copy</span><span class="o">-</span><span class="s-Atom">mode</span>
+<span class="c1">##! paste buffer (prefix Ctrl+p)</span>
+<span class="s-Atom">bind</span> <span class="s-Atom">^p</span> <span class="s-Atom">pasteb</span>
+<span class="c1">##! select (v)</span>
+<span class="s-Atom">bind</span> <span class="o">-</span><span class="s-Atom">t</span> <span class="s-Atom">vi</span><span class="o">-</span><span class="s-Atom">copy</span> <span class="s-Atom">v</span> <span class="s-Atom">begin</span><span class="o">-</span><span class="s-Atom">selection</span>
+<span class="c1">##! copy (y)</span>
+<span class="s-Atom">bind</span> <span class="o">-</span><span class="s-Atom">t</span> <span class="s-Atom">vi</span><span class="o">-</span><span class="s-Atom">copy</span> <span class="s-Atom">y</span> <span class="s-Atom">copy</span><span class="o">-</span><span class="s-Atom">selection</span>
+<span class="c1">##! reload configure</span>
+<span class="s-Atom">bind</span> <span class="s-Atom">r</span> <span class="s-Atom">source</span> <span class="s-Atom">~/.tmux</span><span class="p">.</span><span class="s-Atom">conf</span> <span class="s-Atom">\</span><span class="p">;</span> <span class="s-Atom">display</span> <span class="s2">&quot;Configuration reloaded!&quot;</span>
+</pre></div>
+
+
+<h4><strong>1.3 Screen </strong></h4>
+<p>Screen的优点：   </p>
+<ul>
+<li>多窗口，支持横向切屏    </li>
+<li>会话共享，可以让一个或多个用户多次登录一个会话     </li>
+</ul>
+<p>缺点：    </p>
+<ul>
+<li>4.00以后的版本才支持纵向切屏    </li>
+<li>与sz rz的兼容性不好   </li>
+</ul>
+<p>官方说明：<a href="http://www.gnu.org/software/screen/">http://www.gnu.org/software/screen/</a>   <br />
+有兴趣的，还可以下源码下来看看。    </p>
+<p>给出一个详细的blog，我就不在这里班门弄斧了。  <br />
+<a href="http://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html">http://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html</a>   </p>
+<p>贴出我常用的配置：    </p>
+<div class="highlight"><pre><span class="err">#</span><span class="x"> Set default encoding using utf8</span>
+<span class="x">defutf8 on</span>
+<span class="cp">##</span><span class="c"> 解决中文乱码,这个要按需配置</span><span class="x"></span>
+<span class="x">defencoding utf8</span>
+<span class="x">encoding utf8 utf8</span>
+<span class="err">#</span><span class="x"> 兼容shell 使得.bashrc .profile /etc/profile等里面的别名等设置生效</span>
+<span class="x">shell -</span><span class="p">$</span><span class="nv">SHELL</span><span class="x"></span>
+<span class="cp">#</span><span class="nf">set</span><span class="x"> the startup message</span>
+<span class="x">startup_message off</span>
+<span class="x">term linux</span>
+<span class="cp">##</span><span class="c"> 解决无法滚动</span><span class="x"></span>
+<span class="x">termcapinfo xterm|xterms|xs ti@:te=\E[2J</span>
+<span class="err">#</span><span class="x"> 屏幕缓冲区行数</span>
+<span class="x">defscrollback 10000</span>
+<span class="err">#</span><span class="x"> 下标签设置</span>
+<span class="x">hardstatus on</span>
+<span class="x">caption always &quot;%</span><span class="err">{</span><span class="x">= kw}%-w%</span><span class="err">{</span><span class="x">= kG}%</span><span class="err">{</span><span class="x">+b}[%n %t]%</span><span class="err">{</span><span class="x">-b}%</span><span class="err">{</span><span class="x">= kw}%+w %=%d %M %0c %</span><span class="err">{</span><span class="x">g}%H%</span><span class="err">{</span><span class="x">-}&quot;</span>
+<span class="err">#</span><span class="x">关闭闪屏</span>
+<span class="x">vbell off</span>
+<span class="cp">#</span><span class="nf">Keboard</span><span class="x"> binding</span>
+<span class="err">#</span><span class="x"> bind Alt+z to move to previous window</span>
+<span class="x">bindkey ^[z prev</span>
+<span class="err">#</span><span class="x"> bind Alt+x to move to next window</span>
+<span class="x">bindkey ^[x next</span>
+<span class="err">#</span><span class="x"> bind Alt`~= to screen0~12</span>
+<span class="x">bindkey &quot;^[`&quot; select 0</span>
+<span class="x">bindkey &quot;^[1&quot; select 1</span>
+<span class="x">bindkey &quot;^[2&quot; select 2</span>
+<span class="x">bindkey &quot;^[3&quot; select 3</span>
+<span class="x">bindkey &quot;^[4&quot; select 4</span>
+<span class="x">bindkey &quot;^[5&quot; select 5</span>
+<span class="x">bindkey &quot;^[6&quot; select 6</span>
+<span class="x">bindkey &quot;^[7&quot; select 7</span>
+<span class="x">bindkey &quot;^[8&quot; select 8</span>
+<span class="x">bindkey &quot;^[9&quot; select 9</span>
+<span class="x">bindkey &quot;^[0&quot; select 10</span>
+<span class="x">bindkey &quot;^[-&quot; select 11</span>
+<span class="x">bindkey &quot;^[=&quot; select 12</span>
+<span class="err">#</span><span class="x"> bind F5 to create a new screen</span>
+<span class="x">bindkey -k k5 screen</span>
+<span class="err">#</span><span class="x"> bind F6 to detach screen session (to background)</span>
+<span class="x">bindkey -k k6 detach</span>
+<span class="err">#</span><span class="x"> bind F7 to kill current screen window</span>
+<span class="x">bindkey -k k7 kill</span>
+<span class="err">#</span><span class="x"> bind F8 to rename current screen window</span>
+<span class="x">bindkey -k k8 title</span>
+</pre></div>
+
+
+<h4><strong>1.4 Vim</strong></h4>
+<p>Vim和Emacs向来都是*inux开发工程的两个阵营。两者都是神级的编辑器，
+冒失点说，与顶级的IDE比起来，它也是不容小觑的。  <br />
+这两个编辑器都各自有各自的有点，也正式因为两个阵营中，都有些顶级
+的开发工程师在贡献着自己的劳动，所以两边用起来都非常不错。   <br />
+我个人是两个都用过的，并且也在不断的尝试，但目前来说，自己还是比较
+喜欢用Vim一些。
+Vim的一些神级插件，自己也在不断的摸索。目前用到的一些插件如下:   </p>
+<ul>
+<li>NERDTree   </li>
+<li>TagList    </li>
+<li>vim-colors-solarized   </li>
+<li>DoxygenToolkit    </li>
+</ul>
+<p>这些详细的说明及使用，我就不在这里说了，在github上，一搜就出来了。  <br />
+这里贴出我目前的vim配置:    </p>
+<div class="highlight"><pre>&quot; @BRIEF  : vimrc配置文件
+&quot; @AUTHOR : Aleda(aledalee@foxmail.com | aleda.cn)
+&quot; @DATE   : 2015-03-28 23:05
+&quot; @VERSION: 1.0.0
+&quot; @USAGE  :
+&quot; ===================Vundle Begin=============================
+set nocompatible              &quot; be iMproved, required
+filetype off                  &quot; required
+&quot; set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+&quot; let Vundle manage Vundle, required
+Plugin &#39;gmarik/Vundle.vim&#39;
+&quot; solarized color
+Plugin &#39;altercation/vim-colors-solarized&#39;
+&quot; taglist
+Plugin &#39;vim-scripts/taglist.vim&#39;
+&quot; DoxygenToolkit
+Plugin &#39;vim-scripts/DoxygenToolkit.vim&#39;
+&quot; NERD Tree
+Plugin &#39;scrooloose/nerdtree&#39;
+
+call vundle#end()
+&quot; ====================Vundle End==============================
+syntax enable
+&quot; ==================Solarized Color Theme=====================
+if has(&#39;gui_running&#39;)
+    set background=light
+else
+    set background=dark
+endif
+colorscheme solarized
+&quot; ==================Solarized Color Theme=====================
+&quot;
+&quot; =======================Tag lists============================
+&quot; Taglist为最后一个window时,exit
+let Tlist_Exit_OnlyWindow  = 1
+&quot; 在右边显示
+let Tlist_Use_Right_Window = 1
+&quot; =======================Tag lists============================
+&quot;
+&quot; =====================DoxgenToolkit==========================
+&quot; 作者信息
+let g:DoxygenToolkit_authorName=&quot;Aleda(aledalee@foxmail.com | aleda.cn)&quot;
+let g:DoxygenToolkit_blockHeader=&quot;--------------------------------------------------------------------------&quot;
+let g:DoxygenToolkit_blockFooter=&quot;----------------------------------------------------------------------------&quot;
+&quot; =====================DoxgenToolkit==========================
+&quot;
+&quot; =====================Basic Configures=======================
+syntax on
+&quot; 设置语法折叠
+set foldmethod=syntax
+&quot; 启动Vim时候，默认关闭折叠
+set nofoldenable
+set nobackup
+set smarttab
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+set cindent
+retab
+set nu
+set hlsearch
+set incsearch
+set fileencodings=ucs-bom,utf-8,gbk,gb18030,cp936,big5,euc-jp,euc-kr,latin1
+set fileformats=unix
+set fileencoding=gb18030
+set fenc=utf-8
+set fencs=utf-8,usc-bom,gb2312,cp936
+set encoding=utf-8
+set termencoding=utf-8
+&quot; public auto indent
+set cino=g0
+set nocp
+&quot; 防止在vim方式下，鼠标选中默认成virtual
+if has(&#39;mouse&#39;)
+    set mouse=
+endif
+&quot; =====================Basic Configures=======================
+</pre></div>
+
+
+<h4><strong>1.5 Emacs</strong></h4>
+<p>学习和使用Emacs要经历陡峭的学习曲线，需要的是你不懈的使用和钻研。
+对，它就想是一个不错的操作系统一样。  <br />
+你可以上网搜索关于Emacs的不错教材，来进行学习和钻研，但最重要的是
+你要有一颗平静的新去接受它，去不断的熟悉它。   </p>
+            
+            <section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://cq01-rdqa-dev098.cq01.baidu.com:8000/article/2015/03/experience_150327/#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'aleda';
+        var disqus_identifier = 'http://cq01-rdqa-dev098.cq01.baidu.com:8000/article/2015/03/experience_150327/';
+    var disqus_url = 'http://cq01-rdqa-dev098.cq01.baidu.com:8000/article/2015/03/experience_150327/';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+            <hr/>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2015-03-27T10:12:00+08:00">Mar 27, 2015</time>
+            <h4>Category</h4>
+            <a class="category-link" href="http://cq01-rdqa-dev098.cq01.baidu.com:8000/categories.html#experience-ref">experience</a>
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article">
+                <li><a href="http://cq01-rdqa-dev098.cq01.baidu.com:8000/tags.html#experience-ref">experience
+                    <span>4</span>
+</a></li>
+            </ul>
+<h4>Contact</h4>
+    <a href="http://github.com/Aleda" title="My Github Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-github sidebar-social-links"></i></a>
+    <a href="mailto:aledalee@foxmail.com" title="My Email Address" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-envelope sidebar-social-links"></i></a>
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+        <div id="push"></div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+            <script type="text/javascript">
+var disqus_shortname = 'aleda';
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+<script  language="javascript" type="text/javascript">
+function uncollapse() {
+    if (window.location.hash.match(/^#comment-\d+$/)) {
+        $('#disqus_thread').collapse('show');
+    }
+}
+</script>
+<script type="text/javascript" language="JavaScript">
+uncollapse();
+window.onhashchange=function(){
+    if (window.location.hash.match(/^#comment-\d+$/))
+        window.location.reload(true);
+}
+</script>
+<script>
+$('#disqus_thread').on('shown', function () {
+    var link = document.getElementsByClassName('accordion-toggle');
+    var old_innerHTML = link[0].innerHTML;
+    $(link[0]).fadeOut(500, function() {
+        $(this).text('Click here to hide comments').fadeIn(500);
+    });
+    $('#disqus_thread').on('hidden', function () {
+        $(link[0]).fadeOut(500, function() {
+            $(this).text(old_innerHTML).fadeIn(500);
+        });
+    })
+})
+</script>
+
+
+    </body>
+    <!-- Theme: Elegant built for Pelican
+    License : http://oncrashreboot.com/pelican-elegant -->
+</html>

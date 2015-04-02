@@ -14,12 +14,12 @@
 
 <meta property="og:title" content="常用的linux-tools的配置文件汇总 "/>
 <meta property="og:url" content="http://aleda.cn/article/2015/03/experience_150327/" />
-<meta property="og:description" content="Linux下的terminal_tmux配置 Content of Table 1. Linux-Tools-Configure 1.1 Introduction 1.2 Tmux 1.3 Screen 1.4 Vim 1.5 Emacs 1. Linux-Tools-Configure 1.1 Introduction *inux对于做后端的工程师来说是会天天打交道的，理所应当的，Linux是 我们的首选； Linux下的许多工具的使用是很讲究技巧性的，有很多黑技能能够使得 你的开发效率比别人快上几倍！ 这里列出来，我日常经常会用到的工具，以及他的一些常规性的配置。 1.2 Tmux tmux是我用过的第二个terminal工具，以前一直是screen，但是有一点是 screen并不能竖向切屏，而tmux提供更友好的切屏，所以我尝试去使用它。 在create windows方面上，两者的使用上也是没有什么很大的区别的 ..." />
+<meta property="og:description" content="Linux下的terminal_tmux配置 Content of Table 1. Linux-Tools-Configure 1.1 Introduction 1.2 Tmux 1.3 Screen 1.4 Vim 1.5 Emacs 1.6 bashrc 1. Linux-Tools-Configure 1.1 Introduction *inux对于做后端的工程师来说是会天天打交道的，理所应当的，Linux是 我们的首选； Linux下的许多工具的使用是很讲究技巧性的，有很多黑技能能够使得 你的开发效率比别人快上几倍！ 这里列出来，我日常经常会用到的工具，以及他的一些常规性的配置。 1.2 Tmux tmux是我用过的第二个terminal工具，以前一直是screen，但是有一点是 screen并不能竖向切屏，而tmux提供更友好的切屏，所以我尝试去使用它 ..." />
 <meta property="og:site_name" content="Aleda | Make Different" />
 <meta property="og:article:author" content="Aleda" />
 <meta property="og:article:published_time" content="2015-03-27T10:12:00+08:00" />
 <meta name="twitter:title" content="常用的linux-tools的配置文件汇总 ">
-<meta name="twitter:description" content="Linux下的terminal_tmux配置 Content of Table 1. Linux-Tools-Configure 1.1 Introduction 1.2 Tmux 1.3 Screen 1.4 Vim 1.5 Emacs 1. Linux-Tools-Configure 1.1 Introduction *inux对于做后端的工程师来说是会天天打交道的，理所应当的，Linux是 我们的首选； Linux下的许多工具的使用是很讲究技巧性的，有很多黑技能能够使得 你的开发效率比别人快上几倍！ 这里列出来，我日常经常会用到的工具，以及他的一些常规性的配置。 1.2 Tmux tmux是我用过的第二个terminal工具，以前一直是screen，但是有一点是 screen并不能竖向切屏，而tmux提供更友好的切屏，所以我尝试去使用它。 在create windows方面上，两者的使用上也是没有什么很大的区别的 ...">
+<meta name="twitter:description" content="Linux下的terminal_tmux配置 Content of Table 1. Linux-Tools-Configure 1.1 Introduction 1.2 Tmux 1.3 Screen 1.4 Vim 1.5 Emacs 1.6 bashrc 1. Linux-Tools-Configure 1.1 Introduction *inux对于做后端的工程师来说是会天天打交道的，理所应当的，Linux是 我们的首选； Linux下的许多工具的使用是很讲究技巧性的，有很多黑技能能够使得 你的开发效率比别人快上几倍！ 这里列出来，我日常经常会用到的工具，以及他的一些常规性的配置。 1.2 Tmux tmux是我用过的第二个terminal工具，以前一直是screen，但是有一点是 screen并不能竖向切屏，而tmux提供更友好的切屏，所以我尝试去使用它 ...">
 
         <title>常用的linux-tools的配置文件汇总  · Aleda | Make Different
 </title>
@@ -78,6 +78,7 @@
 <li><strong>1.3 Screen</strong>      </li>
 <li><strong>1.4 Vim</strong>    </li>
 <li><strong>1.5 Emacs</strong>     </li>
+<li><strong>1.6 bashrc</strong>    </li>
 </ul>
 </li>
 </ul>
@@ -331,6 +332,227 @@ endif
 对，它就想是一个不错的操作系统一样。  <br />
 你可以上网搜索关于Emacs的不错教材，来进行学习和钻研，但最重要的是
 你要有一颗平静的新去接受它，去不断的熟悉它。   </p>
+<h4><strong>1.6 bashrc</strong></h4>
+<p>一个好的bashrc，可以更方便的帮助你在linux下去执行你想要做的事情，
+你可以设置你自己常用的命令，你可以去创造你经常使用的函数。  <br />
+甚至你可以去组织你去犯经常性的错误，我也是最近才想起来要做这件事情，
+用自己工作中的经验、小点子，去创造性的改善自己的使用环境。  <br />
+因此，就有了这个<strong>bashrc</strong>，终究只是刚开始的研究，后续会经常性的更行，
+先给第一个版本。  <br />
+以下：    </p>
+<div class="highlight"><pre><span class="cp"># .bashrc</span>
+<span class="cp"># =============================================================== #</span>
+<span class="cp">#</span>
+<span class="cp"># PERSONAL $HOME/.bashrc FILE for bash-3.0 (or later)</span>
+<span class="cp"># By Aleda [aledalee@foxmail.com] | aleda.cn</span>
+<span class="cp">#</span>
+<span class="cp"># Last modified: Wed Apr  1 15:39:41 CST 2015</span>
+<span class="cp">#</span>
+<span class="cp"># NOTICE:</span>
+<span class="cp">#  This bashrc file is a bit overcrowded.</span>
+<span class="cp">#  Remember, it is just an example for you.</span>
+<span class="cp">#  Tailor it to your needs.</span>
+<span class="cp">#</span>
+<span class="cp"># =============================================================== #</span>
+
+<span class="cp"># ====================== global definitions ===================== #</span>
+<span class="cp"># Source global definitions</span>
+<span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">bashrc</span> <span class="p">];</span> <span class="n">then</span>
+    <span class="p">.</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">bashrc</span>
+<span class="n">fi</span>
+
+<span class="cp"># WORK ROOT</span>
+<span class="n">WORK_ROOT</span><span class="o">=</span><span class="s">&quot;$HOME/lishuo&quot;</span>
+<span class="cp"># TRASH_DIR</span>
+<span class="n">TRASH_DIR</span><span class="o">=</span><span class="s">&quot;${WORK_ROOT}/trash&quot;</span>
+
+<span class="cp"># use jumbo&#39;s bashrc [in baidu];</span>
+<span class="p">[[</span> <span class="o">-</span><span class="n">s</span> <span class="s">&quot;/home/users/lishuo02/.jumbo/etc/bashrc&quot;</span> <span class="p">]]</span> <span class="o">&amp;&amp;</span> <span class="n">source</span> <span class="s">&quot;/home/users/lishuo02/.jumbo/etc/bashrc&quot;</span>
+
+<span class="cp"># astyle path (c/c++ formmater) [in baidu];</span>
+<span class="n">ARTISTIC_STYLE_OPTIONS</span><span class="o">=~/</span><span class="p">.</span><span class="n">astylerc</span>
+
+<span class="cp"># commonly useful colors</span>
+<span class="cp">##! Normal colors</span>
+<span class="n">BLACK</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="mi">30</span><span class="n">m</span><span class="err">&#39;</span>        <span class="err">#</span> <span class="n">Black</span>
+<span class="n">RED</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="mi">31</span><span class="n">m</span><span class="err">&#39;</span>          <span class="err">#</span> <span class="n">Red</span>
+<span class="n">GREEN</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="mi">32</span><span class="n">m</span><span class="err">&#39;</span>        <span class="err">#</span> <span class="n">Green</span>
+<span class="n">YELLOW</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="mi">33</span><span class="n">m</span><span class="err">&#39;</span>       <span class="err">#</span> <span class="n">Yellow</span>
+<span class="n">BLUE</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="mi">34</span><span class="n">m</span><span class="err">&#39;</span>         <span class="err">#</span> <span class="n">Blue</span>
+<span class="n">PURPLE</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="mi">35</span><span class="n">m</span><span class="err">&#39;</span>       <span class="err">#</span> <span class="n">Purple</span>
+<span class="n">CYAN</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="mi">36</span><span class="n">m</span><span class="err">&#39;</span>         <span class="err">#</span> <span class="n">Cyan</span>
+<span class="n">WHITE</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="mi">37</span><span class="n">m</span><span class="err">&#39;</span>        <span class="err">#</span> <span class="n">White</span>
+
+<span class="cp"># Bold colors</span>
+<span class="n">BBLACK</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">;</span><span class="mi">30</span><span class="n">m</span><span class="err">&#39;</span>       <span class="err">#</span> <span class="n">Black</span>
+<span class="n">BRED</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">;</span><span class="mi">31</span><span class="n">m</span><span class="err">&#39;</span>         <span class="err">#</span> <span class="n">Red</span>
+<span class="n">BGREEN</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">;</span><span class="mi">32</span><span class="n">m</span><span class="err">&#39;</span>       <span class="err">#</span> <span class="n">Green</span>
+<span class="n">BYELLOW</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">;</span><span class="mi">33</span><span class="n">m</span><span class="err">&#39;</span>      <span class="err">#</span> <span class="n">Yellow</span>
+<span class="n">BBLUE</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">;</span><span class="mi">34</span><span class="n">m</span><span class="err">&#39;</span>        <span class="err">#</span> <span class="n">Blue</span>
+<span class="n">BPURPLE</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">;</span><span class="mi">35</span><span class="n">m</span><span class="err">&#39;</span>      <span class="err">#</span> <span class="n">Purple</span>
+<span class="n">BCYAN</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">;</span><span class="mi">36</span><span class="n">m</span><span class="err">&#39;</span>        <span class="err">#</span> <span class="n">Cyan</span>
+<span class="n">BWHITE</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">;</span><span class="mi">37</span><span class="n">m</span><span class="err">&#39;</span>       <span class="err">#</span> <span class="n">White</span>
+
+<span class="cp"># Background colors</span>
+<span class="n">ON_BLACK</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">40</span><span class="n">m</span><span class="err">&#39;</span>       <span class="err">#</span> <span class="n">Black</span>
+<span class="n">ON_RED</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">41</span><span class="n">m</span><span class="err">&#39;</span>         <span class="err">#</span> <span class="n">Red</span>
+<span class="n">ON_GREEN</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">42</span><span class="n">m</span><span class="err">&#39;</span>       <span class="err">#</span> <span class="n">Green</span>
+<span class="n">ON_YELLOW</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">43</span><span class="n">m</span><span class="err">&#39;</span>      <span class="err">#</span> <span class="n">Yellow</span>
+<span class="n">ON_BLUE</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">44</span><span class="n">m</span><span class="err">&#39;</span>        <span class="err">#</span> <span class="n">Blue</span>
+<span class="n">ON_PURPLE</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">45</span><span class="n">m</span><span class="err">&#39;</span>      <span class="err">#</span> <span class="n">Purple</span>
+<span class="n">ON_CYAN</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">46</span><span class="n">m</span><span class="err">&#39;</span>        <span class="err">#</span> <span class="n">Cyan</span>
+<span class="n">ON_WHITE</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="mi">47</span><span class="n">m</span><span class="err">&#39;</span>       <span class="err">#</span> <span class="n">White</span>
+
+<span class="cp"># Reset Color</span>
+<span class="n">COLOR_NC</span><span class="o">=</span><span class="err">&#39;\</span><span class="n">e</span><span class="p">[</span><span class="n">m</span><span class="err">&#39;</span>
+<span class="cp"># Color Configuration</span>
+<span class="n">FATAL_COLOR</span><span class="o">=</span><span class="s">&quot;${BWHITE}${ON_RED}&quot;</span>
+<span class="n">WARNING_COLOR</span><span class="o">=</span><span class="s">&quot;${BWHITE}${ON_YELLOW}&quot;</span>
+<span class="n">NOTICE_COLOR</span><span class="o">=</span><span class="s">&quot;${BWHITE}${ON_GREEN}&quot;</span>
+
+<span class="cp"># return code list</span>
+<span class="n">RET_RUNNING_OK</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">RET_RUNNING_FAIL</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">RET_PARAMS_ERROR</span><span class="o">=</span><span class="mi">2</span>
+
+
+<span class="cp"># ====================== global definitions ===================== #</span>
+
+<span class="cp"># ======================= global exports ======================== #</span>
+<span class="cp"># PATH</span>
+<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="s">&quot;$PATH:$HOME/.jumbo/bin/&quot;</span>
+<span class="cp"># PS1 commander setting; [useful]</span>
+<span class="n">export</span> <span class="n">PS1</span><span class="o">=</span><span class="s">&quot;[\[\e[36;1m\]\u@\H\[\e[32;1m\]:\w\[\e[0m\]]</span><span class="se">\n</span><span class="s">\[\e[32;1m\]\$\[\e[0m\]&quot;</span>
+<span class="cp"># python encoding; [useful]</span>
+<span class="n">export</span> <span class="n">PYTHONIOENCODING</span><span class="o">=</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span>
+<span class="cp"># terminal term; [default]</span>
+<span class="n">export</span> <span class="n">TERM</span><span class="o">=</span><span class="s">&quot;xterm&quot;</span>
+<span class="cp"># ======================= global exports ======================== #</span>
+
+<span class="cp"># ======================== global alias ========================== #</span>
+<span class="cp"># astyle (c/c++ formatter) [in baidu];</span>
+<span class="n">alias</span> <span class="n">astyle</span><span class="o">=</span><span class="s">&quot;astyle --style=attach --convert-tabs --indent=spaces=4 --add-brackets \</span>
+<span class="s">--pad-header --unpad-paren --pad-oper --max-code-length=100 --formatted --align-pointer=type \</span>
+<span class="s">--align-reference=type --break-blocks -Y&quot;</span>
+<span class="n">alias</span> <span class="n">lt</span><span class="o">=</span><span class="s">&quot;ls --color=auto -ltr&quot;</span>
+<span class="n">alias</span> <span class="n">ls</span><span class="o">=</span><span class="s">&quot;ls --color=auto&quot;</span>
+<span class="n">alias</span> <span class="n">grep</span><span class="o">=</span><span class="s">&quot;grep --color=auto&quot;</span>
+<span class="n">alias</span> <span class="n">cp</span><span class="o">=</span><span class="s">&quot;cp -r&quot;</span>
+<span class="cp"># for keyboard-dependent</span>
+<span class="n">alias</span> <span class="n">moer</span><span class="o">=</span><span class="s">&quot;more&quot;</span>
+<span class="n">alias</span> <span class="n">gerp</span><span class="o">=</span><span class="s">&quot;grep&quot;</span>
+<span class="n">alias</span> <span class="n">remove</span><span class="o">=</span><span class="s">&quot;rm&quot;</span>
+<span class="cp"># ======================== global alias ========================== #</span>
+
+<span class="cp"># ====================== global functions ======================== #</span>
+
+<span class="cp">##! @brief : print the fatal log</span>
+<span class="cp">##! @params: $@ =&gt; msg</span>
+<span class="cp">##! @return: see return code list</span>
+<span class="n">function</span> <span class="n">log_fatal</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;${FATAL_COLOR}$@${COLOR_NC}&quot;</span>
+    <span class="k">return</span> <span class="err">$</span><span class="p">{</span><span class="n">RET_RUNNING_OK</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cp">##! @brief : print the warning log</span>
+<span class="cp">##! @params: $@ =&gt; msg</span>
+<span class="cp">##! @return: see return code list</span>
+<span class="n">function</span> <span class="n">log_warning</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;${WARNING_COLOR}$@${COLOR_NC}&quot;</span>
+    <span class="k">return</span> <span class="err">$</span><span class="p">{</span><span class="n">RET_RUNNING_OK</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cp">##! @brief : print the notice log</span>
+<span class="cp">##! @params: $@ =&gt; msg</span>
+<span class="cp">##! @return: see return code list</span>
+<span class="n">function</span> <span class="n">log_notice</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;${NOTICE_COLOR}$@${COLOR_NC}&quot;</span>
+    <span class="k">return</span> <span class="err">$</span><span class="p">{</span><span class="n">RET_RUNNING_OK</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cp">##! @brief : swap two file</span>
+<span class="cp">##! @params: $1 =&gt; 1st file; $2 =&gt; 2nd file;</span>
+<span class="cp">##! @return: see return code list</span>
+<span class="n">function</span> <span class="n">swap</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">[</span> <span class="err">$#</span> <span class="o">-</span><span class="n">ne</span> <span class="mi">2</span> <span class="p">];</span> <span class="n">then</span>
+        <span class="n">log_fatal</span> <span class="s">&quot;please input two files to swap!&quot;</span>
+        <span class="k">return</span> <span class="err">$</span><span class="p">{</span><span class="n">RET_PARAMS_ERROR</span><span class="p">}</span>
+    <span class="n">fi</span>
+    <span class="n">local</span> <span class="n">first_file</span><span class="o">=</span><span class="err">$</span><span class="mi">1</span>
+    <span class="n">local</span> <span class="n">second_file</span><span class="o">=</span><span class="err">$</span><span class="mi">2</span>
+    <span class="k">if</span> <span class="p">[[</span> <span class="o">!</span> <span class="o">-</span><span class="n">e</span> <span class="err">$</span><span class="p">{</span><span class="n">first_file</span><span class="p">}</span> <span class="p">]]</span> <span class="o">||</span> <span class="p">[[</span> <span class="o">!</span> <span class="o">-</span><span class="n">e</span> <span class="err">$</span><span class="p">{</span><span class="n">second_file</span><span class="p">}</span> <span class="p">]];</span> <span class="n">then</span>
+        <span class="n">log_fatal</span> <span class="s">&quot;file(1 or 2) not exits!&quot;</span>
+        <span class="k">return</span> <span class="err">$</span><span class="p">{</span><span class="n">RET_RUNNING_FAIL</span><span class="p">}</span>
+    <span class="n">fi</span>
+    <span class="n">local</span> <span class="n">tmp_file</span><span class="o">=</span><span class="n">__sys</span><span class="p">.</span><span class="n">tmp</span><span class="p">.</span><span class="err">$$</span>
+    <span class="n">mv</span> <span class="err">$</span><span class="p">{</span><span class="n">first_file</span><span class="p">}</span> <span class="err">$</span><span class="p">{</span><span class="n">tmp_file</span><span class="p">}</span>
+    <span class="n">mv</span> <span class="err">$</span><span class="p">{</span><span class="n">second_file</span><span class="p">}</span> <span class="err">$</span><span class="p">{</span><span class="n">first_file</span><span class="p">}</span>
+    <span class="n">mv</span> <span class="err">$</span><span class="p">{</span><span class="n">tmp_file</span><span class="p">}</span> <span class="err">$</span><span class="p">{</span><span class="n">second_file</span><span class="p">}</span>
+    <span class="k">return</span> <span class="err">$</span><span class="p">{</span><span class="n">RET_RUNNING_OK</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cp">##! @brief : show the file&#39;s ftp address</span>
+<span class="cp">##! @params: $1 =&gt; file</span>
+<span class="cp">##! @return: see return code list</span>
+<span class="n">function</span> <span class="n">gen_ftp</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">[</span> <span class="err">$#</span> <span class="o">-</span><span class="n">ne</span> <span class="mi">1</span> <span class="p">];</span> <span class="n">then</span>
+        <span class="n">log_fatal</span> <span class="s">&quot;please input only one file!&quot;</span>
+        <span class="k">return</span> <span class="err">$</span><span class="p">{</span><span class="n">RET_PARAMS_ERROR</span><span class="p">}</span>
+    <span class="n">fi</span>
+    <span class="n">local</span> <span class="n">input_file</span><span class="o">=</span><span class="err">$</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="p">[</span> <span class="o">!</span> <span class="o">-</span><span class="n">e</span> <span class="err">$</span><span class="p">{</span><span class="n">input_file</span><span class="p">}</span> <span class="p">];</span> <span class="n">then</span>
+        <span class="n">log_fatal</span> <span class="s">&quot;file not exists!&quot;</span>
+        <span class="k">return</span> <span class="err">$</span><span class="p">{</span><span class="n">RET_RUNNING_FAIL</span><span class="p">}</span>
+    <span class="n">fi</span>
+    <span class="n">echo</span> <span class="s">&quot;ftp://$HOSTNAME`readlink -f ${input_file}`&quot;</span>
+    <span class="k">return</span> <span class="err">$</span><span class="p">{</span><span class="n">RET_RUNNING_OK</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cp">##! @brief : parse json data</span>
+<span class="cp">##! @params: [$1] =&gt; param1,param2</span>
+<span class="cp">##! @return: see the return code list</span>
+<span class="cp">##! @stdin : json_data and every line has a json_data</span>
+<span class="cp">##! @stdout: json_ans_data</span>
+<span class="n">function</span> <span class="n">parse_json_py</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">local</span> <span class="n">parse_param</span><span class="o">=</span><span class="s">&quot;&quot;</span>
+    <span class="k">if</span> <span class="p">[</span> <span class="err">$#</span> <span class="o">-</span><span class="n">eq</span> <span class="mi">1</span> <span class="p">];</span> <span class="n">then</span>
+        <span class="n">parse_param</span><span class="o">=</span><span class="err">$</span><span class="mi">1</span>
+    <span class="k">else</span>
+        <span class="n">log_fatal</span> <span class="s">&quot;Must input params that you want to parse!&quot;</span>
+        <span class="k">return</span> <span class="err">$</span><span class="p">{</span><span class="n">RET_PARAMS_ERROR</span><span class="p">}</span>
+    <span class="n">fi</span>
+    <span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="err">&#39;</span><span class="n">import</span> <span class="n">sys</span><span class="p">;</span> <span class="n">import</span> <span class="n">json</span><span class="p">;</span> \
+    <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">loads</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">stdin</span><span class="p">.</span><span class="n">read</span><span class="p">());</span> \
+    <span class="n">print</span> <span class="n">j</span><span class="p">[</span><span class="s">&quot;&#39;${parse_param}&#39;&quot;</span><span class="p">]</span><span class="err">&#39;</span>
+    <span class="k">return</span> <span class="err">$</span><span class="p">{</span><span class="n">RET_RUNNING_OK</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cp">##! @brief : rm the file to trash</span>
+<span class="cp">##! @params: $@ =&gt; files</span>
+<span class="cp">##! @return: see return code list</span>
+<span class="n">function</span> <span class="n">rm</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">[</span> <span class="err">$#</span> <span class="o">-</span><span class="n">eq</span> <span class="mi">0</span> <span class="p">];</span> <span class="n">then</span>
+        <span class="n">log_warning</span> <span class="s">&quot;must input files to rm&quot;</span>
+        <span class="k">return</span> <span class="err">$</span><span class="p">{</span><span class="n">RET_PARAMS_ERROR</span><span class="p">}</span>
+    <span class="n">fi</span>
+    <span class="k">for</span> <span class="n">_file</span> <span class="k">in</span> <span class="err">$</span><span class="p">@;</span> <span class="k">do</span>
+        <span class="k">if</span> <span class="p">[</span> <span class="o">!</span> <span class="o">-</span><span class="n">e</span> <span class="err">$</span><span class="p">{</span><span class="n">_file</span><span class="p">}</span> <span class="p">];</span> <span class="n">then</span>
+            <span class="n">log_notice</span> <span class="s">&quot;${_file}: not exists!&quot;</span>
+            <span class="k">continue</span>
+        <span class="n">fi</span>
+        <span class="n">mv</span> <span class="err">$</span><span class="p">{</span><span class="n">_file</span><span class="p">}</span> <span class="err">$</span><span class="p">{</span><span class="n">TRASH_DIR</span><span class="p">}</span>
+    <span class="n">done</span>
+<span class="p">}</span>
+
+<span class="cp"># ====================== global functions ======================== #</span>
+</pre></div>
             
             <section>
 <div class="accordion" id="accordion2">

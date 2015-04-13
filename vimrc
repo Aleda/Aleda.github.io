@@ -74,6 +74,8 @@ set termencoding=utf-8
 " public auto indent
 set cino=g0
 set nocp
+" @NOTICE: 防止vi和vim不兼容,导致退格不能用
+set backspace=indent,eol,start
 " 防止在vim方式下，鼠标选中默认成virtual
 if has('mouse')
     set mouse=

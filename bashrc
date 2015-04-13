@@ -218,9 +218,10 @@ function rm()
 ##! @brief : reload bashrc
 ##! @params: NULL
 ##! @return: see return code list
+##! @test  :
 function reload()
 {
-    curl "${CLOUD_BASHRC}" > ${WORK_ROOT}/.bashrc
+    wget -q -T 60 "${CLOUD_BASHRC}" -O ${WORK_ROOT}/.bashrc
     source ${WORK_ROOT}/.bashrc
     log_notice "reload successful!"
     return ${RET_RUNNING_OK}
@@ -229,11 +230,22 @@ function reload()
 ##! @brief : load newly vimrc
 ##! @params: NULL
 ##! @return: see return code list
+##! @test  : 
 function load_vimrc()
 {
-    log_notice "Stay tuned"
+    ##! @NOTICE: test the version of vim
+    local version_vim=`vim --version | head -n 1 | awk '{print $5}' | awk -F '.' '{print $1}'`
+    if [ ${version_vim} -le 6 ]; then
+        log_warning "vim version smaller than 6"
+    fi
+    wget -q -T 60 ${CLOUD_VIMRC} -O ${WORK_ROOT}/.vimrc
+    local ret_msg=`type git`
+    if [ ${ret_msg} ~= "not" ]; then
+        log_notice "git not exists!"
+        return ${RET_RUNNING_FAIL}
+    fi
+    git clone https://github.com/gmarik/Vundle.vim.git ${WORK_ROOT}/.vim/bundle/Vundle.vim
     return ${RET_RUNNING_OK}
 }
 
 # ====================== global functions ======================== #
-

@@ -27,6 +27,8 @@ TRASH_DIR="${WORK_ROOT}/trash"
 CLOUD_BASHRC="http://aleda.cn/bashrc"
 # newly VIMRC in the cloud
 CLOUD_VIMRC="http://aleda.cn/vimrc"
+# newly MAKEFILE in the clod
+CLOUD_MAKEFILE="http://aleda.cn/makefile"
 
 # use jumbo's bashrc [in baidu];
 [[ -s "/home/users/lishuo02/.jumbo/etc/bashrc" ]] && source "/home/users/lishuo02/.jumbo/etc/bashrc"
@@ -103,7 +105,6 @@ alias cp="cp -r"
 # for keyboard-dependent
 alias moer="more"
 alias gerp="grep"
-alias remove="rm"
 # vi
 alias vi="vim -u ${WORK_ROOT}/.vimrc"
 # ======================== global alias ========================== #
@@ -200,7 +201,7 @@ function parse_json_py()
 ##! @brief : rm the file to trash
 ##! @params: $@ => files
 ##! @return: see return code list
-function rm()
+function remove()
 {
     if [ $# -eq 0 ]; then
         log_warning "must input files to rm"
@@ -230,7 +231,7 @@ function reload()
 ##! @brief : load newly vimrc
 ##! @params: NULL
 ##! @return: see return code list
-##! @test  : 
+##! @test  : pass
 function load_vimrc()
 {
     ##! @NOTICE: test the version of vim
@@ -247,5 +248,18 @@ function load_vimrc()
     git clone https://github.com/gmarik/Vundle.vim.git ${WORK_ROOT}/.vim/bundle/Vundle.vim
     return ${RET_RUNNING_OK}
 }
+
+##! @brief : generate the makefiel
+##! @params: NULL
+##! @return: see return code list
+##! @test  : 
+function gen_mk()
+{
+    cp ./Makefile ./Makefile.orig
+    wget -q -T 60 ${CLOUD_MAKEFILE} -O ./Makefile
+    return ${RET_RUNNING_OK}
+}
+
+
 
 # ====================== global functions ======================== #

@@ -31,7 +31,7 @@ CLOUD_VIMRC="http://aleda.cn/vimrc"
 CLOUD_MAKEFILE="http://aleda.cn/makefile"
 
 # use jumbo's bashrc [in baidu];
-[[ -s "/home/users/lishuo02/.jumbo/etc/bashrc" ]] && source "/home/users/lishuo02/.jumbo/etc/bashrc"
+[[ -s "$HOME/.jumbo/etc/bashrc" ]] && source "$HOME/.jumbo/etc/bashrc"
 
 # astyle path (c/c++ formmater) [in baidu];
 ARTISTIC_STYLE_OPTIONS=~/.astylerc
@@ -245,7 +245,9 @@ function load_vimrc()
         log_notice "git not exists!"
         return ${RET_RUNNING_FAIL}
     fi
-    git clone https://github.com/gmarik/Vundle.vim.git ${WORK_ROOT}/.vim/bundle/Vundle.vim
+    # Modified by Aleda at 2015-7-6 16:56 
+    # Because Vundle need run in the ~/.vim
+    git clone https://github.com/gmarik/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
     return ${RET_RUNNING_OK}
 }
 
@@ -260,6 +262,25 @@ function gen_mk()
     return ${RET_RUNNING_OK}
 }
 
+##! @brief : kill all the sessions of screen
+##! @params: NULL
+##! @return: see return code list
+function screen_kill_all()
+{
+    screen -ls | grep "Detached" | cut -d "." -f 1 | sed "s/^[ \t]*//g" | xargs kill -9
+    ##! remove all the sessions
+    screen -wipe
+    return ${RET_RUNNING_OK}
+}
+
+##! @brief : show all eths config
+##! @params: NULL
+##! @return: see return code list
+function ip_config()
+{
+    cat /etc/sysconfig/network-scripts/ifcfg-eth*
+    return ${RET_RUNNING_OK}
+}
 
 
 # ====================== global functions ======================== #

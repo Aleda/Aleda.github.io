@@ -91,6 +91,8 @@ export PS1="[\[\e[36;1m\]\u@\H\[\e[32;1m\]:\w\[\e[0m\]]\n\[\e[32;1m\]\$\[\e[0m\]
 export PYTHONIOENCODING=utf-8
 # terminal term; [default]
 export TERM="xterm"
+# modified the language env
+export LANG="en_US.utf-8"
 # ======================= global exports ======================== #
 
 # ======================== global alias ========================== #

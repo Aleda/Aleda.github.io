@@ -71,16 +71,28 @@
             <h1>leveldb</h1>
 <h2><strong>Table of Contents</strong></h2>
 <ul>
-<li>1 leveldb    <ul>
-<li>1.1 Introduction    </li>
-<li>1.2 etc    </li>
+<li><a href="#1"><strong>1 leveldb</strong></a>    <ul>
+<li><a href="#1.1"><strong>1.1 Introduction</strong></a>    </li>
+<li><a href="#1.2"><strong>1.2 Feature</strong></a>   </li>
+<li><a href="#1.3"><strong>1.3 Code Analysis</strong></a><ul>
+<li><a href="#1.3.1"><strong>1.3.1 Interface</strong></a><ul>
+<li><a href="#1.3.1.1"><strong>1.3.1.1 Cache.h</strong></a></li>
+<li><a href="#1.3.1.2"><strong>1.3.1.2 Slice.h</strong></a></li>
+<li><a href="#1.3.1.3"><strong>1.3.1.3 Iterator.h</strong></a>  </li>
+<li><a href="#1.3.1.4"><strong>1.3.1.4 Table.h</strong></a></li>
+<li><a href="#1.3.1.5"><strong>1.3.1.5 Status.h</strong></a></li>
+</ul>
+</li>
+<li><a href="#1.3.2"><strong>1.3.2 memtable</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 <h2><strong>1 leveldb</strong></h2>
 <p>leveldb是一个开源kv存储系统，是google大神jeff的作品。  <br />
 <a href="http://code.google.com/p/leveldb/">http://code.google.com/p/leveldb/</a>    </p>
-<h3><strong>1.1 Introduction</strong></h3>
+<h3><strong>1.1 Introduction</strong><span id="1.1"></span></h3>
 <p>相关资源：    </p>
 <ul>
 <li>dirlt.com.牛人的blog. <a href="http://dirlt.com/leveldb.html">http://dirlt.com/leveldb.html</a>    </li>
@@ -94,9 +106,490 @@
 <li>include // Interface    </li>
 <li>port // 操作系统相关的移植接口    </li>
 <li>table // 表存储结构    </li>
-<li>util // 公用部分.    </li>
+<li>util // 公用部分.   </li>
 </ul>
-<p>note(MUST): 最近一直很忙，有空一定要把这个代码看一看，对自己的能力提升会很大的!    </p>
+<p>LevelDb有如下一些特点：<br />
+首先，LevelDb是一个持久化存储的KV系统，和Redis这种内存型的KV系统不同，LevelDb不会像Redis一样狂吃内存，而是将大部分数据存储到磁盘上。 <br />
+其次，LevleDb在存储数据时，是根据记录的key值有序存储的，就是说相邻的key值在存储文件中是依次顺序存储的，而应用可以自定义key大小比较函数，LevleDb会按照用户定义的比较函数依序存储这些记录。 <br />
+再次，像大多数KV系统一样，LevelDb的操作接口很简单，基本操作包括写记录，读记录以及删除记录。也支持针对多条操作的原子批量操作。
+另外，LevelDb支持数据快照（snapshot）功能，使得读取操作不受写操作影响，可以在读操作过程中始终看到一致的数据。 <br />
+除此外，LevelDb还支持数据压缩等操作，这对于减小存储空间以及增快IO效率都有直接的帮助。 <br />
+LevelDb性能非常突出，官方网站报道其随机写性能达到40万条记录每秒，而随机读性能达到6万条记录每秒。总体来说，LevelDb的写操作要大大快于读操作，而顺序读写操作则大大快于随机读写操作。  </p>
+<h3><strong>1.2 Feature</strong><span id="1.2"></span></h3>
+<p>这个，我一直觉得应该是自己把所有的code都看完之后再进行总结的。一直是待定的状态，但是自己无意间看到了一篇总结不错的文章，但自己没来得及写下自己的心得，希望自己看完code能有机会再次百读，写下summary。 <br />
+文章在：<a href="http://www.cnblogs.com/haippy/archive/2011/12/04/2276064.html">http://www.cnblogs.com/haippy/archive/2011/12/04/2276064.html</a></p>
+<h3><strong>1.3 Code Analysis</strong><span id="1.3"></span></h3>
+<h4><strong>1.3.1 Interface</strong><span id="1.3.1"></span></h4>
+<p>leveldb提供给我们的头文件：   </p>
+<ul>
+<li>cache.h // kv内存cache接口   </li>
+<li>c.h // leveldb C接口    </li>
+<li>comparator.h // Slice的比较接口    </li>
+<li>db.h // db对象接口    </li>
+<li>env.h // 和环境相关的接口   </li>
+<li>filter_policy.h // 过滤策略相关的接口    </li>
+<li>iterator.h // 遍历接口    </li>
+<li>options.h // db操作的选项对象    </li>
+<li>slice.h // db操作的key对象(Slice)    </li>
+<li>status.h // db操作返回状态的对象   </li>
+<li>table_builder.h // 构建table   </li>
+<li>table.h // immutable persistent sortedtable.   </li>
+<li>write_batch.h // 批量(原子)写入对象   </li>
+</ul>
+<h5><strong>1.3.1.1 Cache.h</strong><span id="1.3.1.1"></span></h5>
+<p>cache.h是处理kv映射的接口文件，主要接口含有：   </p>
+<ul>
+<li>Insert // 插入key，value，返回handle</li>
+<li>Lookup // 查询key，返回handle</li>
+<li>Release // 释放handle的内存</li>
+<li>Value // 返回handle指向的Value</li>
+<li>NewId // 创建一个id，可以在不同用户之间共享使用。</li>
+</ul>
+<p>Cache的默认调度是LRU，当然你可以实现Cache的接口更改对应的调度方法来适应你自己的应用。 <br />
+其实，这里的注释非常的清晰，看注释都可以明白的。</p>
+<div class="highlight"><pre><span class="kr">class</span> <span class="nx">Cache</span> <span class="p">{</span>
+ <span class="kr">public</span><span class="o">:</span>
+  <span class="nx">Cache</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+
+  <span class="c1">// Destroys all existing entries by calling the &quot;deleter&quot;</span>
+  <span class="c1">// function that was passed to the constructor.</span>
+  <span class="nx">virtual</span> <span class="o">~</span><span class="nx">Cache</span><span class="p">();</span>
+
+  <span class="c1">// Opaque handle to an entry stored in the cache.</span>
+  <span class="nx">struct</span> <span class="nx">Handle</span> <span class="p">{</span> <span class="p">};</span>
+
+  <span class="c1">// Insert a mapping from key-&gt;value into the cache and assign it</span>
+  <span class="c1">// the specified charge against the total cache capacity.</span>
+  <span class="c1">//</span>
+  <span class="c1">// Returns a handle that corresponds to the mapping.  The caller</span>
+  <span class="c1">// must call this-&gt;Release(handle) when the returned mapping is no</span>
+  <span class="c1">// longer needed.</span>
+  <span class="c1">//</span>
+  <span class="c1">// When the inserted entry is no longer needed, the key and</span>
+  <span class="c1">// value will be passed to &quot;deleter&quot;.</span>
+  <span class="nx">virtual</span> <span class="nx">Handle</span><span class="o">*</span> <span class="nx">Insert</span><span class="p">(</span><span class="kr">const</span> <span class="nx">Slice</span><span class="o">&amp;</span> <span class="nx">key</span><span class="p">,</span> <span class="k">void</span><span class="o">*</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">size_t</span> <span class="nx">charge</span><span class="p">,</span>
+                         <span class="k">void</span> <span class="p">(</span><span class="o">*</span><span class="nx">deleter</span><span class="p">)(</span><span class="kr">const</span> <span class="nx">Slice</span><span class="o">&amp;</span> <span class="nx">key</span><span class="p">,</span> <span class="k">void</span><span class="o">*</span> <span class="nx">value</span><span class="p">))</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// If the cache has no mapping for &quot;key&quot;, returns NULL.</span>
+  <span class="c1">//</span>
+  <span class="c1">// Else return a handle that corresponds to the mapping.  The caller</span>
+  <span class="c1">// must call this-&gt;Release(handle) when the returned mapping is no</span>
+  <span class="c1">// longer needed.</span>
+  <span class="nx">virtual</span> <span class="nx">Handle</span><span class="o">*</span> <span class="nx">Lookup</span><span class="p">(</span><span class="kr">const</span> <span class="nx">Slice</span><span class="o">&amp;</span> <span class="nx">key</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// Release a mapping returned by a previous Lookup().</span>
+  <span class="c1">// REQUIRES: handle must not have been released yet.</span>
+  <span class="c1">// REQUIRES: handle must have been returned by a method on *this.</span>
+  <span class="nx">virtual</span> <span class="k">void</span> <span class="nx">Release</span><span class="p">(</span><span class="nx">Handle</span><span class="o">*</span> <span class="nx">handle</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// Return the value encapsulated in a handle returned by a</span>
+  <span class="c1">// successful Lookup().</span>
+  <span class="c1">// REQUIRES: handle must not have been released yet.</span>
+  <span class="c1">// REQUIRES: handle must have been returned by a method on *this.</span>
+  <span class="nx">virtual</span> <span class="k">void</span><span class="o">*</span> <span class="nx">Value</span><span class="p">(</span><span class="nx">Handle</span><span class="o">*</span> <span class="nx">handle</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// If the cache contains entry for key, erase it.  Note that the</span>
+  <span class="c1">// underlying entry will be kept around until all existing handles</span>
+  <span class="c1">// to it have been released.</span>
+  <span class="nx">virtual</span> <span class="k">void</span> <span class="nx">Erase</span><span class="p">(</span><span class="kr">const</span> <span class="nx">Slice</span><span class="o">&amp;</span> <span class="nx">key</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// Return a new numeric id.  May be used by multiple clients who are</span>
+  <span class="c1">// sharing the same cache to partition the key space.  Typically the</span>
+  <span class="c1">// client will allocate a new id at startup and prepend the id to</span>
+  <span class="c1">// its cache keys.</span>
+  <span class="nx">virtual</span> <span class="nx">uint64_t</span> <span class="nx">NewId</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+ <span class="kr">private</span><span class="o">:</span>
+  <span class="k">void</span> <span class="nx">LRU_Remove</span><span class="p">(</span><span class="nx">Handle</span><span class="o">*</span> <span class="nx">e</span><span class="p">);</span>
+  <span class="k">void</span> <span class="nx">LRU_Append</span><span class="p">(</span><span class="nx">Handle</span><span class="o">*</span> <span class="nx">e</span><span class="p">);</span>
+  <span class="k">void</span> <span class="nx">Unref</span><span class="p">(</span><span class="nx">Handle</span><span class="o">*</span> <span class="nx">e</span><span class="p">);</span>
+
+  <span class="nx">struct</span> <span class="nx">Rep</span><span class="p">;</span>
+  <span class="nx">Rep</span><span class="o">*</span> <span class="nx">rep_</span><span class="p">;</span>
+
+  <span class="c1">// No copying allowed</span>
+  <span class="nx">Cache</span><span class="p">(</span><span class="kr">const</span> <span class="nx">Cache</span><span class="o">&amp;</span><span class="p">);</span>
+  <span class="k">void</span> <span class="nx">operator</span><span class="o">=</span><span class="p">(</span><span class="kr">const</span> <span class="nx">Cache</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<h5><strong>1.3.1.2 Slice.h</strong><span id="1.3.1.2"></span></h5>
+<p>Slice是leveldb最基础的数据结构，是用来做db的key使用的，代码也比较简单。  <br />
+一目了然，leveldb中是用char类型来代替int类型的key。</p>
+<div class="highlight"><pre><span class="nt">namespace</span> <span class="nt">leveldb</span> <span class="p">{</span>
+
+<span class="n">class</span> <span class="n">Slice</span> <span class="err">{</span>
+ <span class="n">public</span><span class="o">:</span>
+  <span class="o">//</span> <span class="n">Create</span> <span class="n">an</span> <span class="n">empty</span> <span class="n">slice</span><span class="o">.</span>
+  <span class="n">Slice</span><span class="p">()</span> <span class="o">:</span> <span class="n">data_</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">,</span> <span class="n">size_</span><span class="p">(</span><span class="m">0</span><span class="p">)</span> <span class="err">{</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Create</span> <span class="nt">a</span> <span class="nt">slice</span> <span class="nt">that</span> <span class="nt">refers</span> <span class="nt">to</span> <span class="nt">d</span><span class="cp">[</span><span class="mi">0</span><span class="p">,</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="cp">]</span><span class="o">.</span>
+  <span class="nt">Slice</span><span class="o">(</span><span class="nt">const</span> <span class="nt">char</span><span class="o">*</span> <span class="nt">d</span><span class="o">,</span> <span class="nt">size_t</span> <span class="nt">n</span><span class="o">)</span> <span class="o">:</span> <span class="nt">data_</span><span class="o">(</span><span class="nt">d</span><span class="o">),</span> <span class="nt">size_</span><span class="o">(</span><span class="nt">n</span><span class="o">)</span> <span class="p">{</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Create</span> <span class="nt">a</span> <span class="nt">slice</span> <span class="nt">that</span> <span class="nt">refers</span> <span class="nt">to</span> <span class="nt">the</span> <span class="nt">contents</span> <span class="nt">of</span> <span class="s2">&quot;s&quot;</span>
+  <span class="nt">Slice</span><span class="o">(</span><span class="nt">const</span> <span class="nt">std</span><span class="o">:</span><span class="nd">:string</span><span class="o">&amp;</span> <span class="nt">s</span><span class="o">)</span> <span class="o">:</span> <span class="nt">data_</span><span class="o">(</span><span class="nt">s</span><span class="nc">.data</span><span class="o">()),</span> <span class="nt">size_</span><span class="o">(</span><span class="nt">s</span><span class="nc">.size</span><span class="o">())</span> <span class="p">{</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Create</span> <span class="nt">a</span> <span class="nt">slice</span> <span class="nt">that</span> <span class="nt">refers</span> <span class="nt">to</span> <span class="nt">s</span><span class="cp">[</span><span class="mi">0</span><span class="p">,</span><span class="nx">strlen</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="cp">]</span>
+  <span class="nt">Slice</span><span class="o">(</span><span class="nt">const</span> <span class="nt">char</span><span class="o">*</span> <span class="nt">s</span><span class="o">)</span> <span class="o">:</span> <span class="nt">data_</span><span class="o">(</span><span class="nt">s</span><span class="o">),</span> <span class="nt">size_</span><span class="o">(</span><span class="nt">strlen</span><span class="o">(</span><span class="nt">s</span><span class="o">))</span> <span class="p">{</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Return</span> <span class="nt">a</span> <span class="nt">pointer</span> <span class="nt">to</span> <span class="nt">the</span> <span class="nt">beginning</span> <span class="nt">of</span> <span class="nt">the</span> <span class="nt">referenced</span> <span class="nt">data</span>
+  <span class="nt">const</span> <span class="nt">char</span><span class="o">*</span> <span class="nt">data</span><span class="o">()</span> <span class="nt">const</span> <span class="p">{</span> <span class="n">return</span> <span class="n">data_</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Return</span> <span class="nt">the</span> <span class="nt">length</span> <span class="o">(</span><span class="nt">in</span> <span class="nt">bytes</span><span class="o">)</span> <span class="nt">of</span> <span class="nt">the</span> <span class="nt">referenced</span> <span class="nt">data</span>
+  <span class="nt">size_t</span> <span class="nt">size</span><span class="o">()</span> <span class="nt">const</span> <span class="p">{</span> <span class="n">return</span> <span class="n">size_</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Return</span> <span class="nt">true</span> <span class="nt">if</span> <span class="nt">the</span> <span class="nt">length</span> <span class="nt">of</span> <span class="nt">the</span> <span class="nt">referenced</span> <span class="nt">data</span> <span class="nt">is</span> <span class="nt">zero</span>
+  <span class="nt">bool</span> <span class="nt">empty</span><span class="o">()</span> <span class="nt">const</span> <span class="p">{</span> <span class="n">return</span> <span class="n">size_</span> <span class="o">==</span> <span class="m">0</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Return</span> <span class="nt">the</span> <span class="nt">ith</span> <span class="nt">byte</span> <span class="nt">in</span> <span class="nt">the</span> <span class="nt">referenced</span> <span class="nt">data</span><span class="o">.</span>
+  <span class="o">//</span> <span class="nt">REQUIRES</span><span class="o">:</span> <span class="nt">n</span> <span class="o">&lt;</span> <span class="nt">size</span><span class="o">()</span>
+  <span class="nt">char</span> <span class="nt">operator</span><span class="cp">[]</span><span class="o">(</span><span class="nt">size_t</span> <span class="nt">n</span><span class="o">)</span> <span class="nt">const</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="k">size</span><span class="p">());</span>
+    <span class="n">return</span> <span class="n">data_</span><span class="cp">[</span><span class="nx">n</span><span class="cp">]</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Change</span> <span class="nt">this</span> <span class="nt">slice</span> <span class="nt">to</span> <span class="nt">refer</span> <span class="nt">to</span> <span class="nt">an</span> <span class="nt">empty</span> <span class="nt">array</span>
+  <span class="nt">void</span> <span class="nt">clear</span><span class="o">()</span> <span class="p">{</span> <span class="n">data_</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span> <span class="n">size_</span> <span class="o">=</span> <span class="m">0</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Drop</span> <span class="nt">the</span> <span class="nt">first</span> <span class="s2">&quot;n&quot;</span> <span class="nt">bytes</span> <span class="nt">from</span> <span class="nt">this</span> <span class="nt">slice</span><span class="o">.</span>
+  <span class="nt">void</span> <span class="nt">remove_prefix</span><span class="o">(</span><span class="nt">size_t</span> <span class="nt">n</span><span class="o">)</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">n</span> <span class="o">&lt;=</span> <span class="k">size</span><span class="p">());</span>
+    <span class="n">data_</span> <span class="o">+=</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">size_</span> <span class="o">-=</span> <span class="n">n</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Return</span> <span class="nt">a</span> <span class="nt">string</span> <span class="nt">that</span> <span class="nt">contains</span> <span class="nt">the</span> <span class="nt">copy</span> <span class="nt">of</span> <span class="nt">the</span> <span class="nt">referenced</span> <span class="nt">data</span><span class="o">.</span>
+  <span class="nt">std</span><span class="o">:</span><span class="nd">:string</span> <span class="nt">ToString</span><span class="o">()</span> <span class="nt">const</span> <span class="p">{</span> <span class="n">return</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">data_</span><span class="o">,</span> <span class="n">size_</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Three-way</span> <span class="nt">comparison</span><span class="o">.</span>  <span class="nt">Returns</span> <span class="nt">value</span><span class="o">:</span>
+  <span class="o">//</span>   <span class="o">&lt;</span>  <span class="nt">0</span> <span class="nt">iff</span> <span class="s2">&quot;*this&quot;</span> <span class="o">&lt;</span>  <span class="s2">&quot;b&quot;</span><span class="o">,</span>
+  <span class="o">//</span>   <span class="o">==</span> <span class="nt">0</span> <span class="nt">iff</span> <span class="s2">&quot;*this&quot;</span> <span class="o">==</span> <span class="s2">&quot;b&quot;</span><span class="o">,</span>
+  <span class="o">//</span>   <span class="o">&gt;</span>  <span class="nt">0</span> <span class="nt">iff</span> <span class="s2">&quot;*this&quot;</span> <span class="o">&gt;</span>  <span class="s2">&quot;b&quot;</span>
+  <span class="nt">int</span> <span class="nt">compare</span><span class="o">(</span><span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">b</span><span class="o">)</span> <span class="nt">const</span><span class="o">;</span>
+
+  <span class="o">//</span> <span class="nt">Return</span> <span class="nt">true</span> <span class="nt">iff</span> <span class="s2">&quot;x&quot;</span> <span class="nt">is</span> <span class="nt">a</span> <span class="nt">prefix</span> <span class="nt">of</span> <span class="s2">&quot;*this&quot;</span>
+  <span class="nt">bool</span> <span class="nt">starts_with</span><span class="o">(</span><span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">x</span><span class="o">)</span> <span class="nt">const</span> <span class="p">{</span>
+    <span class="n">return</span> <span class="p">((</span><span class="n">size_</span> <span class="o">&gt;=</span> <span class="n">x</span><span class="o">.</span><span class="n">size_</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+            <span class="p">(</span><span class="n">memcmp</span><span class="p">(</span><span class="n">data_</span><span class="o">,</span> <span class="n">x</span><span class="o">.</span><span class="n">data_</span><span class="o">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size_</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span><span class="p">));</span>
+  <span class="p">}</span>
+
+ <span class="nt">private</span><span class="o">:</span>
+  <span class="nt">const</span> <span class="nt">char</span><span class="o">*</span> <span class="nt">data_</span><span class="o">;</span>
+  <span class="nt">size_t</span> <span class="nt">size_</span><span class="o">;</span>
+
+  <span class="o">//</span> <span class="nt">Intentionally</span> <span class="nt">copyable</span>
+<span class="err">}</span><span class="o">;</span>
+
+<span class="nt">inline</span> <span class="nt">bool</span> <span class="nt">operator</span><span class="o">==(</span><span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">x</span><span class="o">,</span> <span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">y</span><span class="o">)</span> <span class="p">{</span>
+  <span class="n">return</span> <span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="k">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="k">size</span><span class="p">())</span> <span class="o">&amp;&amp;</span>
+          <span class="p">(</span><span class="n">memcmp</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">data</span><span class="p">()</span><span class="o">,</span> <span class="n">y</span><span class="o">.</span><span class="n">data</span><span class="p">()</span><span class="o">,</span> <span class="n">x</span><span class="o">.</span><span class="k">size</span><span class="p">())</span> <span class="o">==</span> <span class="m">0</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="nt">inline</span> <span class="nt">bool</span> <span class="nt">operator</span><span class="o">!=(</span><span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">x</span><span class="o">,</span> <span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">y</span><span class="o">)</span> <span class="p">{</span>
+  <span class="n">return</span> <span class="o">!</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nt">inline</span> <span class="nt">int</span> <span class="nt">Slice</span><span class="o">:</span><span class="nd">:compare</span><span class="o">(</span><span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">b</span><span class="o">)</span> <span class="nt">const</span> <span class="p">{</span>
+  <span class="n">const</span> <span class="n">size_t</span> <span class="n">min_len</span> <span class="o">=</span> <span class="p">(</span><span class="n">size_</span> <span class="o">&lt;</span> <span class="n">b</span><span class="o">.</span><span class="n">size_</span><span class="p">)</span> <span class="o">?</span> <span class="n">size_</span> <span class="o">:</span> <span class="n">b</span><span class="o">.</span><span class="n">size_</span><span class="p">;</span>
+  <span class="n">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">memcmp</span><span class="p">(</span><span class="n">data_</span><span class="o">,</span> <span class="n">b</span><span class="o">.</span><span class="n">data_</span><span class="o">,</span> <span class="n">min_len</span><span class="p">);</span> <span class="o">//</span><span class="err">先比较最小部分是否相等</span>
+  <span class="n">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="err">{</span>
+    <span class="n">if</span> <span class="p">(</span><span class="n">size_</span> <span class="o">&lt;</span> <span class="n">b</span><span class="o">.</span><span class="n">size_</span><span class="p">)</span> <span class="n">r</span> <span class="o">=</span> <span class="m">-1</span><span class="p">;</span>
+    <span class="n">else</span> <span class="n">if</span> <span class="p">(</span><span class="n">size_</span> <span class="o">&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">size_</span><span class="p">)</span> <span class="n">r</span> <span class="o">=</span> <span class="o">+</span><span class="m">1</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nt">return</span> <span class="nt">r</span><span class="o">;</span>
+<span class="err">}</span>
+
+<span class="err">}</span>  <span class="o">//</span> <span class="nt">namespace</span> <span class="nt">leveldb</span>
+</pre></div>
+
+
+<h5><strong>1.3.1.3 Iterator.h</strong><span id="1.3.1.3"></span></h5>
+<p>Iterator是以一个yeild整个key,value列表的迭代器。多种不同的实现具有不同的意义，但根本上的作用是不变的，就是方便的遍历整个list。Iterator的实现在db/db_iter.cc中。 <br />
+    class Iterator {
+     public:
+      Iterator();
+      virtual ~Iterator();</p>
+<div class="highlight"><pre>  <span class="c1">// An iterator is either positioned at a key/value pair, or</span>
+  <span class="c1">// not valid.  This method returns true iff the iterator is valid.</span>
+  <span class="nx">virtual</span> <span class="nx">bool</span> <span class="nx">Valid</span><span class="p">()</span> <span class="kr">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// Position at the first key in the source.  The iterator is Valid()</span>
+  <span class="c1">// after this call iff the source is not empty.</span>
+  <span class="nx">virtual</span> <span class="k">void</span> <span class="nx">SeekToFirst</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// Position at the last key in the source.  The iterator is</span>
+  <span class="c1">// Valid() after this call iff the source is not empty.</span>
+  <span class="nx">virtual</span> <span class="k">void</span> <span class="nx">SeekToLast</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// Position at the first key in the source that is at or past target.</span>
+  <span class="c1">// The iterator is Valid() after this call iff the source contains</span>
+  <span class="c1">// an entry that comes at or past target.</span>
+  <span class="nx">virtual</span> <span class="k">void</span> <span class="nx">Seek</span><span class="p">(</span><span class="kr">const</span> <span class="nx">Slice</span><span class="o">&amp;</span> <span class="nx">target</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// Moves to the next entry in the source.  After this call, Valid() is</span>
+  <span class="c1">// true iff the iterator was not positioned at the last entry in the source.</span>
+  <span class="c1">// REQUIRES: Valid()</span>
+  <span class="nx">virtual</span> <span class="k">void</span> <span class="nx">Next</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// Moves to the previous entry in the source.  After this call, Valid() is</span>
+  <span class="c1">// true iff the iterator was not positioned at the first entry in source.</span>
+  <span class="c1">// REQUIRES: Valid()</span>
+  <span class="nx">virtual</span> <span class="k">void</span> <span class="nx">Prev</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// Return the key for the current entry.  The underlying storage for</span>
+  <span class="c1">// the returned slice is valid only until the next modification of</span>
+  <span class="c1">// the iterator.</span>
+  <span class="c1">// REQUIRES: Valid()</span>
+  <span class="nx">virtual</span> <span class="nx">Slice</span> <span class="nx">key</span><span class="p">()</span> <span class="kr">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// Return the value for the current entry.  The underlying storage for</span>
+  <span class="c1">// the returned slice is valid only until the next modification of</span>
+  <span class="c1">// the iterator.</span>
+  <span class="c1">// REQUIRES: Valid()</span>
+  <span class="nx">virtual</span> <span class="nx">Slice</span> <span class="nx">value</span><span class="p">()</span> <span class="kr">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// If an error has occurred, return it.  Else return an ok status.</span>
+  <span class="nx">virtual</span> <span class="nx">Status</span> <span class="nx">status</span><span class="p">()</span> <span class="kr">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="c1">// Clients are allowed to register function/arg1/arg2 triples that</span>
+  <span class="c1">// will be invoked when this iterator is destroyed.</span>
+  <span class="c1">//</span>
+  <span class="c1">// Note that unlike all of the preceding methods, this method is</span>
+  <span class="c1">// not abstract and therefore clients should not override it.</span>
+  <span class="nx">typedef</span> <span class="k">void</span> <span class="p">(</span><span class="o">*</span><span class="nx">CleanupFunction</span><span class="p">)(</span><span class="k">void</span><span class="o">*</span> <span class="nx">arg1</span><span class="p">,</span> <span class="k">void</span><span class="o">*</span> <span class="nx">arg2</span><span class="p">);</span>
+  <span class="k">void</span> <span class="nx">RegisterCleanup</span><span class="p">(</span><span class="nx">CleanupFunction</span> <span class="kd">function</span><span class="p">,</span> <span class="k">void</span><span class="o">*</span> <span class="nx">arg1</span><span class="p">,</span> <span class="k">void</span><span class="o">*</span> <span class="nx">arg2</span><span class="p">);</span>
+
+ <span class="kr">private</span><span class="o">:</span>
+  <span class="nx">struct</span> <span class="nx">Cleanup</span> <span class="p">{</span>
+    <span class="nx">CleanupFunction</span> <span class="kd">function</span><span class="p">;</span>
+    <span class="k">void</span><span class="o">*</span> <span class="nx">arg1</span><span class="p">;</span>
+    <span class="k">void</span><span class="o">*</span> <span class="nx">arg2</span><span class="p">;</span>
+    <span class="nx">Cleanup</span><span class="o">*</span> <span class="nx">next</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="nx">Cleanup</span> <span class="nx">cleanup_</span><span class="p">;</span>
+
+  <span class="c1">// No copying allowed</span>
+  <span class="nx">Iterator</span><span class="p">(</span><span class="kr">const</span> <span class="nx">Iterator</span><span class="o">&amp;</span><span class="p">);</span>
+  <span class="k">void</span> <span class="nx">operator</span><span class="o">=</span><span class="p">(</span><span class="kr">const</span> <span class="nx">Iterator</span><span class="o">&amp;</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<h5><strong>1.3.1.4 Table.h</strong><span id="1.3.1.4"></span></h5>
+<p>Table就是持久化并且不可变的sortedtable.    </p>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">Table</span> {
+<span class="n">public:</span>
+  // <span class="n">Attempt</span> <span class="nb">to</span> <span class="nb">open</span> <span class="n">the</span> <span class="n">table</span> <span class="n">that</span> <span class="k">is</span> <span class="n">stored</span> <span class="n">in</span> <span class="nb">bytes</span> [<span class="mi">0</span><span class="o">..</span><span class="n">file_size</span>)
+  // <span class="k">of</span> <span class="s">&quot;file&quot;</span>, <span class="o">and</span> <span class="nb">read</span> <span class="n">the</span> <span class="n">metadata</span> <span class="n">entries</span> <span class="n">necessary</span> <span class="nb">to</span> <span class="n">allow</span>
+  // <span class="n">retrieving</span> <span class="n">data</span> <span class="nb">from</span> <span class="n">the</span> <span class="n">table</span>.
+  //
+  // <span class="n">If</span> <span class="n">successful</span>, <span class="k">returns</span> <span class="nb">ok</span> <span class="o">and</span> <span class="n">sets</span> <span class="s">&quot;*table&quot;</span> <span class="nb">to</span> <span class="n">the</span> <span class="n">newly</span> <span class="n">opened</span>
+  // <span class="n">table</span>.  <span class="n">The</span> <span class="n">client</span> <span class="n">should</span> <span class="nb">delete</span> <span class="s">&quot;*table&quot;</span> <span class="k">when</span> <span class="n">no</span> <span class="n">longer</span> <span class="n">needed</span>.
+  // <span class="n">If</span> <span class="n">there</span> <span class="n">was</span> <span class="n">an</span> <span class="n">error</span> <span class="k">while</span> <span class="n">initializing</span> <span class="n">the</span> <span class="n">table</span>, <span class="n">sets</span> <span class="s">&quot;*table&quot;</span>
+  // <span class="nb">to</span> <span class="n">NULL</span> <span class="o">and</span> <span class="k">returns</span> <span class="n">a</span> <span class="n">non-ok</span> <span class="n">status</span>.  <span class="n">Does</span> <span class="nb">not</span> <span class="k">take</span> <span class="n">ownership</span> <span class="k">of</span>
+  // <span class="s">&quot;*source&quot;</span>, <span class="k">but</span> <span class="n">the</span> <span class="n">client</span> <span class="n">must</span> <span class="n">ensure</span> <span class="n">that</span> <span class="s">&quot;source&quot;</span> <span class="n">remains</span> <span class="n">live</span>
+  // <span class="k">for</span> <span class="n">the</span> <span class="n">duration</span> <span class="k">of</span> <span class="n">the</span> <span class="n">returned</span> <span class="n">table&#39;s</span> <span class="n">lifetime</span>.
+  //
+  // *<span class="n">file</span> <span class="n">must</span> <span class="n">remain</span> <span class="n">live</span> <span class="k">while</span> <span class="n">this</span> <span class="n">Table</span> <span class="k">is</span> <span class="n">in</span> <span class="k">use</span>.
+  <span class="n">static</span> <span class="n">Status</span> <span class="n">Open</span>(<span class="n">const</span> <span class="n">Options</span>&amp; <span class="n">options</span>,
+                     <span class="n">RandomAccessFile</span>* <span class="n">file</span>,
+                     <span class="n">uint64_t</span> <span class="n">file_size</span>,
+                     <span class="n">Table</span>** <span class="n">table</span>);
+
+  ~<span class="n">Table</span>();
+
+  // <span class="n">Returns</span> <span class="n">a</span> <span class="nb">new</span> <span class="nb">iterator</span> <span class="n">over</span> <span class="n">the</span> <span class="n">table</span> <span class="n">contents</span>.
+  // <span class="n">The</span> <span class="n">result</span> <span class="k">of</span> <span class="n">NewIterator</span>() <span class="k">is</span> <span class="n">initially</span> <span class="n">invalid</span> (<span class="nb">caller</span> <span class="n">must</span>
+  // <span class="n">call</span> <span class="nb">one</span> <span class="k">of</span> <span class="n">the</span> <span class="n">Seek</span> <span class="n">methods</span> <span class="n">on</span> <span class="n">the</span> <span class="nb">iterator</span> <span class="o">before</span> <span class="n">using</span> <span class="n">it</span>).
+  <span class="n">Iterator</span>* <span class="n">NewIterator</span>(<span class="n">const</span> <span class="n">ReadOptions</span>&amp;) <span class="n">const</span>;
+
+  // <span class="n">Given</span> <span class="n">a</span> <span class="nb">key</span>, <span class="k">return</span> <span class="n">an</span> <span class="n">approximate</span> <span class="n">byte</span> <span class="n">offset</span> <span class="n">in</span> <span class="n">the</span> <span class="n">file</span> <span class="k">where</span>
+  // <span class="n">the</span> <span class="n">data</span> <span class="k">for</span> <span class="n">that</span> <span class="nb">key</span> <span class="n">begins</span> (<span class="o">or</span> <span class="n">would</span> <span class="n">begin</span> <span class="k">if</span> <span class="n">the</span> <span class="nb">key</span> <span class="n">were</span>
+  // <span class="n">present</span> <span class="n">in</span> <span class="n">the</span> <span class="n">file</span>).  <span class="n">The</span> <span class="n">returned</span> <span class="nb">value</span> <span class="k">is</span> <span class="n">in</span> <span class="n">terms</span> <span class="k">of</span> <span class="n">file</span>
+  // <span class="nb">bytes</span>, <span class="o">and</span> <span class="o">so</span> <span class="n">includes</span> <span class="n">effects</span> <span class="nb">like</span> <span class="n">compression</span> <span class="k">of</span> <span class="n">the</span> <span class="n">underlying</span> <span class="n">data</span>.
+  // <span class="n">E</span>.<span class="n">g</span>., <span class="n">the</span> <span class="n">approximate</span> <span class="n">offset</span> <span class="k">of</span> <span class="n">the</span> <span class="k">last</span> <span class="nb">key</span> <span class="n">in</span> <span class="n">the</span> <span class="n">table</span> <span class="k">will</span>
+  // <span class="n">be</span> <span class="nb">close</span> <span class="nb">to</span> <span class="n">the</span> <span class="n">file</span> <span class="n">length</span>.
+  <span class="n">uint64_t</span> <span class="n">ApproximateOffsetOf</span>(<span class="n">const</span> <span class="n">Slice</span>&amp; <span class="nb">key</span>) <span class="n">const</span>;
+
+ <span class="n">private:</span>
+  <span class="n">struct</span> <span class="n">Rep</span>;
+  <span class="n">Rep</span>* <span class="n">rep_</span>;
+
+  <span class="n">explicit</span> <span class="n">Table</span>(<span class="n">Rep</span>* <span class="n">rep</span>) { <span class="n">rep_</span> = <span class="n">rep</span>; }
+  <span class="n">static</span> <span class="n">Iterator</span>* <span class="n">BlockReader</span>(<span class="nb">void</span>*, <span class="n">const</span> <span class="n">ReadOptions</span>&amp;, <span class="n">const</span> <span class="n">Slice</span>&amp;);
+
+  // <span class="n">Calls</span> (*<span class="n">handle_result</span>)(<span class="n">arg</span>, ...) <span class="n">with</span> <span class="n">the</span> <span class="n">entry</span> <span class="n">found</span> <span class="o">after</span> <span class="n">a</span> <span class="n">call</span>
+  // <span class="nb">to</span> <span class="n">Seek</span>(<span class="nb">key</span>).  <span class="n">May</span> <span class="nb">not</span> <span class="k">make</span> <span class="n">such</span> <span class="n">a</span> <span class="n">call</span> <span class="k">if</span> <span class="n">filter</span> <span class="n">policy</span> <span class="n">says</span>
+  // <span class="n">that</span> <span class="nb">key</span> <span class="k">is</span> <span class="nb">not</span> <span class="n">present</span>.
+  <span class="n">friend</span> <span class="k">class</span> <span class="n">TableCache</span>;
+  <span class="n">Status</span> <span class="n">InternalGet</span>(
+      <span class="n">const</span> <span class="n">ReadOptions</span>&amp;, <span class="n">const</span> <span class="n">Slice</span>&amp; <span class="nb">key</span>,
+      <span class="nb">void</span>* <span class="n">arg</span>,
+      <span class="nb">void</span> (*<span class="n">handle_result</span>)(<span class="nb">void</span>* <span class="n">arg</span>, <span class="n">const</span> <span class="n">Slice</span>&amp; <span class="n">k</span>, <span class="n">const</span> <span class="n">Slice</span>&amp; <span class="n">v</span>));
+
+
+  <span class="nb">void</span> <span class="n">ReadMeta</span>(<span class="n">const</span> <span class="n">Footer</span>&amp; <span class="n">footer</span>);
+  <span class="nb">void</span> <span class="n">ReadFilter</span>(<span class="n">const</span> <span class="n">Slice</span>&amp; <span class="n">filter_handle_value</span>);
+
+  // <span class="n">No</span> <span class="n">copying</span> <span class="n">allowed</span>
+  <span class="n">Table</span>(<span class="n">const</span> <span class="n">Table</span>&amp;);
+  <span class="nb">void</span> <span class="nb">operator</span>=(<span class="n">const</span> <span class="n">Table</span>&amp;);
+};
+</pre></div>
+
+
+<h5><strong>1.3.1.5 Status.h</strong><span id="1.3.1.5"></span></h5>
+<p>level中的返回状态，将错误号或者错误信息封装成Status类。
+其中，<br />
+    state_[0..3] == 消息message长度 <br />
+    state_[4]    == 消息code <br />
+    state_[5..]  ==消息message   </p>
+<div class="highlight"><pre><span class="nt">class</span> <span class="nt">Status</span> <span class="p">{</span>
+ <span class="n">public</span><span class="o">:</span>
+  <span class="o">//</span> <span class="n">Create</span> <span class="n">a</span> <span class="n">success</span> <span class="n">status</span><span class="o">.</span>
+  <span class="n">Status</span><span class="p">()</span> <span class="o">:</span> <span class="n">state_</span><span class="p">(</span><span class="n">NULL</span><span class="p">)</span> <span class="err">{</span> <span class="p">}</span>
+  <span class="o">~</span><span class="nt">Status</span><span class="o">()</span> <span class="p">{</span> <span class="n">delete</span><span class="cp">[]</span> <span class="n">state_</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Copy</span> <span class="nt">the</span> <span class="nt">specified</span> <span class="nt">status</span><span class="o">.</span>
+  <span class="nt">Status</span><span class="o">(</span><span class="nt">const</span> <span class="nt">Status</span><span class="o">&amp;</span> <span class="nt">s</span><span class="o">);</span>
+  <span class="nt">void</span> <span class="nt">operator</span><span class="o">=(</span><span class="nt">const</span> <span class="nt">Status</span><span class="o">&amp;</span> <span class="nt">s</span><span class="o">);</span>
+
+  <span class="o">//</span> <span class="nt">Return</span> <span class="nt">a</span> <span class="nt">success</span> <span class="nt">status</span><span class="o">.</span>
+  <span class="nt">static</span> <span class="nt">Status</span> <span class="nt">OK</span><span class="o">()</span> <span class="p">{</span> <span class="n">return</span> <span class="n">Status</span><span class="p">();</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Return</span> <span class="nt">error</span> <span class="nt">status</span> <span class="nt">of</span> <span class="nt">an</span> <span class="nt">appropriate</span> <span class="nt">type</span><span class="o">.</span>
+  <span class="nt">static</span> <span class="nt">Status</span> <span class="nt">NotFound</span><span class="o">(</span><span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">msg</span><span class="o">,</span> <span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">msg2</span> <span class="o">=</span> <span class="nt">Slice</span><span class="o">())</span> <span class="p">{</span>
+    <span class="n">return</span> <span class="n">Status</span><span class="p">(</span><span class="n">kNotFound</span><span class="o">,</span> <span class="n">msg</span><span class="o">,</span> <span class="n">msg2</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nt">static</span> <span class="nt">Status</span> <span class="nt">Corruption</span><span class="o">(</span><span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">msg</span><span class="o">,</span> <span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">msg2</span> <span class="o">=</span> <span class="nt">Slice</span><span class="o">())</span> <span class="p">{</span>
+    <span class="n">return</span> <span class="n">Status</span><span class="p">(</span><span class="n">kCorruption</span><span class="o">,</span> <span class="n">msg</span><span class="o">,</span> <span class="n">msg2</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nt">static</span> <span class="nt">Status</span> <span class="nt">NotSupported</span><span class="o">(</span><span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">msg</span><span class="o">,</span> <span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">msg2</span> <span class="o">=</span> <span class="nt">Slice</span><span class="o">())</span> <span class="p">{</span>
+    <span class="n">return</span> <span class="n">Status</span><span class="p">(</span><span class="n">kNotSupported</span><span class="o">,</span> <span class="n">msg</span><span class="o">,</span> <span class="n">msg2</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nt">static</span> <span class="nt">Status</span> <span class="nt">InvalidArgument</span><span class="o">(</span><span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">msg</span><span class="o">,</span> <span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">msg2</span> <span class="o">=</span> <span class="nt">Slice</span><span class="o">())</span> <span class="p">{</span>
+    <span class="n">return</span> <span class="n">Status</span><span class="p">(</span><span class="n">kInvalidArgument</span><span class="o">,</span> <span class="n">msg</span><span class="o">,</span> <span class="n">msg2</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nt">static</span> <span class="nt">Status</span> <span class="nt">IOError</span><span class="o">(</span><span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">msg</span><span class="o">,</span> <span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">msg2</span> <span class="o">=</span> <span class="nt">Slice</span><span class="o">())</span> <span class="p">{</span>
+    <span class="n">return</span> <span class="n">Status</span><span class="p">(</span><span class="n">kIOError</span><span class="o">,</span> <span class="n">msg</span><span class="o">,</span> <span class="n">msg2</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Returns</span> <span class="nt">true</span> <span class="nt">iff</span> <span class="nt">the</span> <span class="nt">status</span> <span class="nt">indicates</span> <span class="nt">success</span><span class="o">.</span>
+  <span class="nt">bool</span> <span class="nt">ok</span><span class="o">()</span> <span class="nt">const</span> <span class="p">{</span> <span class="n">return</span> <span class="p">(</span><span class="n">state_</span> <span class="o">==</span> <span class="n">NULL</span><span class="p">);</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Returns</span> <span class="nt">true</span> <span class="nt">iff</span> <span class="nt">the</span> <span class="nt">status</span> <span class="nt">indicates</span> <span class="nt">a</span> <span class="nt">NotFound</span> <span class="nt">error</span><span class="o">.</span>
+  <span class="nt">bool</span> <span class="nt">IsNotFound</span><span class="o">()</span> <span class="nt">const</span> <span class="p">{</span> <span class="n">return</span> <span class="n">code</span><span class="p">()</span> <span class="o">==</span> <span class="n">kNotFound</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Returns</span> <span class="nt">true</span> <span class="nt">iff</span> <span class="nt">the</span> <span class="nt">status</span> <span class="nt">indicates</span> <span class="nt">a</span> <span class="nt">Corruption</span> <span class="nt">error</span><span class="o">.</span>
+  <span class="nt">bool</span> <span class="nt">IsCorruption</span><span class="o">()</span> <span class="nt">const</span> <span class="p">{</span> <span class="n">return</span> <span class="n">code</span><span class="p">()</span> <span class="o">==</span> <span class="n">kCorruption</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Returns</span> <span class="nt">true</span> <span class="nt">iff</span> <span class="nt">the</span> <span class="nt">status</span> <span class="nt">indicates</span> <span class="nt">an</span> <span class="nt">IOError</span><span class="o">.</span>
+  <span class="nt">bool</span> <span class="nt">IsIOError</span><span class="o">()</span> <span class="nt">const</span> <span class="p">{</span> <span class="n">return</span> <span class="n">code</span><span class="p">()</span> <span class="o">==</span> <span class="n">kIOError</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="o">//</span> <span class="nt">Return</span> <span class="nt">a</span> <span class="nt">string</span> <span class="nt">representation</span> <span class="nt">of</span> <span class="nt">this</span> <span class="nt">status</span> <span class="nt">suitable</span> <span class="nt">for</span> <span class="nt">printing</span><span class="o">.</span>
+  <span class="o">//</span> <span class="nt">Returns</span> <span class="nt">the</span> <span class="nt">string</span> <span class="s2">&quot;OK&quot;</span> <span class="nt">for</span> <span class="nt">success</span><span class="o">.</span>
+  <span class="nt">std</span><span class="o">:</span><span class="nd">:string</span> <span class="nt">ToString</span><span class="o">()</span> <span class="nt">const</span><span class="o">;</span>
+
+ <span class="nt">private</span><span class="o">:</span>
+  <span class="o">//</span> <span class="nt">OK</span> <span class="nt">status</span> <span class="nt">has</span> <span class="nt">a</span> <span class="nt">NULL</span> <span class="nt">state_</span><span class="o">.</span>  <span class="nt">Otherwise</span><span class="o">,</span> <span class="nt">state_</span> <span class="nt">is</span> <span class="nt">a</span> <span class="nt">new</span><span class="cp">[]</span> <span class="nt">array</span>
+  <span class="o">//</span> <span class="nt">of</span> <span class="nt">the</span> <span class="nt">following</span> <span class="nt">form</span><span class="o">:</span>
+  <span class="o">//</span>    <span class="nt">state_</span><span class="cp">[</span><span class="mi">0</span><span class="nx">..3</span><span class="cp">]</span> <span class="o">==</span> <span class="nt">length</span> <span class="nt">of</span> <span class="nt">message</span>
+  <span class="o">//</span>    <span class="nt">state_</span><span class="cp">[</span><span class="mi">4</span><span class="cp">]</span>    <span class="o">==</span> <span class="nt">code</span>
+  <span class="o">//</span>    <span class="nt">state_</span><span class="cp">[</span><span class="mi">5</span><span class="nx">..</span><span class="cp">]</span>  <span class="o">==</span> <span class="nt">message</span>
+  <span class="nt">const</span> <span class="nt">char</span><span class="o">*</span> <span class="nt">state_</span><span class="o">;</span>
+
+  <span class="nt">enum</span> <span class="nt">Code</span> <span class="p">{</span>
+    <span class="n">kOk</span> <span class="o">=</span> <span class="m">0</span><span class="o">,</span>
+    <span class="n">kNotFound</span> <span class="o">=</span> <span class="m">1</span><span class="o">,</span>
+    <span class="n">kCorruption</span> <span class="o">=</span> <span class="m">2</span><span class="o">,</span>
+    <span class="n">kNotSupported</span> <span class="o">=</span> <span class="m">3</span><span class="o">,</span>
+    <span class="n">kInvalidArgument</span> <span class="o">=</span> <span class="m">4</span><span class="o">,</span>
+    <span class="n">kIOError</span> <span class="o">=</span> <span class="m">5</span>
+  <span class="p">}</span><span class="o">;</span>
+
+  <span class="nt">Code</span> <span class="nt">code</span><span class="o">()</span> <span class="nt">const</span> <span class="p">{</span>
+    <span class="n">return</span> <span class="p">(</span><span class="n">state_</span> <span class="o">==</span> <span class="n">NULL</span><span class="p">)</span> <span class="o">?</span> <span class="n">kOk</span> <span class="o">:</span> <span class="n">static_cast</span><span class="o">&lt;</span><span class="n">Code</span><span class="o">&gt;</span><span class="p">(</span><span class="n">state_</span><span class="cp">[</span><span class="mi">4</span><span class="cp">]</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nt">Status</span><span class="o">(</span><span class="nt">Code</span> <span class="nt">code</span><span class="o">,</span> <span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">msg</span><span class="o">,</span> <span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">msg2</span><span class="o">);</span>
+  <span class="nt">static</span> <span class="nt">const</span> <span class="nt">char</span><span class="o">*</span> <span class="nt">CopyState</span><span class="o">(</span><span class="nt">const</span> <span class="nt">char</span><span class="o">*</span> <span class="nt">s</span><span class="o">);</span>
+<span class="err">}</span><span class="o">;</span>
+</pre></div>
+
+
+<h4><strong>1.3.2 memtable</strong><span id="1.3.2"></span></h4>
+<p>memtable是leveldb的一个重要的数据结构，memtable是基于reference counted；其中的英文注释已经非常详尽了，重点的知识，我也已经标示；  <br />
+另外，memtable的操作仅有add和get，却没有delete，是因为memtable使用add特殊值的方法来标示删除。  </p>
+<p><em>db/memtable.h:</em>    </p>
+<div class="highlight"><pre><span class="nt">class</span> <span class="nt">MemTable</span> <span class="p">{</span>
+ <span class="n">public</span><span class="o">:</span>
+  <span class="o">//</span> <span class="n">MemTables</span> <span class="n">are</span> <span class="n">reference</span> <span class="n">counted</span><span class="o">.</span>  <span class="n">The</span> <span class="n">initial</span> <span class="n">reference</span> <span class="n">count</span>
+  <span class="o">//</span> <span class="n">is</span> <span class="n">zero</span> <span class="n">and</span> <span class="n">the</span> <span class="n">caller</span> <span class="n">must</span> <span class="n">call</span> <span class="n">Ref</span><span class="p">()</span> <span class="n">at</span> <span class="n">least</span> <span class="k">once</span><span class="o">.</span>
+  <span class="n">explicit</span> <span class="n">MemTable</span><span class="p">(</span><span class="n">const</span> <span class="n">InternalKeyComparator</span><span class="o">&amp;</span> <span class="n">comparator</span><span class="p">);</span>
+
+  <span class="o">//</span> <span class="n">Increase</span> <span class="n">reference</span> <span class="n">count</span><span class="o">.</span>
+  <span class="n">void</span> <span class="n">Ref</span><span class="p">()</span> <span class="err">{</span> <span class="o">++</span><span class="n">refs_</span><span class="p">;</span> <span class="p">}</span> <span class="o">//</span> <span class="err">存在引用计数并且一开始</span><span class="o">==</span><span class="nt">0</span><span class="o">.</span>
+
+  <span class="o">//</span> <span class="nt">Drop</span> <span class="nt">reference</span> <span class="nt">count</span><span class="o">.</span>  <span class="nt">Delete</span> <span class="nt">if</span> <span class="nt">no</span> <span class="nt">more</span> <span class="nt">references</span> <span class="nt">exist</span><span class="o">.</span>
+  <span class="nt">void</span> <span class="nt">Unref</span><span class="o">()</span> <span class="p">{</span>
+    <span class="o">--</span><span class="n">refs_</span><span class="p">;</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">refs_</span> <span class="o">&gt;=</span> <span class="m">0</span><span class="p">);</span>
+    <span class="n">if</span> <span class="p">(</span><span class="n">refs_</span> <span class="o">&lt;=</span> <span class="m">0</span><span class="p">)</span> <span class="err">{</span>
+      <span class="n">delete</span> <span class="n">this</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="err">}</span>
+
+  <span class="o">//</span> <span class="nt">Returns</span> <span class="nt">an</span> <span class="nt">estimate</span> <span class="nt">of</span> <span class="nt">the</span> <span class="nt">number</span> <span class="nt">of</span> <span class="nt">bytes</span> <span class="nt">of</span> <span class="nt">data</span> <span class="nt">in</span> <span class="nt">use</span> <span class="nt">by</span> <span class="nt">this</span>
+  <span class="o">//</span> <span class="nt">data</span> <span class="nt">structure</span><span class="o">.</span>
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="nt">REQUIRES</span><span class="o">:</span> <span class="nt">external</span> <span class="nt">synchronization</span> <span class="nt">to</span> <span class="nt">prevent</span> <span class="nt">simultaneous</span>
+  <span class="o">//</span> <span class="nt">operations</span> <span class="nt">on</span> <span class="nt">the</span> <span class="nt">same</span> <span class="nt">MemTable</span><span class="o">.</span>
+  <span class="nt">size_t</span> <span class="nt">ApproximateMemoryUsage</span><span class="o">();</span> <span class="o">//</span> <span class="err">调用</span><span class="nt">arena</span><span class="err">的</span><span class="nt">MemoryUsage</span><span class="o">.</span><span class="err">因为这里面所有的内存都是从</span><span class="nt">arena</span><span class="err">里面分配的</span><span class="o">.</span>
+
+  <span class="o">//</span> <span class="nt">Return</span> <span class="nt">an</span> <span class="nt">iterator</span> <span class="nt">that</span> <span class="nt">yields</span> <span class="nt">the</span> <span class="nt">contents</span> <span class="nt">of</span> <span class="nt">the</span> <span class="nt">memtable</span><span class="o">.</span>
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="nt">The</span> <span class="nt">caller</span> <span class="nt">must</span> <span class="nt">ensure</span> <span class="nt">that</span> <span class="nt">the</span> <span class="nt">underlying</span> <span class="nt">MemTable</span> <span class="nt">remains</span> <span class="nt">live</span>
+  <span class="o">//</span> <span class="nt">while</span> <span class="nt">the</span> <span class="nt">returned</span> <span class="nt">iterator</span> <span class="nt">is</span> <span class="nt">live</span><span class="o">.</span>  <span class="nt">The</span> <span class="nt">keys</span> <span class="nt">returned</span> <span class="nt">by</span> <span class="nt">this</span>
+  <span class="o">//</span> <span class="nt">iterator</span> <span class="nt">are</span> <span class="nt">internal</span> <span class="nt">keys</span> <span class="nt">encoded</span> <span class="nt">by</span> <span class="nt">AppendInternalKey</span> <span class="nt">in</span> <span class="nt">the</span>
+  <span class="o">//</span> <span class="nt">db</span><span class="o">/</span><span class="nt">format</span><span class="o">.</span><span class="p">{</span><span class="n">h</span><span class="o">,</span><span class="n">cc</span><span class="p">}</span> <span class="nt">module</span><span class="o">.</span>
+  <span class="nt">Iterator</span><span class="o">*</span> <span class="nt">NewIterator</span><span class="o">();</span> <span class="o">//</span> <span class="err">产生新的迭代器</span><span class="o">.</span><span class="err">接下来我们会看看迭代器是如何实现的。</span>
+
+  <span class="o">//</span> <span class="nt">Add</span> <span class="nt">an</span> <span class="nt">entry</span> <span class="nt">into</span> <span class="nt">memtable</span> <span class="nt">that</span> <span class="nt">maps</span> <span class="nt">key</span> <span class="nt">to</span> <span class="nt">value</span> <span class="nt">at</span> <span class="nt">the</span>
+  <span class="o">//</span> <span class="nt">specified</span> <span class="nt">sequence</span> <span class="nt">number</span> <span class="nt">and</span> <span class="nt">with</span> <span class="nt">the</span> <span class="nt">specified</span> <span class="nt">type</span><span class="o">.</span>
+  <span class="o">//</span> <span class="nt">Typically</span> <span class="nt">value</span> <span class="nt">will</span> <span class="nt">be</span> <span class="nt">empty</span> <span class="nt">if</span> <span class="nt">type</span><span class="o">==</span><span class="nt">kTypeDeletion</span><span class="o">.</span>
+  <span class="nt">void</span> <span class="nt">Add</span><span class="o">(</span><span class="nt">SequenceNumber</span> <span class="nt">seq</span><span class="o">,</span> <span class="nt">ValueType</span> <span class="nt">type</span><span class="o">,</span>
+           <span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">key</span><span class="o">,</span>
+           <span class="nt">const</span> <span class="nt">Slice</span><span class="o">&amp;</span> <span class="nt">value</span><span class="o">);</span>
+
+  <span class="o">//</span> <span class="nt">If</span> <span class="nt">memtable</span> <span class="nt">contains</span> <span class="nt">a</span> <span class="nt">value</span> <span class="nt">for</span> <span class="nt">key</span><span class="o">,</span> <span class="nt">store</span> <span class="nt">it</span> <span class="nt">in</span> <span class="o">*</span><span class="nt">value</span> <span class="nt">and</span> <span class="nt">return</span> <span class="nt">true</span><span class="o">.</span>
+  <span class="o">//</span> <span class="nt">If</span> <span class="nt">memtable</span> <span class="nt">contains</span> <span class="nt">a</span> <span class="nt">deletion</span> <span class="nt">for</span> <span class="nt">key</span><span class="o">,</span> <span class="nt">store</span> <span class="nt">a</span> <span class="nt">NotFound</span><span class="o">()</span> <span class="nt">error</span>
+  <span class="o">//</span> <span class="nt">in</span> <span class="o">*</span><span class="nt">status</span> <span class="nt">and</span> <span class="nt">return</span> <span class="nt">true</span><span class="o">.</span>
+  <span class="o">//</span> <span class="nt">Else</span><span class="o">,</span> <span class="nt">return</span> <span class="nt">false</span><span class="o">.</span>
+  <span class="nt">bool</span> <span class="nt">Get</span><span class="o">(</span><span class="nt">const</span> <span class="nt">LookupKey</span><span class="o">&amp;</span> <span class="nt">key</span><span class="o">,</span> <span class="nt">std</span><span class="o">:</span><span class="nd">:string</span><span class="o">*</span> <span class="nt">value</span><span class="o">,</span> <span class="nt">Status</span><span class="o">*</span> <span class="nt">s</span><span class="o">);</span>
+
+ <span class="nt">private</span><span class="o">:</span>
+  <span class="o">~</span><span class="nt">MemTable</span><span class="o">();</span>  <span class="o">//</span> <span class="nt">Private</span> <span class="nt">since</span> <span class="nt">only</span> <span class="nt">Unref</span><span class="o">()</span> <span class="nt">should</span> <span class="nt">be</span> <span class="nt">used</span> <span class="nt">to</span> <span class="nt">delete</span> <span class="nt">it</span>
+
+  <span class="nt">struct</span> <span class="nt">KeyComparator</span> <span class="p">{</span>
+    <span class="n">const</span> <span class="n">InternalKeyComparator</span> <span class="n">comparator</span><span class="p">;</span>
+    <span class="n">explicit</span> <span class="n">KeyComparator</span><span class="p">(</span><span class="n">const</span> <span class="n">InternalKeyComparator</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span> <span class="o">:</span> <span class="n">comparator</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="err">{</span> <span class="p">}</span>
+    <span class="nt">int</span> <span class="nt">operator</span><span class="o">()(</span><span class="nt">const</span> <span class="nt">char</span><span class="o">*</span> <span class="nt">a</span><span class="o">,</span> <span class="nt">const</span> <span class="nt">char</span><span class="o">*</span> <span class="nt">b</span><span class="o">)</span> <span class="nt">const</span><span class="o">;</span>
+  <span class="err">}</span><span class="o">;</span>
+  <span class="nt">friend</span> <span class="nt">class</span> <span class="nt">MemTableIterator</span><span class="o">;</span>
+  <span class="nt">friend</span> <span class="nt">class</span> <span class="nt">MemTableBackwardIterator</span><span class="o">;</span>
+
+  <span class="nt">typedef</span> <span class="nt">SkipList</span><span class="o">&lt;</span><span class="nt">const</span> <span class="nt">char</span><span class="o">*,</span> <span class="nt">KeyComparator</span><span class="o">&gt;</span> <span class="nt">Table</span><span class="o">;</span> <span class="o">//</span> <span class="err">底层</span><span class="nt">Table</span><span class="err">结构是使用</span><span class="nt">SkipList</span><span class="err">存储的</span><span class="o">.</span>
+
+  <span class="nt">KeyComparator</span> <span class="nt">comparator_</span><span class="o">;</span> <span class="o">//</span> <span class="nt">k</span><span class="err">比较器</span><span class="o">.</span>
+  <span class="nt">int</span> <span class="nt">refs_</span><span class="o">;</span> <span class="o">//</span> <span class="nt">ref</span><span class="o">.</span>
+  <span class="nt">Arena</span> <span class="nt">arena_</span><span class="o">;</span> <span class="o">//</span> <span class="err">内存分配</span>
+  <span class="nt">Table</span> <span class="nt">table_</span><span class="o">;</span> <span class="o">//</span> <span class="nt">table</span>
+<span class="err">}</span><span class="o">;</span>
+</pre></div>
+
+
+<p><code>未完待续</code>   </p>
             
             <section>
 <div class="accordion" id="accordion2">
@@ -146,7 +639,7 @@
                     <span>1</span>
 </a></li>
                 <li><a href="http://aleda.cn/tags.html#experience-ref">experience
-                    <span>4</span>
+                    <span>3</span>
 </a></li>
             </ul>
 <h4>Contact</h4>

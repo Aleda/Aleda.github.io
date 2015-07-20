@@ -20,6 +20,8 @@ Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-scripts/DoxygenToolkit.vim'
 " NERD Tree
 Plugin 'scrooloose/nerdtree'
+" synstastic
+Plugin 'scrooloose/syntastic'
 
 call vundle#end()
 " ====================Vundle End==============================

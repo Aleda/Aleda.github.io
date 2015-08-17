@@ -7,7 +7,7 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/lishuo/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " let Vundle manage Vundle, required
@@ -15,15 +15,26 @@ Plugin 'gmarik/Vundle.vim'
 " solarized color
 Plugin 'altercation/vim-colors-solarized'
 " taglist
-Plugin 'vim-scripts/taglist.vim'
+" Abandoned.
+" Plugin 'vim-scripts/taglist.vim'
 " DoxygenToolkit
 Plugin 'vim-scripts/DoxygenToolkit.vim'
 " NERD Tree
 Plugin 'scrooloose/nerdtree'
-" synstastic
+" scrooloose/syntastic
 Plugin 'scrooloose/syntastic'
+" TagBar
+Plugin 'majutsushi/tagbar'
+
+" ================= go =================
+" fatih/vim-go
+Plugin 'fatih/vim-go'
+" ================= go =================
+
 
 call vundle#end()
+" This is Required... for go & others
+filetype plugin on
 " ====================Vundle End==============================
 syntax enable
 " ==================Solarized Color Theme=====================
@@ -83,3 +94,23 @@ if has('mouse')
     set mouse=
 endif
 " =====================Basic Configures=======================
+
+" =======================Map Configures=======================
+map <C-n> :NERDTreeToggle<CR>
+map <C-m> :TagbarToggle<CR>
+" =======================Map Configures=======================
+" =======================NMap Configures======================
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>e <Plug>(go-rename)
+" =======================NMap Configures======================

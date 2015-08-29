@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Aleda" />
+        <meta name="copyright" content="Aleda" />
+
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary">
+
+<meta name="keywords" content="code-reading, experience, code-reading, " />
+
+<meta property="og:title" content="web.go "/>
+<meta property="og:url" content="http://aleda.cn/article/2015/08/web.go/" />
+<meta property="og:description" content="web.go" />
+<meta property="og:site_name" content="Aleda | Make Different" />
+<meta property="og:article:author" content="Aleda" />
+<meta property="og:article:published_time" content="2015-08-29T16:28:00+08:00" />
+<meta name="twitter:title" content="web.go ">
+<meta name="twitter:description" content="web.go">
+
+        <title>web.go  · Aleda | Make Different
+</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/pygments.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/tipuesearch/tipuesearch.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/elegant.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/custom.css" media="screen">
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://aleda.cn/"><span class=site-name><span style="color:black;">Aleda</span> |  <span style="color:#AA1032;"> Make Different </span></span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://aleda.cn">Home</a></li>
+                            <li ><a href="http://aleda.cn/categories.html">Categories</a></li>
+                            <li ><a href="http://aleda.cn/tags.html">Tags</a></li>
+                            <li ><a href="http://aleda.cn/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://aleda.cn/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page-header span10 offset2">
+    <h1><a href="http://aleda.cn/article/2015/08/web.go/"> web.go  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            
+            <h1>web.go</h1>
+<h2><strong>Table of Contents</strong></h2>
+<ul>
+<li><a href="#1"><strong>1 web.go</strong></a>    <ul>
+<li><a href="#1.1"><strong>1.1 Introduction</strong></a>    </li>
+<li><a href="#1.2"><strong>1.2 Feature</strong></a>   </li>
+<li><a href="#1.3"><strong>1.3 Code Analysis</strong></a><ul>
+<li><a href="#1.3.1"><strong>1.3.1 web.go</strong></a></li>
+<li><a href="#1.3.2"><strong>1.3.2 server.go</strong></a></li>
+<li><a href="#1.3.3"><strong>1.3.3 scgi.go</strong></a></li>
+<li><a href="#1.3.4"><strong>1.3.4 fcgi.go</strong></a></li>
+<li><a href="#1.3.5"><strong>1.3.5 status.go</strong></a></li>
+<li><a href="#1.3.6"><strong>1.3.6 helper.go</strong></a></li>
+<li><a href="#1.3.7"><strong>1.3.7 web_test.go</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2><strong>1 web.go</strong></h2>
+<p>web.go是一个用golang写的一个轻量级的HTTP服务器，跟web.py很相似。  <br />
+<a href="https://github.com/hoisie/web">https://github.com/hoisie/web</a>  <br />
+另，我不得不吐槽一下GFW了，阻碍我们这些Developer,给一个golang下载第三方库的地址。 <br />
+<a href="http://golangtc.com/download/package">http://golangtc.com/download/package</a></p>
+<h3><strong>1.1 Introduction</strong><span id="1.1"></span></h3>
+<p>Web.go 是一个基于golang net package下的极简的Web服务框架，实现非常简单，但又具有一定的扩展性，代码量1600行。对于处于学习golang的人来说，看看代码确实不错。</p>
+<h3><strong>1.2 Feature</strong><span id="1.2"></span></h3>
+<p>Web.go 支持对不同的HTTP route、socket，cgi、socket的处理，只需要写好相应的handler就可以使用，性能方面，我自己没有测试。但是基于golang原生的net/http，而golang擅长的就是Web server这方面，性能在一般小应用的情况下应该不差。</p>
+<h3><strong>1.3 Code Analysis</strong><span id="1.3"></span></h3>
+<h4><strong>1.3.1 web.go</strong><span id="1.3.1"></span></h4>
+<p>web.go 这个文件中包含了WEB服务中HTTP请求，返回的基本方法，后续会挨个介绍。
+主要包含一个主要的struct——Context。Context的作用就是接受HTTP GET，POST request，和response的一个handler。注释写的就很不错。   </p>
+<div class="highlight"><pre>// A Context object is created for every incoming HTTP request, and is
+// passed to handlers as an optional first argument. It provides information
+// about the request, including the http.Request object, the GET and POST params,
+// and acts as a Writer for the response.  
+type Context struct {
+    Request *http.Request // request.
+    Params  map[string]string // HTTP params.
+    Server  *Server // see server.go
+    http.ResponseWriter // Interface for response Writer.
+}
+</pre></div>
+
+
+<p>response的写方法：   </p>
+<div class="highlight"><pre>// WriteString writes string data into the response object.
+func (ctx *Context) WriteString(content string) {
+    ctx.ResponseWriter.Write([]byte(content))
+}
+</pre></div>
+
+
+<p>返回用户server对request的返回信息，对应HTTP的返回码，这些注释我觉得写的非常好了，我就不在细细解释了，有没解释的，我都有自己加上注释。  </p>
+<div class="highlight"><pre>// Abort is a helper method that sends an HTTP header and an optional
+// body. It is useful for returning 4xx or 5xx errors.
+// Once it has been called, any return value from the handler will
+// not be written to the response.
+func (ctx *Context) Abort(status int, body string) {
+    ctx.ResponseWriter.WriteHeader(status)
+    ctx.ResponseWriter.Write([]byte(body))
+}
+
+// Redirect is a helper method for 3xx redirects.
+func (ctx *Context) Redirect(status int, url_ string) {
+    ctx.ResponseWriter.Header().Set(&quot;Location&quot;, url_)
+    ctx.ResponseWriter.WriteHeader(status)
+    ctx.ResponseWriter.Write([]byte(&quot;Redirecting to: &quot; + url_))
+}
+
+// Notmodified writes a 304 HTTP response
+func (ctx *Context) NotModified() {
+    ctx.ResponseWriter.WriteHeader(304)
+}
+
+// NotFound writes a 404 HTTP response
+func (ctx *Context) NotFound(message string) {
+    ctx.ResponseWriter.WriteHeader(404)
+    ctx.ResponseWriter.Write([]byte(message))
+}
+
+//Unauthorized writes a 401 HTTP response
+func (ctx *Context) Unauthorized() {
+    ctx.ResponseWriter.WriteHeader(401)
+}
+
+//Forbidden writes a 403 HTTP response
+func (ctx *Context) Forbidden() {
+    ctx.ResponseWriter.WriteHeader(403)
+}
+</pre></div>
+
+
+<p>设置返回content的type：</p>
+<div class="highlight"><pre>// ContentType sets the Content-Type header for an HTTP response.
+// For example, ctx.ContentType(&quot;json&quot;) sets the content-type to &quot;application/json&quot;
+// If the supplied value contains a slash (/) it is set as the Content-Type
+// verbatim. The return value is the content type as it was
+// set, or an empty string if none was found.
+func (ctx *Context) ContentType(val string) string {
+    var ctype string
+    if strings.ContainsRune(val, &#39;/&#39;) {
+        ctype = val
+    } else {
+        if !strings.HasPrefix(val, &quot;.&quot;) {
+            val = &quot;.&quot; + val
+        }
+        ctype = mime.TypeByExtension(val)
+    }
+    if ctype != &quot;&quot; {
+        ctx.Header().Set(&quot;Content-Type&quot;, ctype)
+    }
+    return ctype
+}
+</pre></div>
+
+
+<p>设置response Header, 这里需要关注unique的作用:   </p>
+<div class="highlight"><pre>// SetHeader sets a response header. If `unique` is true, the current value
+// of that header will be overwritten . If false, it will be appended.
+func (ctx *Context) SetHeader(hdr string, val string, unique bool) {
+    if unique {
+        ctx.Header().Set(hdr, val)
+    } else {
+        ctx.Header().Add(hdr, val)
+    }
+}
+</pre></div>
+
+
+<p>关于cookie的设置，web.go由三部分构成，用“|”分割，分别是：   </p>
+<ul>
+<li>val的<a href="http://baike.baidu.com/link?url=4O1U2kT9q-mMIETHnJq8dCG7pqhajKIonmi2DAqJjdG8JzYk7Qf2aGj1ZbZjtDHJE-jq2WsmkG564X6XnED2ca">base64</a>编码</li>
+<li>取10位的unix时间戳</li>
+<li>cookie签名，通过<a href="http://baike.baidu.com/link?url=ZeSCGSQ62Dpj_Sl_23Ml1robpKbAKmSca7SC3ZZuJn3PLq_WtyFGgF22Nkiuy7Cp9yOqHMsw5FNlvd17cPmhTK">hmac</a>对key,val,timestap进行加密，见getCookieSig   </li>
+</ul>
+<p>getCookieSig：   </p>
+<div class="highlight"><pre>func getCookieSig(key string, val []byte, timestamp string) string {
+    hm := hmac.New(sha1.New, []byte(key))
+
+    hm.Write(val)
+    hm.Write([]byte(timestamp))
+
+    hex := fmt.Sprintf(&quot;%02x&quot;, hm.Sum(nil))
+    return hex
+}
+</pre></div>
+
+
+<p>整个cookie的构造：   </p>
+<div class="highlight"><pre>func (ctx *Context) SetSecureCookie(name string, val string, age int64) {
+    //base64 encode the val
+    if len(ctx.Server.Config.CookieSecret) == 0 {
+        ctx.Server.Logger.Println(&quot;Secret Key for secure cookies has not been set. Please assign a cookie secret to web.Config.CookieSecret.&quot;)
+        return
+    }
+    var buf bytes.Buffer
+    encoder := base64.NewEncoder(base64.StdEncoding, &amp;buf)
+    encoder.Write([]byte(val))
+    encoder.Close()
+    vs := buf.String()
+    vb := buf.Bytes()
+    timestamp := strconv.FormatInt(time.Now().Unix(), 10)
+    sig := getCookieSig(ctx.Server.Config.CookieSecret, vb, timestamp)
+    cookie := strings.Join([]string{vs, timestamp, sig}, &quot;|&quot;)
+    ctx.SetCookie(NewCookie(name, cookie, age))
+}
+</pre></div>
+
+
+<p>判断cookie是否合法的：   </p>
+<div class="highlight"><pre>func (ctx *Context) GetSecureCookie(name string) (string, bool) {
+    for _, cookie := range ctx.Request.Cookies() {
+        if cookie.Name != name {
+            continue
+        }
+
+        parts := strings.SplitN(cookie.Value, &quot;|&quot;, 3)
+
+        val := parts[0]
+        timestamp := parts[1]
+        sig := parts[2]
+
+        if getCookieSig(ctx.Server.Config.CookieSecret, []byte(val), timestamp) != sig {
+            return &quot;&quot;, false
+        }
+
+        ts, _ := strconv.ParseInt(timestamp, 0, 64)
+
+        if time.Now().Unix()-31*86400 &gt; ts { // 有效时间设置为1个月
+            return &quot;&quot;, false
+        }
+
+        buf := bytes.NewBufferString(val)
+        encoder := base64.NewDecoder(base64.StdEncoding, buf)
+
+        res, _ := ioutil.ReadAll(encoder)
+        return string(res), true
+    }
+    return &quot;&quot;, false
+}
+</pre></div>
+
+
+<p>init方法，获取可执行go的static path，存在全局变量中，并reflect the context to the global variable。   </p>
+<div class="highlight"><pre><span class="x">// small optimization: cache the context type instead of repeteadly calling reflect.Typeof</span>
+<span class="x">var contextType reflect.Type</span>
+
+<span class="x">var defaultStaticDirs []string</span>
+
+<span class="x">func init() </span><span class="err">{</span><span class="x"></span>
+<span class="x">    contextType = reflect.TypeOf(Context</span><span class="err">{</span><span class="x">})</span>
+<span class="x">    //find the location of the exe file</span>
+<span class="x">    wd, _ := os.Getwd()</span>
+<span class="x">    arg0 := path.Clean(os.Args[0])</span>
+<span class="x">    var exeFile string</span>
+<span class="x">    if strings.HasPrefix(arg0, &quot;/&quot;) </span><span class="err">{</span><span class="x"></span>
+<span class="x">        exeFile = arg0</span>
+<span class="x">    } else </span><span class="err">{</span><span class="x"></span>
+<span class="x">        //TODO for robustness, search each directory in </span><span class="p">$</span><span class="nv">PATH</span><span class="x"></span>
+<span class="x">        exeFile = path.Join(wd, arg0)</span>
+<span class="x">    }</span>
+<span class="x">    parent, _ := path.Split(exeFile)</span>
+<span class="x">    defaultStaticDirs = append(defaultStaticDirs, path.Join(parent, &quot;static&quot;))</span>
+<span class="x">    defaultStaticDirs = append(defaultStaticDirs, path.Join(wd, &quot;static&quot;))</span>
+<span class="x">    return</span>
+<span class="x">}</span>
+</pre></div>
+
+
+<p>创建一个server，关于server，请看<a href="#1.3.2">server</a>, 这里可以对不同的HTTP route的不同的“method”，指定自己的handler，分别可以为: GET，POST，PUT，DELETE，arbitray http method，SOCKET指定。   </p>
+<div class="highlight"><pre>var mainServer = NewServer()
+
+// Get adds a handler for the &#39;GET&#39; http method in the main server.
+func Get(route string, handler interface{}) {
+    mainServer.Get(route, handler)
+}
+
+// Post adds a handler for the &#39;POST&#39; http method in the main server.
+func Post(route string, handler interface{}) {
+    mainServer.addRoute(route, &quot;POST&quot;, handler)
+}
+
+// Put adds a handler for the &#39;PUT&#39; http method in the main server.
+func Put(route string, handler interface{}) {
+    mainServer.addRoute(route, &quot;PUT&quot;, handler)
+}
+
+// Delete adds a handler for the &#39;DELETE&#39; http method in the main server.
+func Delete(route string, handler interface{}) {
+    mainServer.addRoute(route, &quot;DELETE&quot;, handler)
+}
+
+// Match adds a handler for an arbitrary http method in the main server.
+func Match(method string, route string, handler interface{}) {
+    mainServer.addRoute(route, method, handler)
+}
+
+//Adds a custom handler. Only for webserver mode. Will have no effect when running as FCGI or SCGI.
+func Handler(route string, method string, httpHandler http.Handler) {
+    mainServer.Handler(route, method, httpHandler)
+}
+
+//Adds a handler for websockets. Only for webserver mode. Will have no effect when running as FCGI or SCGI.
+func Websocket(route string, httpHandler websocket.Handler) {
+    mainServer.Websocket(route, httpHandler)
+}
+</pre></div>
+
+
+<h4><strong>1.3.2 server.go</strong><span id="1.3.2"></span></h4>
+<p>是整个web服务的server，用来处理不同的HTTP请求，含有几个重要的struct。 <br />
+分别为: <br />
+服务器的配置，ServerConfig:   </p>
+<div class="highlight"><pre>// ServerConfig is configuration for server objects.
+type ServerConfig struct {
+    StaticDir    string // server的静态dir
+    Addr         string // ip
+    Port         int    // port
+    CookieSecret string // The user&#39;s secret
+    RecoverPanic bool   // If use panic
+    Profiler     bool   // Profiler
+}
+</pre></div>
+
+
+<p>请求的route, route:   </p>
+<div class="highlight"><pre>type route struct {
+    r           string          // route
+    cr          *regexp.Regexp  // cimpiled route
+    method      string          // method
+    handler     reflect.Value   //
+    httpHandler http.Handler
+}
+</pre></div>
+
+
+<p>Server:   </p>
+<div class="highlight"><pre>// Server represents a web.go server.
+type Server struct {
+    Config *ServerConfig // See ServerConfig
+    routes []route       // routes
+    Logger *log.Logger   // logger
+    Env    map[string]interface{} // env
+    //save the listener so it can be closed
+    l   net.Listener
+}
+</pre></div>
+
+
+<p>为每个route，method绑定handler:   </p>
+<div class="highlight"><pre>func (s *Server) addRoute(r string, method string, handler interface{}) {
+    cr, err := regexp.Compile(r)
+    if err != nil {
+        s.Logger.Printf(&quot;Error in route regex %q\n&quot;, r)
+        return
+    }
+
+    switch handler.(type) {
+    case http.Handler:
+        s.routes = append(s.routes, route{r: r, cr: cr, method: method, httpHandler: handler.(http.Handler)})
+    case reflect.Value:
+        fv := handler.(reflect.Value)
+        s.routes = append(s.routes, route{r: r, cr: cr, method: method, handler: fv})
+    default:
+        fv := reflect.ValueOf(handler)
+        s.routes = append(s.routes, route{r: r, cr: cr, method: method, handler: fv})
+    }
+}
+</pre></div>
+
+
+<p>几个创建server的方式函数, 这里还有性能分析的神器<a href="https://golang.org/pkg/net/http/pprof/">pprof</a>：   </p>
+<div class="highlight"><pre>// Run starts the web application and serves HTTP requests for s
+func (s *Server) Run(addr string) {
+    s.initServer()
+
+    mux := http.NewServeMux()
+    if s.Config.Profiler {
+        mux.Handle(&quot;/debug/pprof/cmdline&quot;, http.HandlerFunc(pprof.Cmdline))
+        mux.Handle(&quot;/debug/pprof/profile&quot;, http.HandlerFunc(pprof.Profile))
+        mux.Handle(&quot;/debug/pprof/heap&quot;, pprof.Handler(&quot;heap&quot;))
+        mux.Handle(&quot;/debug/pprof/symbol&quot;, http.HandlerFunc(pprof.Symbol))
+    }
+    mux.Handle(&quot;/&quot;, s)
+
+    s.Logger.Printf(&quot;web.go serving %s\n&quot;, addr)
+
+    l, err := net.Listen(&quot;tcp&quot;, addr)
+    if err != nil {
+        log.Fatal(&quot;ListenAndServe:&quot;, err)
+    }
+    s.l = l
+    err = http.Serve(s.l, mux)
+    s.l.Close()
+}
+
+// RunFcgi starts the web application and serves FastCGI requests for s.
+func (s *Server) RunFcgi(addr string) {
+    s.initServer()
+    s.Logger.Printf(&quot;web.go serving fcgi %s\n&quot;, addr)
+    s.listenAndServeFcgi(addr)
+}
+
+// RunScgi starts the web application and serves SCGI requests for s.
+func (s *Server) RunScgi(addr string) {
+    s.initServer()
+    s.Logger.Printf(&quot;web.go serving scgi %s\n&quot;, addr)
+    s.listenAndServeScgi(addr)
+}
+
+// RunTLS starts the web application and serves HTTPS requests for s.
+func (s *Server) RunTLS(addr string, config *tls.Config) error {
+    s.initServer()
+    mux := http.NewServeMux()
+    mux.Handle(&quot;/&quot;, s)
+    l, err := tls.Listen(&quot;tcp&quot;, addr, config)
+    if err != nil {
+        log.Fatal(&quot;Listen:&quot;, err)
+        return err
+    }
+
+    s.l = l
+    return http.Serve(s.l, mux)
+}
+
+// Close stops server s.
+func (s *Server) Close() {
+    if s.l != nil {
+        s.l.Close()
+    }
+}
+</pre></div>
+
+
+<p>invoke该route，该method的时候的safe函数： </p>
+<div class="highlight"><pre><span class="c1">// safelyCall invokes `function` in recover block</span>
+<span class="nx">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Server</span><span class="p">)</span> <span class="nx">safelyCall</span><span class="p">(</span><span class="kd">function</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Value</span><span class="p">,</span> <span class="nx">args</span> <span class="cp">[]</span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span> <span class="p">(</span><span class="nx">resp</span> <span class="cp">[]</span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Value</span><span class="p">,</span> <span class="nx">e</span> <span class="kr">interface</span><span class="p">{})</span> <span class="p">{</span>
+    <span class="nx">defer</span> <span class="nx">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">recover</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="nx">nil</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="o">!</span><span class="nx">s</span><span class="p">.</span><span class="nx">Config</span><span class="p">.</span><span class="nx">RecoverPanic</span> <span class="p">{</span>
+                <span class="c1">// go back to panic</span>
+                <span class="nx">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">e</span> <span class="o">=</span> <span class="nx">err</span>
+                <span class="nx">resp</span> <span class="o">=</span> <span class="nx">nil</span>
+                <span class="nx">s</span><span class="p">.</span><span class="nx">Logger</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s2">&quot;Handler crashed with error&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+                <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span> <span class="p">{</span>
+                    <span class="nx">_</span><span class="p">,</span> <span class="nx">file</span><span class="p">,</span> <span class="nx">line</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Caller</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="o">!</span><span class="nx">ok</span> <span class="p">{</span>
+                        <span class="k">break</span>
+                    <span class="p">}</span>
+                    <span class="nx">s</span><span class="p">.</span><span class="nx">Logger</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">line</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">.</span><span class="nx">Call</span><span class="p">(</span><span class="nx">args</span><span class="p">),</span> <span class="nx">nil</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>判断一个handle_type的第一个参数是不是web.go中的contextType，也就是Web.go中的Context struct：</p>
+<div class="highlight"><pre>// requiresContext determines whether &#39;handlerType&#39; contains
+// an argument to &#39;web.Ctx&#39; as its first argument
+func requiresContext(handlerType reflect.Type) bool {
+    //if the method doesn&#39;t take arguments, no
+    if handlerType.NumIn() == 0 {
+        return false
+    }
+
+    //if the first argument is not a pointer, no
+    a0 := handlerType.In(0)
+    if a0.Kind() != reflect.Ptr {
+        return false
+    }
+    //if the first argument is a context, yes
+    if a0.Elem() == contextType {
+        return true
+    }
+
+    return false
+}
+</pre></div>
+
+
+<p>记录每次Request请求参数，route等：   </p>
+<div class="highlight"><pre>func (s *Server) logRequest(ctx Context, sTime time.Time) {
+    //log the request
+    var logEntry bytes.Buffer
+    req := ctx.Request
+    requestPath := req.URL.Path
+
+    duration := time.Now().Sub(sTime)
+    var client string
+
+    // We suppose RemoteAddr is of the form Ip:Port as specified in the Request
+    // documentation at http://golang.org/pkg/net/http/#Request
+    pos := strings.LastIndex(req.RemoteAddr, &quot;:&quot;)
+    if pos &gt; 0 {
+        client = req.RemoteAddr[0:pos]
+    } else {
+        client = req.RemoteAddr
+    }
+
+    fmt.Fprintf(&amp;logEntry, &quot;%s - \033[32;1m %s %s\033[0m - %v&quot;, client, req.Method, requestPath, duration)
+
+    if len(ctx.Params) &gt; 0 {
+        fmt.Fprintf(&amp;logEntry, &quot; - \033[37;1mParams: %v\033[0m\n&quot;, ctx.Params)
+    }
+
+    ctx.Server.Logger.Print(logEntry.String())
+
+}
+</pre></div>
+
+
+<p>返回static网页的函数，首先在当前server的path下寻找，找不到在当前的static下找，最后去../static下找：   </p>
+<div class="highlight"><pre>// tryServingFile attempts to serve a static file, and returns
+// whether or not the operation is successful.
+// It checks the following directories for the file, in order:
+// 1) Config.StaticDir
+// 2) The &#39;static&#39; directory in the parent directory of the executable.
+// 3) The &#39;static&#39; directory in the current working directory
+func (s *Server) tryServingFile(name string, req *http.Request, w http.ResponseWriter) bool {
+    //try to serve a static file
+    if s.Config.StaticDir != &quot;&quot; {
+        staticFile := path.Join(s.Config.StaticDir, name)
+        if fileExists(staticFile) {
+            http.ServeFile(w, req, staticFile)
+            return true
+        }
+    } else {
+        for _, staticDir := range defaultStaticDirs {
+            staticFile := path.Join(staticDir, name)
+            if fileExists(staticFile) {
+                http.ServeFile(w, req, staticFile)
+                return true
+            }
+        }
+    }
+    return false
+}
+</pre></div>
+
+
+<p>其中，server.go中，ServeHTTP是net/http的接口方法，所以http serve之后，发来的请求会直接通过ServeHTTP接受来处理，这里是直接发到Process去处理。   </p>
+<div class="highlight"><pre>// ServeHTTP is the interface method for Go&#39;s http server package
+func (s *Server) ServeHTTP(c http.ResponseWriter, req *http.Request) {
+    s.Process(c, req)
+}
+// Process invokes the routing system for server s
+func (s *Server) Process(c http.ResponseWriter, req *http.Request) {
+    route := s.routeHandler(req, c)
+    if route != nil {
+        route.httpHandler.ServeHTTP(c, req)
+    }
+}
+</pre></div>
+
+
+<h4><strong>1.3.3 scgi.go</strong><span id="1.3.3"></span></h4>
+<p><a href="http://baike.baidu.com/view/8051145.htm">scgi</a> request和response的实现。struts： <br />
+scgiBody:   </p>
+<div class="highlight"><pre>type scgiBody struct {
+    reader io.Reader    // reader
+    conn   io.ReadWriteCloser // connector
+    closed bool // if it is cloesed
+}
+</pre></div>
+
+
+<p>scgiConn:   </p>
+<div class="highlight"><pre>type scgiConn struct {
+    fd           io.ReadWriteCloser // read fd
+    req          *http.Request // http request
+    headers      http.Header // http header
+    wroteHeaders bool // if has wrote headers
+}
+</pre></div>
+
+
+<p>scgi的listen方法，不断的监听，并对每个请求，开一个goroutine handleScgiRequest去解决：  </p>
+<div class="highlight"><pre>func (s *Server) listenAndServeScgi(addr string) error {
+
+    var l net.Listener
+    var err error
+
+    //if the path begins with a &quot;/&quot;, assume it&#39;s a unix address
+    if strings.HasPrefix(addr, &quot;/&quot;) {
+        l, err = net.Listen(&quot;unix&quot;, addr)
+    } else {
+        l, err = net.Listen(&quot;tcp&quot;, addr)
+    }
+
+    //save the listener so it can be closed
+    s.l = l
+
+    if err != nil {
+        s.Logger.Println(&quot;SCGI listen error&quot;, err.Error())
+        return err
+    }
+
+    for {
+        fd, err := l.Accept()
+        if err != nil {
+            s.Logger.Println(&quot;SCGI accept error&quot;, err.Error())
+            return err
+        }
+        go s.handleScgiRequest(fd)
+    }
+    return nil
+}
+</pre></div>
+
+
+<p>scgi的对请求处理的worker，调用readScgiRequest解析scgi中的request：</p>
+<div class="highlight"><pre>func (s *Server) handleScgiRequest(fd io.ReadWriteCloser) {
+    req, err := s.readScgiRequest(fd)
+    if err != nil {
+        s.Logger.Println(&quot;SCGI error: %q&quot;, err.Error())
+    }
+    sc := scgiConn{fd, req, make(map[string][]string), false}
+    s.routeHandler(req, &amp;sc)
+    sc.finishRequest()
+    fd.Close()
+}
+</pre></div>
+
+
+<p>read scgi发送过来的头部，并转换成scgiBody： </p>
+<div class="highlight"><pre>func (s *Server) readScgiRequest(fd io.ReadWriteCloser) (*http.Request, error) {
+    reader := bufio.NewReader(fd)
+    line, err := reader.ReadString(&#39;:&#39;)
+    if err != nil {
+        s.Logger.Println(&quot;Error during SCGI read: &quot;, err.Error())
+    }
+    length, _ := strconv.Atoi(line[0 : len(line)-1])
+    if length &gt; 16384 {
+        s.Logger.Println(&quot;Error: max header size is 16k&quot;)
+    }
+    headerData := make([]byte, length)
+    _, err = reader.Read(headerData)
+    if err != nil {
+        return nil, err
+    }
+
+    b, err := reader.ReadByte()
+    if err != nil {
+        return nil, err
+    }
+    // discard the trailing comma
+    if b != &#39;,&#39; {
+        return nil, errors.New(&quot;SCGI protocol error: missing comma&quot;)
+    }
+    headerList := bytes.Split(headerData, []byte{0})
+    headers := map[string]string{}
+    for i := 0; i &lt; len(headerList)-1; i += 2 {
+        headers[string(headerList[i])] = string(headerList[i+1])
+    }
+    httpReq, err := cgi.RequestFromMap(headers)
+    if err != nil {
+        return nil, err
+    }
+    if httpReq.ContentLength &gt; 0 {
+        httpReq.Body = &amp;scgiBody{
+            reader: io.LimitReader(reader, httpReq.ContentLength),
+            conn:   fd,
+        }
+    } else {
+        httpReq.Body = &amp;scgiBody{reader: reader, conn: fd}
+    }
+    return httpReq, nil
+}
+</pre></div>
+
+
+<h4><strong>1.3.4 fcgi.go</strong><span id="1.3.4"></span></h4>
+<p>fcgi 只提供listen的方法：   </p>
+<div class="highlight"><pre>func (s *Server) listenAndServeFcgi(addr string) error {
+    var l net.Listener
+    var err error
+
+    //if the path begins with a &quot;/&quot;, assume it&#39;s a unix address
+    if addr[0] == &#39;/&#39; {
+        l, err = net.Listen(&quot;unix&quot;, addr)
+    } else {
+        l, err = net.Listen(&quot;tcp&quot;, addr)
+    }
+
+    //save the listener so it can be closed
+    s.l = l
+
+    if err != nil {
+        s.Logger.Println(&quot;FCGI listen error&quot;, err.Error())
+        return err
+    }
+    return fcgi.Serve(s.l, s)
+}
+</pre></div>
+
+
+<h4><strong>1.3.5 status.go</strong><span id="1.3.5"></span></h4>
+<p>对http的一些状态值自定义映射成string类型：   </p>
+<div class="highlight"><pre>var statusText = map[int]string{
+    http.StatusContinue:           &quot;Continue&quot;,
+    http.StatusSwitchingProtocols: &quot;Switching Protocols&quot;,
+
+    http.StatusOK:                   &quot;OK&quot;,
+    http.StatusCreated:              &quot;Created&quot;,
+    http.StatusAccepted:             &quot;Accepted&quot;,
+    http.StatusNonAuthoritativeInfo: &quot;Non-Authoritative Information&quot;,
+    http.StatusNoContent:            &quot;No Content&quot;,
+    http.StatusResetContent:         &quot;Reset Content&quot;,
+    http.StatusPartialContent:       &quot;Partial Content&quot;,
+
+    http.StatusMultipleChoices:   &quot;Multiple Choices&quot;,
+    http.StatusMovedPermanently:  &quot;Moved Permanently&quot;,
+    http.StatusFound:             &quot;Found&quot;,
+    http.StatusSeeOther:          &quot;See Other&quot;,
+    http.StatusNotModified:       &quot;Not Modified&quot;,
+    http.StatusUseProxy:          &quot;Use Proxy&quot;,
+    http.StatusTemporaryRedirect: &quot;Temporary Redirect&quot;,
+
+    http.StatusBadRequest:                   &quot;Bad Request&quot;,
+    http.StatusUnauthorized:                 &quot;Unauthorized&quot;,
+    http.StatusPaymentRequired:              &quot;Payment Required&quot;,
+    http.StatusForbidden:                    &quot;Forbidden&quot;,
+    http.StatusNotFound:                     &quot;Not Found&quot;,
+    http.StatusMethodNotAllowed:             &quot;Method Not Allowed&quot;,
+    http.StatusNotAcceptable:                &quot;Not Acceptable&quot;,
+    http.StatusProxyAuthRequired:            &quot;Proxy Authentication Required&quot;,
+    http.StatusRequestTimeout:               &quot;Request Timeout&quot;,
+    http.StatusConflict:                     &quot;Conflict&quot;,
+    http.StatusGone:                         &quot;Gone&quot;,
+    http.StatusLengthRequired:               &quot;Length Required&quot;,
+    http.StatusPreconditionFailed:           &quot;Precondition Failed&quot;,
+    http.StatusRequestEntityTooLarge:        &quot;Request Entity Too Large&quot;,
+    http.StatusRequestURITooLong:            &quot;Request URI Too Long&quot;,
+    http.StatusUnsupportedMediaType:         &quot;Unsupported Media Type&quot;,
+    http.StatusRequestedRangeNotSatisfiable: &quot;Requested Range Not Satisfiable&quot;,
+    http.StatusExpectationFailed:            &quot;Expectation Failed&quot;,
+
+    http.StatusInternalServerError:     &quot;Internal Server Error&quot;,
+    http.StatusNotImplemented:          &quot;Not Implemented&quot;,
+    http.StatusBadGateway:              &quot;Bad Gateway&quot;,
+    http.StatusServiceUnavailable:      &quot;Service Unavailable&quot;,
+    http.StatusGatewayTimeout:          &quot;Gateway Timeout&quot;,
+    http.StatusHTTPVersionNotSupported: &quot;HTTP Version Not Supported&quot;,
+}
+</pre></div>
+
+
+<h4><strong>1.3.6 helper.go</strong><span id="1.3.6"></span></h4>
+<p>helper.go里面实现了web.go的一些helper function, 比如UrlEncode，NewCookie封装函数等。 <br />
+代码也很简单：   </p>
+<div class="highlight"><pre><span class="c1">// internal utility methods</span>
+<span class="nx">func</span> <span class="nx">webTime</span><span class="p">(</span><span class="nx">t</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="p">)</span> <span class="nx">string</span> <span class="p">{</span>
+    <span class="nx">ftime</span> <span class="o">:=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">Format</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">RFC1123</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">HasSuffix</span><span class="p">(</span><span class="nx">ftime</span><span class="p">,</span> <span class="s2">&quot;UTC&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ftime</span> <span class="o">=</span> <span class="nx">ftime</span><span class="cp">[</span><span class="mi">0</span><span class="p">:</span><span class="nx">len</span><span class="p">(</span><span class="nx">ftime</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="cp">]</span> <span class="o">+</span> <span class="s2">&quot;GMT&quot;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">ftime</span>
+<span class="p">}</span>
+
+<span class="nx">func</span> <span class="nx">dirExists</span><span class="p">(</span><span class="nx">dir</span> <span class="nx">string</span><span class="p">)</span> <span class="nx">bool</span> <span class="p">{</span>
+    <span class="nx">d</span><span class="p">,</span> <span class="nx">e</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Stat</span><span class="p">(</span><span class="nx">dir</span><span class="p">)</span>
+    <span class="k">switch</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nx">e</span> <span class="o">!=</span> <span class="nx">nil</span><span class="o">:</span>
+        <span class="k">return</span> <span class="kc">false</span>
+    <span class="k">case</span> <span class="o">!</span><span class="nx">d</span><span class="p">.</span><span class="nx">IsDir</span><span class="p">()</span><span class="o">:</span>
+        <span class="k">return</span> <span class="kc">false</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+
+<span class="nx">func</span> <span class="nx">fileExists</span><span class="p">(</span><span class="nx">dir</span> <span class="nx">string</span><span class="p">)</span> <span class="nx">bool</span> <span class="p">{</span>
+    <span class="nx">info</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Stat</span><span class="p">(</span><span class="nx">dir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="nx">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">false</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="o">!</span><span class="nx">info</span><span class="p">.</span><span class="nx">IsDir</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="c1">// Urlencode is a helper method that converts a map into URL-encoded form data.</span>
+<span class="c1">// It is a useful when constructing HTTP POST requests.</span>
+<span class="nx">func</span> <span class="nx">Urlencode</span><span class="p">(</span><span class="nx">data</span> <span class="nx">map</span><span class="cp">[</span><span class="kt">string</span><span class="cp">]</span><span class="nx">string</span><span class="p">)</span> <span class="nx">string</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">buf</span> <span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span>
+    <span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="nx">range</span> <span class="nx">data</span> <span class="p">{</span>
+        <span class="nx">buf</span><span class="p">.</span><span class="nx">WriteString</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">QueryEscape</span><span class="p">(</span><span class="nx">k</span><span class="p">))</span>
+        <span class="nx">buf</span><span class="p">.</span><span class="nx">WriteByte</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+        <span class="nx">buf</span><span class="p">.</span><span class="nx">WriteString</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">QueryEscape</span><span class="p">(</span><span class="nx">v</span><span class="p">))</span>
+        <span class="nx">buf</span><span class="p">.</span><span class="nx">WriteByte</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">s</span> <span class="o">:=</span> <span class="nx">buf</span><span class="p">.</span><span class="nb">String</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nx">s</span><span class="cp">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nx">len</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="cp">]</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">slugRegex</span> <span class="o">=</span> <span class="nx">regexp</span><span class="p">.</span><span class="nx">MustCompile</span><span class="p">(</span><span class="err">`</span><span class="p">(</span><span class="o">?</span><span class="nx">i</span><span class="o">:</span><span class="cp">[</span><span class="p">^</span><span class="nx">a</span><span class="na">-z0</span><span class="o">-</span><span class="mi">9</span><span class="o">\-</span><span class="nx">_</span><span class="cp">]</span><span class="p">)</span><span class="err">`</span><span class="p">)</span>
+
+<span class="c1">// Slug is a helper function that returns the URL slug for string s.</span>
+<span class="c1">// It&#39;s used to return clean, URL-friendly strings that can be</span>
+<span class="c1">// used in routing.</span>
+<span class="nx">func</span> <span class="nx">Slug</span><span class="p">(</span><span class="nx">s</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">sep</span> <span class="nx">string</span><span class="p">)</span> <span class="nx">string</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">s</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+    <span class="p">}</span>
+    <span class="nx">slug</span> <span class="o">:=</span> <span class="nx">slugRegex</span><span class="p">.</span><span class="nx">ReplaceAllString</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">sep</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">slug</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+    <span class="p">}</span>
+    <span class="nx">quoted</span> <span class="o">:=</span> <span class="nx">regexp</span><span class="p">.</span><span class="nx">QuoteMeta</span><span class="p">(</span><span class="nx">sep</span><span class="p">)</span>
+    <span class="nx">sepRegex</span> <span class="o">:=</span> <span class="nx">regexp</span><span class="p">.</span><span class="nx">MustCompile</span><span class="p">(</span><span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="nx">quoted</span> <span class="o">+</span> <span class="s2">&quot;){2,}&quot;</span><span class="p">)</span>
+    <span class="nx">slug</span> <span class="o">=</span> <span class="nx">sepRegex</span><span class="p">.</span><span class="nx">ReplaceAllString</span><span class="p">(</span><span class="nx">slug</span><span class="p">,</span> <span class="nx">sep</span><span class="p">)</span>
+    <span class="nx">sepEnds</span> <span class="o">:=</span> <span class="nx">regexp</span><span class="p">.</span><span class="nx">MustCompile</span><span class="p">(</span><span class="s2">&quot;^&quot;</span> <span class="o">+</span> <span class="nx">quoted</span> <span class="o">+</span> <span class="s2">&quot;|&quot;</span> <span class="o">+</span> <span class="nx">quoted</span> <span class="o">+</span> <span class="s2">&quot;$&quot;</span><span class="p">)</span>
+    <span class="nx">slug</span> <span class="o">=</span> <span class="nx">sepEnds</span><span class="p">.</span><span class="nx">ReplaceAllString</span><span class="p">(</span><span class="nx">slug</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">ToLower</span><span class="p">(</span><span class="nx">slug</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// NewCookie is a helper method that returns a new http.Cookie object.</span>
+<span class="c1">// Duration is specified in seconds. If the duration is zero, the cookie is permanent.</span>
+<span class="c1">// This can be used in conjunction with ctx.SetCookie.</span>
+<span class="nx">func</span> <span class="nx">NewCookie</span><span class="p">(</span><span class="nx">name</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">age</span> <span class="nx">int64</span><span class="p">)</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Cookie</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">utctime</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Time</span>
+    <span class="k">if</span> <span class="nx">age</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="c1">// 2^31 - 1 seconds (roughly 2038)</span>
+        <span class="nx">utctime</span> <span class="o">=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Unix</span><span class="p">(</span><span class="mi">2147483647</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">utctime</span> <span class="o">=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Unix</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">Unix</span><span class="p">()</span><span class="o">+</span><span class="nx">age</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">&amp;</span><span class="nx">http</span><span class="p">.</span><span class="nx">Cookie</span><span class="p">{</span><span class="nx">Name</span><span class="o">:</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">Value</span><span class="o">:</span> <span class="nx">value</span><span class="p">,</span> <span class="nx">Expires</span><span class="o">:</span> <span class="nx">utctime</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// GetBasicAuth is a helper method of *Context that returns the decoded</span>
+<span class="c1">// user and password from the *Context&#39;s authorization header</span>
+<span class="nx">func</span> <span class="p">(</span><span class="nx">ctx</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span> <span class="nx">GetBasicAuth</span><span class="p">()</span> <span class="p">(</span><span class="nx">string</span><span class="p">,</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">authHeader</span> <span class="o">:=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">Request</span><span class="p">.</span><span class="nx">Header</span><span class="cp">[</span><span class="s2">&quot;Authorization&quot;</span><span class="cp">][</span><span class="mi">0</span><span class="cp">]</span>
+    <span class="nx">authString</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Split</span><span class="p">(</span><span class="nx">string</span><span class="p">(</span><span class="nx">authHeader</span><span class="p">),</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">authString</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> <span class="o">!=</span> <span class="s2">&quot;Basic&quot;</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="s2">&quot;Not Basic Authentication&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">decodedAuth</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">base64</span><span class="p">.</span><span class="nx">StdEncoding</span><span class="p">.</span><span class="nx">DecodeString</span><span class="p">(</span><span class="nx">authString</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="nx">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="nx">authSlice</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Split</span><span class="p">(</span><span class="nx">string</span><span class="p">(</span><span class="nx">decodedAuth</span><span class="p">),</span> <span class="s2">&quot;:&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">len</span><span class="p">(</span><span class="nx">authSlice</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="s2">&quot;Error delimiting authString into username/password. Malformed input: &quot;</span> <span class="o">+</span> <span class="nx">authString</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">authSlice</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span><span class="p">,</span> <span class="nx">authSlice</span><span class="cp">[</span><span class="mi">1</span><span class="cp">]</span><span class="p">,</span> <span class="nx">nil</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h4><strong>1.3.7 web_test.go</strong><span id="1.3.7"></span></h4>
+<p>web_test是web.go的测试代码，读完测试并结合sample里面的代码，也可以照葫芦画瓢迅速搭起一个测试环境。   </p>
+            
+            <section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://aleda.cn/article/2015/08/web.go/#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'aleda';
+        var disqus_identifier = 'http://aleda.cn/article/2015/08/web.go/';
+    var disqus_url = 'http://aleda.cn/article/2015/08/web.go/';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+            <hr/>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2015-08-29T16:28:00+08:00">Aug 29, 2015</time>
+            <h4>Category</h4>
+            <a class="category-link" href="http://aleda.cn/categories.html#code-reading-ref">code-reading</a>
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article">
+                <li><a href="http://aleda.cn/tags.html#code-reading-ref">code-reading
+                    <span>2</span>
+</a></li>
+                <li><a href="http://aleda.cn/tags.html#experience-ref">experience
+                    <span>4</span>
+</a></li>
+            </ul>
+<h4>Contact</h4>
+    <a href="http://github.com/Aleda" title="My Github Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-github sidebar-social-links"></i></a>
+    <a href="mailto:aledalee@foxmail.com" title="My Email Address" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-envelope sidebar-social-links"></i></a>
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+        <div id="push"></div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+            <script type="text/javascript">
+var disqus_shortname = 'aleda';
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+<script  language="javascript" type="text/javascript">
+function uncollapse() {
+    if (window.location.hash.match(/^#comment-\d+$/)) {
+        $('#disqus_thread').collapse('show');
+    }
+}
+</script>
+<script type="text/javascript" language="JavaScript">
+uncollapse();
+window.onhashchange=function(){
+    if (window.location.hash.match(/^#comment-\d+$/))
+        window.location.reload(true);
+}
+</script>
+<script>
+$('#disqus_thread').on('shown', function () {
+    var link = document.getElementsByClassName('accordion-toggle');
+    var old_innerHTML = link[0].innerHTML;
+    $(link[0]).fadeOut(500, function() {
+        $(this).text('Click here to hide comments').fadeIn(500);
+    });
+    $('#disqus_thread').on('hidden', function () {
+        $(link[0]).fadeOut(500, function() {
+            $(this).text(old_innerHTML).fadeIn(500);
+        });
+    })
+})
+</script>
+
+
+    </body>
+    <!-- Theme: Elegant built for Pelican
+    License : http://oncrashreboot.com/pelican-elegant -->
+</html>

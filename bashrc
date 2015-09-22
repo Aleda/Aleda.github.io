@@ -84,14 +84,14 @@ RET_PARAMS_ERROR=2
 
 # ======================= global exports ======================== #
 # PATH
-export PATH="$PATH:$HOME/.jumbo/bin/"
+export PATH="$PATH:$HOME/.jumbo/bin/:$HOME/.jumbo/lib/go/site/bin/"
 # PS1 commander setting; [useful]
 export PS1="[\[\e[36;1m\]\u@\H\[\e[32;1m\]:\w\[\e[0m\]]\n\[\e[32;1m\]\$\[\e[0m\]"
 # python encoding; [useful]
 export PYTHONIOENCODING=utf-8
 # terminal term; [default]
 export TERM="xterm"
-# modified the language env
+# LANG
 export LANG="en_US.utf-8"
 # ======================= global exports ======================== #
 
@@ -284,5 +284,104 @@ function ip_config()
     return ${RET_RUNNING_OK}
 }
 
+##! @brief : utc time to formatted time
+##! @params: $1 => utc seconds
+##! @return: see return code list
+function utc2date()
+{
+    local utc=${1}
+    local date=`date -d "1970-01-01 UTC ${utc} seconds" +"%Y-%m-%d_%H:%M:%S"`
+    echo "${date}"
+    return ${RET_RUNNING_OK}
+}
+
+##! @brief : extract, add up and sort.
+##! @params: NULL
+##! @return: see return code list
+function ext_site()
+{
+    awk '
+    function ext_site(url) {
+        n = split(url, url_arr, "/")
+        if (n <= 0) {
+            return url
+        }
+        if(url ~ /^http[s]?:/) {
+            return url_arr[3]
+        } else {
+            return url_arr[1]
+        }
+        return url
+    }
+    {
+        d[ext_site($1)]++
+    }
+    END {
+        for (site in d) {
+            print site"\t"d[site]
+        }
+    }
+    '
+    return ${RET_RUNNING_OK}
+}
+
+##! @brief : merge the `two` file through the key in first col.
+##!        : Want to go deep in use, please see `join`
+##!        : NOTICE: seperator => '\t'
+##! @params: NULL
+##! @return: see return code list
+function merge_key()
+{
+    local file1=$1
+    local file2=$2
+    if [[ ! -e ${file1} ]] || [[ ! -e ${file2} ]]; then
+        log_fatal "${file1} not exists or ${file2} not exists"
+        return ${RET_PARAMS_ERROR}
+    fi
+    awk '
+    BEGIN{
+        FS  = "\t"
+        OFS = "\t"
+        split_num = -1
+    }{
+        if (ARGIND == 1) {
+            dct[$1] = $0
+        }
+        else if (ARGIND == 2) {
+            split_num = split($0, a, FS)
+            if ($1 in dct) {
+                printf("%s%s", dct[$1], OFS)
+                for(i = 2; i < NF; i++) {
+                    printf("%s%s", $i, OFS)
+                }
+                printf("%s\n", $NF)
+                dct[$1] = -1
+            }
+            else {
+                printf("%s%sNULL%s", $1, OFS, OFS)
+                for (i = 2; i < NF; i++) {
+                    printf("%s\t", $i)
+                }
+                printf("%s\n", $NF)
+            }
+        }
+    }END{
+        for (key in dct) {
+            if (dct[key] != -1) {
+                printf("%s%s", dct[key], OFS)
+                split_num = split(dct[key], a, FS)
+                if (split_num == -1)
+                    printf("\n")
+                else {
+                    for (i = 2; i <= split_num; i++) {
+                        printf("NULL%s", OFS)
+                    }
+                    printf("\n")
+                }
+            }
+        }
+    }' ${file1} ${file2} 
+    return ${RET_RUNNING_OK}
+}
 
 # ====================== global functions ======================== #

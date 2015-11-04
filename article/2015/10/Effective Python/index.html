@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Aleda" />
+        <meta name="copyright" content="Aleda" />
+
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary">
+
+<meta name="keywords" content="code-reading, experience, code-reading, " />
+
+<meta property="og:title" content="Effective Python "/>
+<meta property="og:url" content="http://aleda.cn/article/2015/10/Effective Python/" />
+<meta property="og:description" content="Effective Programming" />
+<meta property="og:site_name" content="Aleda | Make Different" />
+<meta property="og:article:author" content="Aleda" />
+<meta property="og:article:published_time" content="2015-10-08T12:42:00+08:00" />
+<meta name="twitter:title" content="Effective Python ">
+<meta name="twitter:description" content="Effective Programming">
+
+        <title>Effective Python  · Aleda | Make Different
+</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/pygments.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/tipuesearch/tipuesearch.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/elegant.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/custom.css" media="screen">
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://aleda.cn/"><span class=site-name><span style="color:black;">Aleda</span> |  <span style="color:#AA1032;"> Make Different </span></span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://aleda.cn">Home</a></li>
+                            <li ><a href="http://aleda.cn/categories.html">Categories</a></li>
+                            <li ><a href="http://aleda.cn/tags.html">Tags</a></li>
+                            <li ><a href="http://aleda.cn/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://aleda.cn/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page-header span10 offset2">
+    <h1><a href="http://aleda.cn/article/2015/10/Effective Python/"> Effective Python  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            
+            <h1>Effective Python</h1>
+<h2><strong>Table of Contents</strong></h2>
+<ul>
+<li><a href="#1"><strong>1 Effective Python</strong></a>    <ul>
+<li><a href="#1.1"><strong>1.1 Introduction</strong></a>    </li>
+<li><a href="#1.2"><strong>1.2 Items</strong></a>   <ul>
+<li><a href="#1.2.1"><strong>1.2.1 Item 1: 理解pythonic概念 &amp; 编写pythonic的代码</strong></a></li>
+<li><a href="#1.2.2"><strong>1.2.2 Item 2: assert、isinstance、eval、enumerate、iteritems的使用</strong></a></li>
+<li><a href="#1.2.3"><strong>1.2.3 Item 3: else在python中的使用</strong></a></li>
+<li><a href="#1.2.4"><strong>1.2.4 Item 4: 使用format代替%进行字符串格式化</strong></a></li>
+<li><a href="#1.2.5"><strong>1.2.5 Item 5: 确认对象是否可变，多使用简单的列表推导生成列表</strong></a>   </li>
+<li><a href="#1.2.6"><strong>1.2.6 Item 6: 明确函数传递的方法</strong></a></li>
+<li><a href="#1.2.7"><strong>1.2.7 Item 7: python基础库的学习</strong></a></li>
+<li><a href="#1.2.8"><strong>1.2.8 Item 8: 在python中的设计模式</strong></a>   </li>
+<li><a href="#1.2.9"><strong>1.2.9 Item 9: 了解python的内部机制</strong></a></li>
+<li><a href="#1.2.10"><strong>1.2.10 Item 10: 了解python的内部机制</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2><strong>1 Effective Python</strong></h2>
+<p>自己也最近一直在搞python相关的开发，也进行了对于自己比较大的项目，但个人觉得写的还是不够pythonic。 <br />
+看到网上居然还有<strong>Effective python</strong>系列，故，读之，记之。
+但整体看完，确实能收获些东西，但整体效果不是很大，对我而言，可能看源码让我进步更快一些，但从广度上来看，读书确实更能有效的增加你的广度。<br />
+btw，pydoc是十分完善的，所以，学习python，读pydoc是一个不错的选择！</p>
+<h3><strong>1.1 Introduction</strong><span id="1.1"></span></h3>
+<p>发现自己学习一项知识从来都不是通过<strong>细致的读书</strong>得来的，从来都是通过吃自己基础知识的老本，然后遇到问题，解决问题，一步一步的去学习&amp;fix。 <br />
+也许是，自己在这样的工作环境下，需要<em>拔苗助长</em>吧。   <br />
+不过，自己既然已经答应自己：一天的工作，无论怎样都要给自己单独的几个小时去自学，就不管怎样也要坚持下去！   </p>
+<h3><strong>1.2 Items</strong><span id="1.2"></span></h3>
+<p>和书中所列一样，根据知识的<em>深度</em>分类记录我对于每条item的看法与所见所得。   </p>
+<h4><strong>Item 1: 理解pythonic概念 &amp; 编写pythonic的代码</strong><span id="1.2.1"></span></h4>
+<p>pythonic的代码就是能够充分体现python自身特色的代码风格，eg：</p>
+<ul>
+<li>字符串格式化的推荐方式：   <ul>
+<li>print '{greeting} from {whom}'.format(greeting = 'Hello World', whom = 'Aleda')   </li>
+<li>print '%(greeting)s from $(whom)s' % {'greeting': 'Hello World', 'whom': 'Aleda'}   </li>
+</ul>
+</li>
+</ul>
+<p>对于python中，是不支持常量的，但是可以通过定义类的方法来实现const，并将所有的常量写到一个文件中。例如：  </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="c">################################################################################</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2015 Baidu.com, Inc. All Rights Reserved</span>
+<span class="c">#</span>
+<span class="c">################################################################################</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module for the constant.</span>
+
+<span class="sd">Authors: Aleda(lishuo02@baidu.com)</span>
+<span class="sd">Date:    2015/10/08 16:48:06</span>
+<span class="sd">Version: 1.0.0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span> <span class="nc">Const</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">ConstError</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">):</span> <span class="k">pass</span>
+    <span class="k">class</span> <span class="nc">ConstCaseError</span><span class="p">(</span><span class="n">ConstError</span><span class="p">):</span> <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">ConstError</span><span class="p">,</span> <span class="s">&quot;Can&#39;t change const. </span><span class="si">%(name)s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">isupper</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">ConstCaseError</span><span class="p">,</span> <span class="s">&quot;const name: </span><span class="si">%(name)s</span><span class="s"> not all uppercase.&quot;</span> <span class="o">%</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+
+<span class="n">const</span> <span class="o">=</span> <span class="n">Const</span> <span class="o">=</span> <span class="n">Constant</span> <span class="o">=</span> <span class="n">constant</span> <span class="o">=</span> <span class="n">Const</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; Main</span>
+<span class="sd">    Test:</span>
+<span class="sd">        &gt;&gt;&gt; constant.NAME = &#39;Aleda&#39;</span>
+<span class="sd">        &gt;&gt;&gt; print constant.NAME</span>
+<span class="sd">        Aleda</span>
+<span class="sd">        &gt;&gt;&gt; constant.NAME = &#39;Monique&#39;</span>
+<span class="sd">        Traceback (most recent call last):</span>
+<span class="sd">        ...</span>
+<span class="sd">        ConstError: Can&#39;t change const. NAME</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+    <span class="c"># python -m doctest -v constant.py</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+
+<h4><strong>Item 2: assert、isinstance、eval、enumerate、iteritems的使用</strong><span id="1.2.2"></span></h4>
+<p>使用assert要遵守如下的规则：</p>
+<ul>
+<li>不滥用，只在程序<strong>不出bug</strong>的情况且永远到不了的地方使用assert。  常见于程序的开头，控制不可能的参数。  </li>
+<li>对于python异常本身就能cover的地方就不再需要适用断言来处理。   </li>
+<li>不用assert来检查用户输入，可以使用在函数返回后的返回值判断，条件是运行下去的先决条件时（assert test, message）。</li>
+</ul>
+<p>判断一个类型与一个类型的关系，不建议使用type，建议使用isinstance，因为type会出现一些问题，例如：对一些继承基本内置的类型判断不符合用户的要求，对一些继承object的基本类，判断不符合预期。 
+且type和isinstance也是具有不同的作用的。 <br />
+eval is evil，如果不是信任源调用的话，是不能随便使用eval的，容易出现很多意想不到的问题，如果非要使用这项操作，推荐使用ast.literal_eval(); <br />
+对于可迭代的set，list等，使用enumerate来获取index和value是最好的，而对于dict可以使用iteritems来获取key、value。  </p>
+<h4><strong>Item 3: else在python中的使用</strong><span id="1.2.3"></span></h4>
+<p>当循环“自然”终结时，else从句<strong>会</strong>执行一次，当break语句终端时，else从句就不会执行（我总是记混这些规则）。 <br />
+同样的在exception中也是可能调用else的，表示的是如果没有既定的except捕获的时候的运行分支。 <br />
+关于异常的使用，不仅对于python对于所有的带有异常的语言都是这样：<br />
+<em> 注意异常的</em>粒度<em>；try中存的代码的<strong>一致性</strong>和<strong>合理性</strong>。 
+</em> 谨慎的使用单独的except捕获所有的异常（有时候你会except到一些非常基本的语法错误，使你难以找不到错误点）。 
+* finally中的执行代码也要注意。另外，注意一般不要在finally进行return，避免不必要的麻烦，因为在finally的return，是怎么样都会执行的。   </p>
+<h4><strong>Item 4: 使用format代替%进行字符串格式化</strong><span id="1.2.4"></span></h4>
+<p>对于一些对C/C++等变异性语言已经烂熟于心的人，%是比较亲近的。<br />
+但，format较%更加的灵活，且pythonic。   </p>
+<ul>
+<li>参数的顺序完全不必相同。eg. &gt;&gt;&gt; "The number {1} is {0:%d}.".format(34, 23)  <br />
+                                  The number 23 is 34.   </li>
+<li>% 最终会被.format替代（大家都这么认为，但是相信%还是会保留很长时间的）。  </li>
+<li>% 在使用的时候要格外小心，而format却不需要。 eg. &gt;&gt;&gt; "itemlist are {}".format(itemlist)</li>
+</ul>
+<h4><strong>Item 5: 确认对象是否可变，多使用简单的列表推导生成列表</strong><span id="1.2.5"></span></h4>
+<p>python all of objects，所以一定要分清哪些对象是可变的，哪些对象是不可变的： <br />
+<strong>数字、字符串、元组</strong>属于不可变的对象，<strong>字典、list</strong>属于可变的。
+也要弄明白你所做的操作是浅copy还是深copy。 <br />
+切片是浅copy，序列对象的默认copy是浅copy。 <br />
+其实，扩展来看，可变对象的默认拷贝都是拷贝引用，都是浅层的copy。如果想使用深copy的话，可以使用python标准库的copy.deepcopy()。              <br />
+而由于默认参数，在调用函数的时候，仅仅被评估一次，以后就不在评估。所以，可变对象是不能当默认参数的，防止你多次调用此API，却多次使用同一个默认的函数参数。   </p>
+<h4><strong>Item 6: 明确函数传递的方法</strong><span id="1.2.6"></span></h4>
+<p>python不像C/C++等，可以指明传递参数的方法，只有一个默认的参数传递规则：传对象的引用(因为python皆对象。所以，说是对象的引用是对的！)。 <br />
+对于可变对象，调用者和func同时共享同一变量（内存），对于不可变对象其实指向的也是同一对象（内存），但是由于，发生改变的时候，自变量是不发生变化的，而因变量发生变化。  <br />
+只有理解了python的对象存储方式就一目了然，python的变量名就是对该对象（内存）的指针。</p>
+<h4><strong>Item 7: python基础库的学习</strong><span id="1.2.7"></span></h4>
+<ul>
+<li>判断一个对象是不是字符串，应当使用<strong>isinstance(str, basestring)</strong>。    </li>
+<li>判断一个字是否在串中，用<strong>in</strong>和<strong>not in</strong>。   </li>
+<li>sorted的用法，在<a href="https://docs.python.org/2/howto/sorting.html">官方文档</a>中已经解释的相当详细了。      </li>
+<li>Counter的使用，可以用来统计容器中的key出现的个数；包括一些实用的方法，可以<strong>pydoc</strong>看。  </li>
+<li>处理参数的的标准库，optparser，argparser，使用了python就不建议你使用getopt了，效率低，效果不好，开发周期还长（最近自己还用了getopt，贻笑大方啊）。   </li>
+<li>使用ElementTree解析xml，速度更快，内存消耗更小（但需要注意，ElementTree和sax等能处理的xml的大小都有限），如果需要处理较大的xml文件的时候，需要适用lxml。（这些需要仔细的研读一下的）  </li>
+<li>可以支持序列化的模块（pickle，json，marshal，shelve）cPickle（效率是最快的，比pickle和json都快），可pipe验证下。   </li>
+<li>支持json的模块（simplejson，cjson，yajl，ujson），同上cjson也是比较优秀的。   </li>
+<li>except异常的时候，要善于traceback。traceback.print_exc()来输出stack的信息。   </li>
+<li>善于使用logging来打印关键信息，但logging也有许多要注意的点，在设计多进程，多任务的logging的时候也要小心。   </li>
+<li>python threading并不能充分的利用多核（原因是它的GIL），关于GIL，可以看这里，讲的挺细的<a href="http://zhuoqiang.me/python-thread-gil-and-ctypes.html">http://zhuoqiang.me/python-thread-gil-and-ctypes.html</a>。在设计的时候，应当考虑multiprocessing替代之。      </li>
+</ul>
+<h4><strong>Item 8: 在python中的设计模式</strong><span id="1.2.8"></span></h4>
+<p>最近自己在研读design pattern，不过进展比较缓慢，这里看看在python中应用比较广的设计模式。   </p>
+<ul>
+<li>python的单例模型，可以使用python本身的module，python本身的module就是天然的singleton，并且import线程安全。   </li>
+<li>在python中实现程序的<strong>动态</strong>变化，可以使用maxin的方式，即使用__bases__传入你要继承的baseclass。  </li>
+<li>pub和sub的解耦模式还是不错的(<em>Item 53</em>)。blinker和python-message都对pub/sub进行了严谨的实现。到时候自己看一下源码吧。（TODO）</li>
+<li>用状态机模式来美化流程和代码(state). 详情可以看书的<em>Item53</em>，个人感觉在一定条件下，还是有应用前景的。</li>
+<li>super的解释：<ul>
+<li><a href="http://www.cnblogs.com/lovemo1314/archive/2011/05/03/2035005.html">http://www.cnblogs.com/lovemo1314/archive/2011/05/03/2035005.html</a>   </li>
+<li><a href="http://www.zhihu.com/question/20040039">http://www.zhihu.com/question/20040039</a>   </li>
+<li><a href="https://rhettinger.wordpress.com/2011/05/26/super-considered-super/">https://rhettinger.wordpress.com/2011/05/26/super-considered-super/</a>  </li>
+</ul>
+</li>
+</ul>
+<h4><strong>Item 9: 了解python的内部机制</strong><span id="1.2.9"></span></h4>
+<ul>
+<li>使用新式类，即所有的类继承object，这样可以享受覆盖object的一些基本方法，包括__new__, <strong>init</strong>, __hash__等。   </li>
+<li><strong>new</strong>()才是python中类的<strong>构造方法</strong>，<strong>init</strong>()只是对变量进行初始化。   <ul>
+<li><strong>new</strong>()是静态方法，<strong>init</strong>()是实例方法。<strong>new</strong>()要返回类的实例对象(重载需要<strong>显式返回</strong>)，返回的实例对象默认调用__init__()。</li>
+<li>当继承自一些不改改变的对象时候overwrite <strong>new</strong>()。  </li>
+<li>使用一些有可能生成不同对象实例的设计模式而言，需要覆盖__new__()。例如: factory, singleton等。  </li>
+</ul>
+</li>
+<li>python的作用域：  <ul>
+<li>局部作用域：函数内。  </li>
+<li>全局作用域：模块文件中，但也只作用此模块内。  </li>
+<li>嵌套作用域：函数嵌套(global没用，只是重新生成了一个罢了)，参数传递过去吧。  </li>
+<li>内置作用域：__builtin__模块实现的。   </li>
+<li>作用域的顺序：函数内部(locals) =&gt; 嵌套作用域 =&gt; 全局作用域 =&gt; 内置作用域。  </li>
+<li>改变globals，必须使用global声明。   </li>
+</ul>
+</li>
+<li>MRO(Methods Resolution Orders)这个描述，可见<a href="http://www.zhihu.com/question/20040039"><strong>supder</strong></a>的解释。</li>
+<li>__getattr__和__getattribute__的问题点。<a href="http://www.cnblogs.com/bettermanlu/archive/2011/06/22/2087642.html">http://www.cnblogs.com/bettermanlu/archive/2011/06/22/2087642.html</a>   </li>
+<li>为保证封装性，使用property来控制属性的访问。   </li>
+<li>metaclass编程，用metaclass来抽样class，这个还需要研读研读（TODO）。  </li>
+<li>
+<p>用<a href="https://raw.github.com/pypa/pip/master/contrib/get-pip.py">pip</a>去下载和管理package。  </p>
+<ul>
+<li>使用setup.py(distutils)去管理和构建你程序的依赖packages，但是全手打写setup.py，有点麻烦，可以使用pastescript(paster)去生成。   </li>
+<li>
+<p>单元测试的原则：</p>
+<ul>
+<li><strong>一致性</strong>：1000次的执行结果应当是一致的，会产生不确定行为的语句应当避免。    </li>
+<li><strong>原子性</strong>：单元测试的结果只有两种，就是True or False，不存在执行一半成功，一半失败。    </li>
+<li><strong>单一职责</strong>：一种情景和一种行为用一个单测模块。    </li>
+<li><strong>隔离性</strong>：不能依赖于具体的环境设置，如数据库的访问，环境变量的设置等，也不能依赖于条件的逻辑。  </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>普通的程序，可以使用doctest去做一些测试，但是大型的工程使用单测框架做测试。   </p>
+</li>
+<li>unittest，可以使用 python -m unittest discover自动发现test*.py的单测文件。更高级一点的可以使用<strong>nose</strong>(pip install nose)</li>
+<li>测试驱动开发（Test Driven Development）。。。。。</li>
+</ul>
+<h4><strong>Item 10: 了解python的内部机制</strong><span id="1.2.10"></span></h4>
+<ul>
+<li>借助性能优化工具，pypy，cpython等。   </li>
+<li>使用性能分析cProfile并结合使用pstats来做报表，小的函数测试可以使用timeit来看函数运行的时间。   </li>
+<li>使用memory_profiler做内存的分析。  </li>
+<li>使用objgraph对<strong>对象</strong>就行监控。   </li>
+<li>要善于使用yield generator来优化性能。  </li>
+<li>bisect用来二分，heapq可以利用堆的性质。   </li>
+<li>使用multiprocessing解决GIL的缺陷。</li>
+<li>进程之间的通信，优先考虑multiprocessing.Pipe(两个进程间通信)和multiprocessing.Queue(多个进程间的通信)，使用multiprocessing.Value和multiprocess.Array进行资源共享，但开销较大，不是特殊情况，不宜使用，Value是有锁机制的，使用的时候，需要获取锁get_lock()。</li>
+<li>使用线程池提高效率，自己有实现过一下，书中也实现了一个，思想是共通，但是细节点很多，需要注意的点也很多，要看一下pypi上面的threadpool的实现。</li>
+</ul>
+            
+            <section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://aleda.cn/article/2015/10/Effective Python/#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'aleda';
+        var disqus_identifier = 'http://aleda.cn/article/2015/10/Effective Python/';
+    var disqus_url = 'http://aleda.cn/article/2015/10/Effective Python/';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+            <hr/>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2015-10-08T12:42:00+08:00">Oct 8, 2015</time>
+            <h4>Category</h4>
+            <a class="category-link" href="http://aleda.cn/categories.html#code-reading-ref">code-reading</a>
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article">
+                <li><a href="http://aleda.cn/tags.html#code-reading-ref">code-reading
+                    <span>3</span>
+</a></li>
+                <li><a href="http://aleda.cn/tags.html#experience-ref">experience
+                    <span>5</span>
+</a></li>
+            </ul>
+<h4>Contact</h4>
+    <a href="http://github.com/Aleda" title="My Github Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-github sidebar-social-links"></i></a>
+    <a href="mailto:aledalee@foxmail.com" title="My Email Address" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-envelope sidebar-social-links"></i></a>
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+        <div id="push"></div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+            <script type="text/javascript">
+var disqus_shortname = 'aleda';
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+<script  language="javascript" type="text/javascript">
+function uncollapse() {
+    if (window.location.hash.match(/^#comment-\d+$/)) {
+        $('#disqus_thread').collapse('show');
+    }
+}
+</script>
+<script type="text/javascript" language="JavaScript">
+uncollapse();
+window.onhashchange=function(){
+    if (window.location.hash.match(/^#comment-\d+$/))
+        window.location.reload(true);
+}
+</script>
+<script>
+$('#disqus_thread').on('shown', function () {
+    var link = document.getElementsByClassName('accordion-toggle');
+    var old_innerHTML = link[0].innerHTML;
+    $(link[0]).fadeOut(500, function() {
+        $(this).text('Click here to hide comments').fadeIn(500);
+    });
+    $('#disqus_thread').on('hidden', function () {
+        $(link[0]).fadeOut(500, function() {
+            $(this).text(old_innerHTML).fadeIn(500);
+        });
+    })
+})
+</script>
+
+
+    </body>
+    <!-- Theme: Elegant built for Pelican
+    License : http://oncrashreboot.com/pelican-elegant -->
+</html>

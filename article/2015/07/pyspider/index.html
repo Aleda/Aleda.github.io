@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Aleda" />
+        <meta name="copyright" content="Aleda" />
+
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary">
+
+<meta name="keywords" content="code-reading, experience, code-reading, " />
+
+<meta property="og:title" content="pyspider "/>
+<meta property="og:url" content="http://aleda.cn/article/2015/07/pyspider/" />
+<meta property="og:description" content="pyspider" />
+<meta property="og:site_name" content="Aleda | Make Different" />
+<meta property="og:article:author" content="Aleda" />
+<meta property="og:article:published_time" content="2015-07-30T00:39:00+08:00" />
+<meta name="twitter:title" content="pyspider ">
+<meta name="twitter:description" content="pyspider">
+
+        <title>pyspider  · Aleda | Make Different
+</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/pygments.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/tipuesearch/tipuesearch.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/elegant.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/custom.css" media="screen">
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://aleda.cn/"><span class=site-name><span style="color:black;">Aleda</span> |  <span style="color:#AA1032;"> Make Different </span></span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://aleda.cn">Home</a></li>
+                            <li ><a href="http://aleda.cn/categories.html">Categories</a></li>
+                            <li ><a href="http://aleda.cn/tags.html">Tags</a></li>
+                            <li ><a href="http://aleda.cn/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://aleda.cn/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page-header span10 offset2">
+    <h1><a href="http://aleda.cn/article/2015/07/pyspider/"> pyspider  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            
+            <h1>pyspider</h1>
+<h2><strong>Table of Contents</strong></h2>
+<ul>
+<li><a href="#1"><strong>1 pyspider</strong></a>    <ul>
+<li><a href="#1.1"><strong>1.1 Introduction</strong></a>    </li>
+<li><a href="#1.2"><strong>1.2 Feature</strong></a>   </li>
+<li><a href="#1.3"><strong>1.3 Code Analysis</strong></a><ul>
+<li><a href="#1.3.1"><strong>1.3.1 run.py</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2><strong>1 leveldb</strong></h2>
+<p>pyspider是一个binux用python写的一个开源spider爬虫系统，用到了很多我自己从来都没有见过的技术，而最近自己又在学习python，这个作为自己入门的python学习教程是再好不过。  <br />
+<a href="https://github.com/binux/pyspider">https://github.com/binux/pyspider</a>    </p>
+<h3><strong>1.1 Introduction</strong><span id="1.1"></span></h3>
+<p>相关资源：  <br />
+<em> 作者自己讲解的pyspider的架构。 <a href="http://blog.binux.me/2014/02/pyspider-architecture/">http://blog.binux.me/2014/02/pyspider-architecture/</a>  <br />
+</em> 官方的使用说明及功能模块介绍. <a href="http://docs.pyspider.org/">http://docs.pyspider.org/</a>  <br />
+* 设计说明. <a href="http://leveldb.googlecode.com/svn/trunk/doc/impl.html">http://leveldb.googlecode.com/svn/trunk/doc/impl.html</a>    </p>
+<p>目录层次划分：    </p>
+<ul>
+<li>data // 用来存取fetcher抓取的网页内容    </li>
+<li>docs // 存放项目的说明文档    </li>
+<li>pyspider // pyspider的项目实际脚本    </li>
+<li>tests // 单元测试与功能测试的脚本    </li>
+<li>Dockerfile // 建立一个pyspider运行镜像的脚本</li>
+<li>setup.py // 自动化部署依赖环境的脚本     </li>
+</ul>
+<p>pyspider主要由四大组件组成：  <br />
+<em> scheduler 抓取调度模块，它接受任务，并决定该如何调度该任务，包括制定抓取的优先级。调度完成后，发往fetcher抓取任务抓取。  <br />
+</em> fetcher 抓取模块，对任务进行抓取，其中有控制逻辑，来判断是否进行抓取，如何抓取。 <br />
+<em> processor 内容处理模块，对抓取的内容根据用户写的python脚本进行内容分析，抽取有用的信息。 <br />
+</em> monitor 一个监控组件，用来监控任务的执行情况。   </p>
+<h3><strong>1.2 Feature</strong><span id="1.2"></span></h3>
+<p>这个，我一直觉得应该是自己把所有的code都看完之后再进行总结的。一直是待定的状态，但是自己无意间看到了一篇总结不错的文章，但自己没来得及写下自己的心得，希望自己看完code能有机会再次百读，写下summary。
+文章在：<a href="http://www.cnblogs.com/haippy/archive/2011/12/04/2276064.html">http://www.cnblogs.com/haippy/archive/2011/12/04/2276064.html</a></p>
+<h3><strong>1.3 Code Analysis</strong><span id="1.3"></span></h3>
+<h4><strong>1.3.1 run.py</strong><span id="1.3.1"></span></h4>
+<p>run.py是程序的入口程序，主要是完成运行环境的部署，获取用户的参数。  </p>
+<h5><strong>1.3.1.1 cli</strong><span id="1.3.1.1"></span></h5>
+<p>首先，pyspider用的是一个 beautiful command line interfaces，即<a href="http://click.pocoo.org/4/"><em>click</em></a>，简便易用，处理参数及其方便。处理复杂的参数，推荐使用。 <br />
+cli是处理用户参数，并连接、初始化数据库，根据用户环境下的数据库，并根据顺序，选择合适的数据库，创建三个数据源：</p>
+<ul>
+<li>taskdb   </li>
+<li>projectdb   </li>
+<li>resultdb   </li>
+</ul>
+<p>然后，选择合适的消息队列（RABBITMQ_NAME，beanstalk），并创建5个消息队列：   </p>
+<ul>
+<li>newtask_queue    </li>
+<li>status_queue   </li>
+<li>scheduler2fetcher    </li>
+<li>fetcher2processor    </li>
+<li>processor2result</li>
+</ul>
+<p>最后创建phantomjs-proxy。</p>
+<h4><strong>1.3.2 database</strong><span id="1.3.2"></span></h4>
+<p>用来管理数据库连接，待看。</p>
+            
+            <section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://aleda.cn/article/2015/07/pyspider/#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'aleda';
+        var disqus_identifier = 'http://aleda.cn/article/2015/07/pyspider/';
+    var disqus_url = 'http://aleda.cn/article/2015/07/pyspider/';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+            <hr/>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2015-07-30T00:39:00+08:00">Jul 30, 2015</time>
+            <h4>Category</h4>
+            <a class="category-link" href="http://aleda.cn/categories.html#code-reading-ref">code-reading</a>
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article">
+                <li><a href="http://aleda.cn/tags.html#code-reading-ref">code-reading
+                    <span>8</span>
+</a></li>
+                <li><a href="http://aleda.cn/tags.html#experience-ref">experience
+                    <span>12</span>
+</a></li>
+            </ul>
+<h4>Contact</h4>
+    <a href="http://github.com/Aleda" title="My Github Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-github sidebar-social-links"></i></a>
+    <a href="mailto:aledalee@foxmail.com" title="My Email Address" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-envelope sidebar-social-links"></i></a>
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+        <div id="push"></div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+            <script type="text/javascript">
+var disqus_shortname = 'aleda';
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+<script  language="javascript" type="text/javascript">
+function uncollapse() {
+    if (window.location.hash.match(/^#comment-\d+$/)) {
+        $('#disqus_thread').collapse('show');
+    }
+}
+</script>
+<script type="text/javascript" language="JavaScript">
+uncollapse();
+window.onhashchange=function(){
+    if (window.location.hash.match(/^#comment-\d+$/))
+        window.location.reload(true);
+}
+</script>
+<script>
+$('#disqus_thread').on('shown', function () {
+    var link = document.getElementsByClassName('accordion-toggle');
+    var old_innerHTML = link[0].innerHTML;
+    $(link[0]).fadeOut(500, function() {
+        $(this).text('Click here to hide comments').fadeIn(500);
+    });
+    $('#disqus_thread').on('hidden', function () {
+        $(link[0]).fadeOut(500, function() {
+            $(this).text(old_innerHTML).fadeIn(500);
+        });
+    })
+})
+</script>
+
+
+    </body>
+    <!-- Theme: Elegant built for Pelican
+    License : http://oncrashreboot.com/pelican-elegant -->
+</html>

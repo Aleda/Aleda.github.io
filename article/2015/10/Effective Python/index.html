@@ -86,6 +86,10 @@
 <li><a href="#1.2.10"><strong>1.2.10 Item 10: 了解python的内部机制</strong></a></li>
 </ul>
 </li>
+<li><a href="#1.3"><strong>1.3 Learning notes</strong></a><ul>
+<li><a href="#1.3.1"><strong>1.3.1 re</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -327,6 +331,11 @@ eval is evil，如果不是信任源调用的话，是不能随便使用eval的�
 <li>进程之间的通信，优先考虑multiprocessing.Pipe(两个进程间通信)和multiprocessing.Queue(多个进程间的通信)，使用multiprocessing.Value和multiprocess.Array进行资源共享，但开销较大，不是特殊情况，不宜使用，Value是有锁机制的，使用的时候，需要获取锁get_lock()。</li>
 <li>使用线程池提高效率，自己有实现过一下，书中也实现了一个，思想是共通，但是细节点很多，需要注意的点也很多，要看一下pypi上面的threadpool的实现。</li>
 </ul>
+<h3><strong>1.3 Learning Notes</strong><span id="1.3"></span></h3>
+<h4><strong>1.3.1 re</strong><span id="1.3.1"></span></h4>
+<p>身为一名合格的coder，如果你不<strong>精通</strong>正则表达式，你真的会让别人笑掉大牙的。=_= <br />
+先贴<a href="https://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">wiki</a>, 看了wiki才了解到re的普及得益于<a href="https://zh.wikipedia.org/wiki/Grep">grep</a>和<a href="https://zh.wikipedia.org/wiki/Sed">sed</a>，真的感觉*inux很强大，做一个无私奉献的coder也是十分重要！ <br />
+关于sed和grep的进一步进阶，我在<a href="/usefulResources">这里</a>有推荐几篇不错的introduction，大家可以看看。      </p>
             
             <section>
 <div class="accordion" id="accordion2">
@@ -373,10 +382,10 @@ eval is evil，如果不是信任源调用的话，是不能随便使用eval的�
             <h4>Tags</h4>
             <ul class="list-of-tags tags-in-article">
                 <li><a href="http://aleda.cn/tags.html#code-reading-ref">code-reading
-                    <span>3</span>
+                    <span>8</span>
 </a></li>
                 <li><a href="http://aleda.cn/tags.html#experience-ref">experience
-                    <span>5</span>
+                    <span>12</span>
 </a></li>
             </ul>
 <h4>Contact</h4>

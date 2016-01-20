@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Aleda" />
+        <meta name="copyright" content="Aleda" />
+
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary">
+
+<meta name="keywords" content="code-reading, experience, code-reading, " />
+
+<meta property="og:title" content="Effective C++ "/>
+<meta property="og:url" content="http://aleda.cn/article/2015/10/Effective C++/" />
+<meta property="og:description" content="Effective Programming" />
+<meta property="og:site_name" content="Aleda | Make Different" />
+<meta property="og:article:author" content="Aleda" />
+<meta property="og:article:published_time" content="2015-10-06T19:04:00+08:00" />
+<meta name="twitter:title" content="Effective C++ ">
+<meta name="twitter:description" content="Effective Programming">
+
+        <title>Effective C++  · Aleda | Make Different
+</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/pygments.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/tipuesearch/tipuesearch.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/elegant.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/custom.css" media="screen">
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://aleda.cn/"><span class=site-name><span style="color:black;">Aleda</span> |  <span style="color:#AA1032;"> Make Different </span></span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://aleda.cn">Home</a></li>
+                            <li ><a href="http://aleda.cn/categories.html">Categories</a></li>
+                            <li ><a href="http://aleda.cn/tags.html">Tags</a></li>
+                            <li ><a href="http://aleda.cn/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://aleda.cn/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page-header span10 offset2">
+    <h1><a href="http://aleda.cn/article/2015/10/Effective C++/"> Effective C++  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            
+            <h1>Effective C++</h1>
+<h2><strong>Table of Contents</strong></h2>
+<ul>
+<li><a href="#1"><strong>1 Effective C++</strong></a>    <ul>
+<li><a href="#1.1"><strong>1.1 Introduction</strong></a>    </li>
+<li><a href="#1.2"><strong>1.2 Feature</strong></a>   </li>
+<li><a href="#1.3"><strong>1.3 Code Analysis</strong></a><ul>
+<li><a href="#1.3.1"><strong>1.3.1 web.go</strong></a></li>
+<li><a href="#1.3.2"><strong>1.3.2 server.go</strong></a></li>
+<li><a href="#1.3.3"><strong>1.3.3 scgi.go</strong></a></li>
+<li><a href="#1.3.4"><strong>1.3.4 fcgi.go</strong></a></li>
+<li><a href="#1.3.5"><strong>1.3.5 status.go</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2><strong>1 Effective C++</strong></h2>
+<p>自己也学C/C++有几年的时间了，以前也只是用C/C++来解决算法的问题，对实际工程的应用不多。     <br />
+这次从老家回北京的火车上，闲来无聊，翻起了存在手机上的Effective C++这本书，看了之后越发感兴趣，觉得受益匪浅。虽然自己以前也曾看过几遍，但是工作了之后再看，拍手叫绝。 <br />
+故，记下。          </p>
+<h3><strong>1.1 Introduction</strong><span id="1.1"></span></h3>
+<p>C++之所以<strong>难学</strong>，<strong>难精</strong>，广博的语法是其一，更重要原因是它的四个编程范式：   </p>
+<ul>
+<li>procedural-based(基于过程的编程范式)   </li>
+<li>object-based(基于对象的编程范式)</li>
+<li>object-oriented(面向对象的编程范式)</li>
+<li>generics(泛型的编程范式)</li>
+</ul>
+<p>如果，对于C++<em>半知半解</em>的话，写程序的时候就无从下手，写下的程序也很难<strong>稳定</strong>、<strong>扩展性强</strong>。</p>
+<h3><strong>1.2 Items</strong><span id="1.2"></span></h3>
+<p>和书中所列一样，逐个记录我对于每条item的看法以及所见所得。  </p>
+<h4><strong>Item 1: View C++ as a federation of languages.</strong><span id="1.2.1"></span></h4>
+<p>C++虽然饱受程序员诟病————坑多，开发效率低等，但不得不说C++在效率上，程序可读性，扩展性与可维护性上都是非常优秀的：   </p>
+<ul>
+<li>效率是因为他所继承的正是C，效率方面当然是可以和可以写操作系统的C比肩。     </li>
+<li>扩展性，可维护性上是因为，现在的C++已经是一门多重的编程语言了，不仅具备了C的特性，还包含了面向对象，泛型编程，元编程等。 </li>
+</ul>
+<p>所以，C++即是一个<strong>继承者</strong>，又是一个<strong>创新者</strong>！不仅继承了C的高效性，也含有了面向对象编程、泛型编程的特点。 <br />
+由于C++的多种特性，你可以根据具体的需求选择其一或者结合多个特性来应用到你的实际开发场景中。   </p>
+<h4><strong>Item 2: Prefer consts, enums, and inlines to #defines.</strong> <span id="1.2.2"></span></h4>
+<p>#define 宏定义是在C中广泛使用的一种技术(C代码中大量使用)，宏并不是语言的一部分，它会在程序的预处理阶段，在程序中发生替换动作。 <br />
+所以，容易造成：编译阶段如果宏出现问题，不好定位————因为宏已经发生替换；而如果使用const常量代替，调试是可以找出该记号的。而且#define 也是没有作用域的，一旦出现，整个包含该头文件都会应用，而const是可以有作用域的。 <br />
+const的作用很多，下一个item介绍，这里有一个点需要注意的是，在类内的static const由于编译器的不同，有些是不支持在类内直接赋值的，是需要在class外赋值的。所以，面对这种情况还是统一将static变量统一放在<strong>外面</strong>进行赋值吧。 <br />
+另，这时候万一你的编译器(错误地)不允许"static 整数型class 常量"完成"in class 初值设定"，可改用所谓的"the enum
+hack" 补偿做法。 <br />
+函数宏不仅要对参数多加小心，每个参数都要加括号，而且对于自增（减）等操作的参数就更有可能出错了，使用inline则可以避免。    </p>
+<div class="highlight"><pre>#define CALL_WITH_MAX (a, b) f ((a) &gt; (b) ? (a) : (b))
+int a = 5 , b = 0;
+CALL_WITH_MAX(++a, b); //a 被累加2次
+CALL_WITH MAX(++a, b+l0); //a 被累加1次
+
+template&lt;typename T&gt;                             // 由于我们不知道
+inline void callWithMax(const T&amp; a , const T&amp; b) // T 是什么，所以采用
+{                                                // pass by refrerence-to-const.
+    f(a &gt; b ? a : b);
+}
+</pre></div>
+
+
+<h4><strong>Item 3: Use const whenever possible.</strong><span id="1.2.3"></span></h4>
+<p>const就是增加一个语义约束，指定不被改变的对象。<br />
+其中一个比较容易混淆的点就是：<em>常指针</em>和<em>指针常量</em>。</p>
+<ul>
+<li>常指针是指针可变，指针指向的内容不可变。</li>
+<li>指针常量是指针指向不可变，指针指向的内容可变。</li>
+</ul>
+<p>可从const的位置区别出，const跟谁最近，就是谁不可变。</p>
+<div class="highlight"><pre>const char* p = &quot;Hello World&quot; // non-const pointer, const data
+char const *p = &quot;Hello World&quot; // non-const pointer, const data
+char* const p = &quot;Hello World&quot; // const pointer, non-const data
+const char* const p = &quot;Hello World&quot; // const pointer, const data
+</pre></div>
+
+
+<p>而const最显身手的地方就是对于函数的应用：const可以和函数声明，函数参数，函数返回值产生关联。 <br />
+    const对于返回值和参数的约束，可以避免不必要的粗心大意，例如：</p>
+<div class="highlight"><pre>(a * b) = c;
+if ((a * b) = c)
+</pre></div>
+
+
+<p>const的成员函数方面有两个概念，bitwise constness和logical constness，前者认为，只要不改变对象内的变量才可以使用const，但有的情景下是需要适当的允许改变变量的，这时候需要结合logical上和mutable来实现const函数。</p>
+<h4><strong>Item 4: Make sure that objects are initialized before they're used.</strong><span id="1.2.4"></span></h4>
+<p>变量的初始化是程序稳定性的保证。所以，我们在编程时，一定要注意到并小心翼翼的应对。 <br />
+内置类型的初始化，较容易的保证。但对于自定义类型的初始化就全部交由了<strong>构造函数</strong>。  <br />
+而对于构造函数，除了default构造函数，<strong>其余的构造函数只是赋值操作</strong>，初始化的操作还是会调用default构造函数。这时候就需要用到了member initialization list来解决。 <br />
+即，牢记：    </p>
+<ul>
+<li>为内置型对象进行手工初始化，因为C++不保证初始化它们。</li>
+<li>构造函数最好使用成员初值列(member initialization list) ，而不要在构造函数本体内使用赋值操作(assignment) 。</li>
+<li>初值列列出的成员变量，其排列次序应该和它们在class 中的声明次序相同。</li>
+<li>为免除"跨编译单元之初始化次序"问题，请以local static 对象替换non-local static 对象。</li>
+</ul>
+<h4><strong>Item 5: Know what functions C++ silently writes and calls.</strong><span id="1.2.5"></span></h4>
+<p>当你写下一个empty class之后：</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">Empty</span> { };
+</pre></div>
+
+
+<p>其实，它已经是这样的了：   </p>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">Empty</span> {
+<span class="n">public:</span>
+    <span class="n">Empty</span>() { ... }
+    <span class="n">Empty</span>(<span class="n">const</span> <span class="n">Empty</span>&amp; <span class="n">rhs</span>) { ... )
+    ~<span class="n">Empty</span>( ) { ... }
+    <span class="n">Empty</span>&amp; <span class="nb">operator</span>=(<span class="n">const</span> <span class="n">Empty</span>&amp; <span class="n">rhs</span>) { ... }
+};
+</pre></div>
+
+
+<p>唯有当这些函数被需要（被调用）的时候，编译器才会把这些函数创建出来。 <br />
+这里的复制构造函数，是要小心的，系统默认生成的复制构造函数对于指针数据成员是使用的浅复制，而这往往不是程序员想得到的。<br />
+另外，对于class中含有引用成员变量的时候，也是不能随意的使用默认的赋值运算符的。   </p>
+<h4><strong>Item 6: Explicitly disallow the use of compiler-generated functions you do not want.</strong><span id="1.2.6"></span></h4>
+<p>如果你明确的不会使用到编译器主动生成的那几个成员函数的时候，要明确的把函数只声明在private下。或者使用继承Uncopyable这样的base class的方法明确拒绝使用。 <br />
+这里补上一个关于继承的点。个人觉得写的挺简单易懂的，自己又温故知新了一下。<a href="http://www.cnblogs.com/qlwy/archive/2011/08/25/2153584.html">http://www.cnblogs.com/qlwy/archive/2011/08/25/2153584.html</a>    </p>
+<h4><strong>Item 7: Explicitly disallow the use of compiler-generated functions you do not want.</strong><span id="1.2.7"></span></h4>
+<p>重头戏来了，C++的多态和virtual函数……让我们仔细的捋一捋。 <br />
+当一个derived class继承的base class中并不含有virtual 析构函数的时候，不管返回的指针是经由base class还是经由derived class，都会发生“局部销毁”的现象。 <br />
+消除这种现象的做法就是，对有明显的继承倾向的base class设计virtual的析构函数。可以确定，只要带有virtual函数的类，基本上都是需要一个virtual的析构函数的（why？）。 <br />
+但是，切记注意，对于没有明显继承的类，不能滥用virtual析构函数，会浪费一些不必要的空间。   </p>
+<h4><strong>Item 8: Prevent exceptions from leaving destructors.</strong><span id="1.2.8></span></h4>
+<p>别让异常逃离析构函数，其实对于构造函数也是的，对于非常重要的函数，应该考虑加上容错，吞下异常（不期望析构函数还抛出异常，因为析构函数的执行，有可能是自动的，这个时候是没人去except的），打印日志。而对于严格的逻辑，出现异常就退出的，可以使用abort。 <br />
+但是，这些都是不友好的，对于产生的异常应当去处理。所以，最好的方法是，显式的申明一个函数，让<strong>用户自己去执行</strong>这些有可能raise异常的函数，如果用户没有处理，再使用以上下策。   </p>
+<h4><strong>Item 9: Never call virtual functions during construction or destruction.</strong><span id="1.2.9></span></h4>
+<blockquote>
+<ul>
+<li>绝对不在构造函数和析构函数中调用虚函数  <br />
+理由是，在derived class中，构造函数的执行顺序是，先构造基类，而此时调用虚函数，应当是调用的基类的虚函数，因为此时derived class是没有构造的，是无法调用的。   </li>
+</ul>
+</blockquote>
+<div class="highlight"><pre>函数一定会更早被调用;是的， derived class 对象内的base class 成分会在derived class
+自身成分被构造之前先构造妥当。Transaction 构造函数的最后一行调用virtual 函
+数logTransactio口，这正是引发惊奇的起点。这时候被调用的logTransaction 是
+Transaction 内的版本，不是BuyTransaction 内的版本一一即使目前即将建立的对
+象类型是BuyTransaction。是的， base class 构造期间virtual 函数绝不会下降到
+derived classes 阶层。取而代之的是，对象的作为就像隶属base 类型一样。非正式的
+说法或许比较传神:在base class 构造期间， virtual 函数不是virtual 函数。
+这一似乎反直觉的行为有个好理由。由于base class 构造函数的执行更早于
+derived class 构造函数，当base class 构造函数执行时derived class 的成员变量尚未初
+始化。如果此期间调用的virtual 函数下降至derived classes 阶层，要知道derived class
+的函数几乎必然取用local 成员变量，而那些成员变量尚未初始化。这将是一张通往
+不明确行为和彻夜调试大会串的直达车票。&quot;要求使用对象内部尚未初始化的成分&quot;
+是危险的代名词，所以C++ 不让你走这条路。
+其实还有比上述理由更根本的原因:在derived class 对象的base class 构造期间，
+对象的类型是base class 而不是derived classo 不只virtual 函数会被编译器解析至
+(resolve to) base class，若使用运行期类型信息(runtime type information，例如
+dynamic_cast (见条款27) 和typeid) ，也会把对象视为base class 类型。本例之
+中，当Transaction 构造函数正执行起来打算初始化&quot;BUyTransaction 对象内的
+base class 成分&quot;时，该对象的类型是Transaction。那是每二个C++ 次成分(见条
+款1)的态度，而这样的对待是合理的2 这个对象内的&quot;BUyTransaction 专属成分&quot;
+尚未被初始化，所以面对它们，最安全的做法就是视它们不存在。对象在derived class
+构造函数开始执行前不会成为一个derived class 对象。
+</pre></div>
+
+
+<p>可以使用derived class传递独有的参数方法来使用base class的构造函数达到自己的目的。而这里如果需要适用函数的方法来生成参数的话，就需要将函数定义成static了。</p>
+<h4><strong>Item 10: Have assignment operators return a reference to *this.</strong><span id="1.2.10></span></h4>
+<p>重载赋值运算符的时候，返回值要注意使用reference to *this。 即使用了该赋值操作之后，一改变则都改变。   </p>
+<h4><strong>Item 11: Handle assignment to self in operator=.</strong><span id="1.2.11></span></h4>
+<p>记住这些准则就可以应对：   </p>
+<ul>
+<li>确保当对象自我赋值时operator= 有良好行为。其中技术包括比较"来源对象"和"目标对象"的地址、精心周到的语句顺序、以及copy-and-swap。   </li>
+<li>确定任何函数如果操作一个以上的对象，而其中多个对象是同一个对象时，其行为仍然正确。  </li>
+</ul>
+<h4><strong>Item 12: Copy all parts of an object.</strong><span id="1.2.12></span></h4>
+<p>这里也是需要注意的，对于copy &amp;　operator=都是要确保全部copy|assign的，尤其是对于对象。<br />
+记住这些准则：</p>
+<ul>
+<li>Copying 函数应该确保复制"对象内的所有成员变量"及"所有base class 成分"。</li>
+<li>不要尝试以某个copying 函数实现另一个copying 函数。应该将共同机能放进第三个函数中，并由两个coping 函数共同调用。</li>
+</ul>
+<h4><strong>Item 13: Use objects to manage resources.</strong><span id="1.2.13></span></h4>
+<p>C++是一种志在用户遵守RAII(Resource Acquisition Is Initialization)的语言，即：</p>
+<ul>
+<li>获得资源后立刻放进管理对象中；</li>
+<li>管理对象运用虚构函数来保证资源的释放；</li>
+</ul>
+<p>所以，针对一些heap based的资源，我们是希望，使用完之后能够及时的释放它们。 
+建议使用一些遵守RAII的class，包括auto_ptr,shared_ptr.   </p>
+<h4><strong>Item 14: Use objects to manage resources.</strong><span id="1.2.13></span></h4>
+<div class="highlight"><pre>Pending
+</pre></div>
+
+
+<h4><strong>Item 34: Differentiate between inheritance of interface and inheritance of implementation.</strong><span id="1.2.8"></span></h4>
+<p>这个建议是指：区分接口继承和实现继承； <br />
+这章真的非常棒，个人受益匪浅。感觉这里的所有语言都是需要细细推敲的。所以，冒昧的，我把这章的所有文字都copy过来了。   </p>
+<p>表面上直截了当的public 继承概念，经过更严密的检查之后，发现它由两部分
+组成:函数接口(function interfaces) 继承和函数实现(function implementations)
+继承。这两种继承的差异，很像本书导读所讨论的函数声明与函数定义之间的差异。
+身为class 设计者，有时候你会希望derived classes 只继承成员函数的接口(也
+就是声明) ;有时候你又会希望derived classes 同时继承函数的接口和实现，但又
+希望能够覆写(override) 它们所继承的实现:又有时候你希望derived classes 同时
+继承函数的接口和实现，并且不允许覆写任何东西。 <br />
+为了更好地感觉上述选择之间的差异，让我们考虑一个展现绘图程序中各种几何形状的class 继承体系:   </p>
+<div class="highlight"><pre><span class="nt">class</span> <span class="nt">Shape</span> <span class="p">{</span>
+    <span class="n">public</span><span class="o">:</span>
+    <span class="n">virtual</span> <span class="n">void</span> <span class="n">draw</span><span class="p">(</span> <span class="p">)</span> <span class="n">canst</span> <span class="o">=</span> <span class="m">0</span><span class="p">;</span>
+    <span class="n">virtual</span> <span class="n">void</span> <span class="n">error</span><span class="p">(</span><span class="n">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">msg</span><span class="p">);</span>
+    <span class="n">int</span> <span class="n">objectID</span> <span class="p">(</span> <span class="p">)</span> <span class="n">canst</span><span class="p">;</span>
+    <span class="n">class</span> <span class="n">Rectangle</span><span class="o">:</span> <span class="n">public</span> <span class="n">Shape</span> <span class="err">{</span><span class="o">...</span><span class="p">}</span><span class="o">;</span>
+    <span class="nt">class</span> <span class="nt">Ellipse</span><span class="o">:</span> <span class="nt">public</span> <span class="nt">Shape</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span><span class="o">;</span>
+<span class="err">}</span><span class="o">;</span>
+</pre></div>
+
+
+<p>Shape 是个抽象class; 它的pure virtual 函数draw 使它成为一个抽象class 。所
+以客户不能够创建Shape class 的实体，只能创建其derived classes 的实体。尽管如
+此， Shape 还是强烈影响了所有以public 形式继承它的derived classes ，因为:
+·成员函数的接口总是会被继承。一如条款32 所说， public 继承意味is-a (是一
+种) ，所以对base class 为真的任何事情一定也对其derived classes 为真。因此
+如果某个函数可施行于某class 身上，一定也可施行于其derived classes 身上。
+Shape class 声明了三个函数。第一个是draw，于某个隐喻的视屏中画出当前对
+象。第二个是error，准备让那些"需要报导某个错误"的成员函数调用。第三个
+是objectID，返回当前对象的一个独一无二的整数识别码。每个函数的声明方式
+都不相同: draw 是个pure virtual 函数; error 是个简朴的(非纯) impure virtual
+函数; objectI D 是个non-virtual 函数。这些不同的声明带来什么样的暗示呢?
+首先考虑pure virtual 函数draw:  </p>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">Shape</span> {
+<span class="n">public:</span>
+    <span class="n">virtual</span> <span class="nb">void</span> <span class="n">drawl</span>() <span class="n">const</span> = <span class="mi">0</span>;
+    ...
+};
+</pre></div>
+
+
+<p>pure virtual 函数有两个最突出的特性:它们必须被任何"继承了它们"的具象
+class 重新声明，而且它们在抽象class 中通常没有定义。把这两个性质摆在一起，
+你就会明白:
+* 声明一个pure virtual 函数的目的是为了让derived classes 只继承函数接口。
+这对Shape: : draw 函数是再合理不过的事了，因为所有Shape 对象都应该是可
+绘出的，这是合理的要求。但Shape class 无法为此函数提供合理的缺省实现，毕竟
+椭圆形绘法迥异于矩形绘法。Shape::draw 的声明式乃是对具象derived classes 设
+计者说， "你必须提供一个draw 函数，但我不干涉你怎么实现它。"
+令人意外的是，我们竟然可以为pure virtual 函数提供定义。也就是说你可以为
+Shape: :draw 供应一份实现代码，C++ 并不会发出怨言，但调用它的唯一途径是"调
+用时明确指出其class 名称" :   </p>
+<div class="highlight"><pre><span class="nt">Shape</span><span class="o">*</span> <span class="nt">ps</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">Shape</span><span class="o">;</span> <span class="o">//</span><span class="err">错误</span><span class="o">!</span> <span class="nt">Shape</span> <span class="err">是抽象的</span>
+<span class="nt">Shape</span><span class="o">*</span> <span class="nt">ps1</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">Rectangle</span><span class="o">;</span> <span class="o">//</span><span class="err">正确</span>
+<span class="nt">psl-</span><span class="o">&gt;</span><span class="nt">draw</span><span class="o">();</span> <span class="o">//</span><span class="err">正确</span>
+<span class="nt">Shape</span><span class="o">*</span> <span class="nt">ps2</span> <span class="o">=</span> <span class="nt">new</span> <span class="nt">Ellipse</span><span class="o">;</span> <span class="o">//</span><span class="err">正确</span>
+<span class="nt">ps2-</span><span class="o">&gt;</span><span class="nt">draw</span> <span class="o">();</span> <span class="o">//</span><span class="err">正确</span>
+<span class="nt">psl-</span><span class="o">&gt;</span><span class="nt">Shape</span><span class="o">:</span><span class="nd">:draw</span><span class="o">();</span> <span class="o">//</span><span class="err">正确</span>
+<span class="nt">ps2-</span><span class="o">&gt;</span><span class="nt">Shape</span><span class="o">:</span><span class="nd">:draw</span><span class="o">();</span> <span class="o">//</span><span class="err">正确</span>
+</pre></div>
+
+
+<p>除了能够帮助你在鸡尾酒派对上留给大师级程序员一个深刻的印象，→般而言
+这项性质用途有限。但是一如稍后你将看到，它可以实现二种机制，为简朴的(非
+纯) impure virtual 函数提供更平常更安全的缺省实现。
+简朴的impure virtual 函数背后的故事和pure vi阳al 函数有点不同。一如往常，
+derived classes 继承其函数接口，但impure virtual 函数会提供→份实现代码，derived
+classes 可能覆写(override) 它。稍加思索，你就会明白:
+·声明简朴的(非纯) impure virtual 函数的目的，是让derived classes 继承该函数
+的接口和缺省实现。
+考虑Shape::error 这个例子:   </p>
+<div class="highlight"><pre><span class="nt">class</span> <span class="nt">Shape</span> <span class="p">{</span>
+<span class="n">public</span><span class="o">:</span>
+    <span class="n">virtual</span> <span class="n">void</span> <span class="n">error</span><span class="p">(</span><span class="n">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">msg</span><span class="p">);</span>
+<span class="p">}</span><span class="o">;</span>
+</pre></div>
+
+
+<p>其接口表示，每个class 都必须支持一个"当遇上错误时可调用"的函数，但
+每个class 可自由处理错误。如果某个class 不想针对错误做出任何特殊行为，它可
+以返回到Shape class 提供的缺省错误处理行为。也就是说Shape: : error 的声明式
+告诉derived classes 的设计者， "你必须支持一个error 函数，但如果你不想自己
+写一个，可以使用Shape class 提供的缺省版本"。
+但是，允许impure virtual 函数同时指定函数声明和函数缺省行为，却有可能造
+成危险。欲探讨原因，让我们考虑XYZ 航空公司设计的飞机继承体系。该公司只
+有A 型和B 型两种飞机，两者都以相同方式飞行。因此XYZ 设计出这样的继承体
+系:   </p>
+<div class="highlight"><pre><span class="nt">class</span> <span class="nt">Airport</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span><span class="o">;</span> <span class="nt">I</span> <span class="nt">I</span><span class="err">用以表现机场</span>
+<span class="nt">class</span> <span class="nt">Airplane</span> <span class="p">{</span>
+<span class="n">public</span><span class="o">:</span>
+    <span class="n">virtual</span> <span class="n">void</span> <span class="n">fly</span><span class="p">(</span><span class="n">const</span> <span class="n">Airport</span><span class="o">&amp;</span> <span class="n">destination</span><span class="p">);</span>
+<span class="p">}</span><span class="o">;</span>
+<span class="nt">void</span> <span class="nt">Airplane</span><span class="o">:</span><span class="nd">:fly</span><span class="o">(</span><span class="nt">const</span> <span class="nt">Airport</span><span class="o">&amp;</span> <span class="nt">destination</span><span class="o">)</span>
+<span class="p">{</span>
+    <span class="err">缺省代码，将飞机飞至指定的目的地</span>
+<span class="p">}</span>
+<span class="nt">class</span> <span class="nt">ModelA</span><span class="o">:</span> <span class="nt">public</span> <span class="nt">Airplane</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span><span class="o">;</span>
+<span class="nt">class</span> <span class="nt">ModelB</span><span class="o">:</span> <span class="nt">public</span> <span class="nt">Airplane</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span><span class="o">;</span>
+</pre></div>
+
+
+<p>为了表示所有飞机都一定能飞，并阐明"不同型飞机原则上需要不同的fly 实
+现" , Airplane::fly 被声明为virtual.然而为了避免在ModelA 和ModelB 中撰写
+相同代码，缺省飞行行为由Airplane: : fly 提供，它同时被ModelA 和ModelB 继承。
+这是个典型的面向对象设计。两个classes 共享一份相同性质(也就是它们实现
+fly 的方式) ，所以共同性质被搬到base class 中，然后被这两个classes 继承。这
+个设计突显出共同性质，避免代码重复，并提升未来的强化能力，减缓长期维护所
+需的成本。所有这些都是面向对象技术如此受到欢迎的原因。XYZ 航空公司应该感
+到骄傲。
+现在，假设XYZ 盈余大增，决定购买一种新式C 型飞机。C 型和A 型以及B
+型有某些不同。更明确地说，它的飞行方式不同。
+XYZ 公司的程序员在继承体系中针对C 型飞机添加了一个class ，但由于他们
+急着让新飞机上线服务，竟忘了重新定义其fly 函数:   </p>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">ModelC:</span> <span class="n">public</span> <span class="n">Airplane</span> {
+    ... //<span class="n">未声明fly</span> <span class="n">函数</span>
+};
+<span class="n">然后代码中有一些诸如此类的动作:</span>
+<span class="n">Airport</span> <span class="n">PDX</span>(...);
+<span class="n">Airplane</span>* <span class="n">pa</span> = <span class="nb">new</span> <span class="n">ModelC</span>;
+<span class="n">pa-</span>&gt;<span class="n">fly</span> (<span class="n">PDX</span>);
+</pre></div>
+
+
+<p>这将酿成大灾难:这个程序试图以ModelA 或ModelB 的飞行方式来飞ModelC 。
+这不是一个可以公开鼓舞旅游信心的行为。
+问题不在Airplane: : fly 有缺省行为，而在于ModelC 在未明白说出"我要"
+的情况下就继承了该缺省行为。幸运的是我们可以轻易做到"提供缺省实现给
+derived classes，但除非它们明白要求否则免谈"。此间技俩在于切断"virtual 函数
+接口"和其"缺省实现"之间的连接。下面是一种做法:   </p>
+<div class="highlight"><pre><span class="nt">class</span> <span class="nt">Airplane</span> <span class="p">{</span>
+<span class="n">public</span><span class="o">:</span>
+    <span class="n">virtual</span> <span class="n">void</span> <span class="n">fly</span><span class="p">(</span><span class="n">const</span> <span class="n">Airport</span><span class="o">&amp;</span> <span class="n">destination</span><span class="p">)</span> <span class="o">=</span> <span class="m">0</span><span class="p">;</span>
+<span class="n">protected</span><span class="o">:</span>
+    <span class="n">void</span> <span class="n">defaultFly</span><span class="p">(</span><span class="n">const</span> <span class="n">Airport</span><span class="o">&amp;</span> <span class="n">destination</span><span class="p">);</span>
+    <span class="n">void</span> <span class="n">Airplane</span><span class="o">::</span><span class="n">defaultFly</span><span class="p">(</span><span class="n">const</span> <span class="n">Airport</span><span class="o">&amp;</span> <span class="n">destination</span><span class="p">);</span>
+<span class="p">}</span><span class="o">;</span>
+</pre></div>
+
+
+<p>缺省行为，将飞机飞至指定的目的地。
+请注意， Airplane::fly 己被改为一个pure virtual 函数，只提供飞行接口。其
+缺省行为也出现在Airplane class 中，但此次系以独立函数defaultFly的姿态出
+现。若想使用缺省实现(例如ModelA和ModelB)，可以在其fly函数中对defaultFly
+做一个inline 调用(但请注意条款30 所言， inline 函数和virtual 函数之间的交互关
+系) :    </p>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">ModelA:</span> <span class="n">public</span> <span class="n">Airplane</span> {
+<span class="n">public:</span>
+    <span class="n">virtual</span> <span class="nb">void</span> <span class="n">fly</span>(<span class="n">const</span> <span class="n">Airport</span>&amp; <span class="n">destination</span>)
+    { <span class="n">defaultFly</span>(<span class="n">destination</span>); }
+};
+<span class="k">class</span> <span class="n">ModelB:</span> <span class="n">public</span> <span class="n">Airplane</span> {
+<span class="n">public:</span>
+    <span class="n">virtual</span> <span class="nb">void</span> <span class="n">fly</span>(<span class="n">const</span> <span class="n">Airport</span>&amp; <span class="n">destnation</span>)
+    { <span class="n">defaultFly</span>(<span class="n">destination</span>); }
+    ...
+};
+</pre></div>
+
+
+<p>现在ModelC class 不可能意外继承不正确的fly 实现代码了，因为Airplane
+中的pure virtual 函数迫使ModelC 必须提供自己的fly 版本:   </p>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">ModelC:</span> <span class="n">public</span> <span class="n">Airplane</span> {
+<span class="n">public:</span>
+    <span class="n">virtual</span> <span class="nb">void</span> <span class="n">fly</span>(<span class="n">const</span> <span class="n">Airport</span>&amp; <span class="n">destination</span>};
+};
+<span class="nb">void</span> <span class="n">ModelC::fly</span>(<span class="n">const</span> <span class="n">Airport</span>&amp; <span class="n">destination</span>}
+{
+    <span class="n">将C型飞机飞至指定的目的地方</span>；
+}
+</pre></div>
+
+
+<p>这个方案并非安全无虞，程序员还是可能因为剪贴(copy-and-paste) 代码而招
+来麻烦，但它的确比原先的设计值得倚赖。至于Airplane::defaultFly ，请注意
+它现在成了protected ，因为它是Airplane 及其derived classes 的实现细目。乘客应
+该只在意飞机能不能飞，不在意它们怎么飞。
+Airplane::defaultFly 是个non-virtual 函数，这一点也很重要。因为没有任何
+一个derived class 应该重新定义此函数(见条款36) 。如果default Fl y 是virtual
+函数，就会出现一个循环问题:万一某些derived class 忘记重新定义defaultFly ，
+会怎样?
+有些人反对以不同的函数分别提供接口和缺省实现，像上述的fly 和
+defaultFly 那样。他们关心因过度雷同的函数名称而引起的class 命名空间污染问
+题。但是他们也同意，接口和缺省实现应该分开。这个表面上看起来的矛盾该如何
+解决?晤，我们可以利用"pure virtual 函数必须在derived classes 中重新声明，但
+它们也可以拥有自己的实现"这一事实。下面便是Airplane 继承体系如何给pure
+virtual 函数一份定义:     </p>
+<div class="highlight"><pre><span class="nt">class</span> <span class="nt">Airplane</span> <span class="p">{</span>
+<span class="n">public</span><span class="o">:</span>
+    <span class="n">virtual</span> <span class="n">void</span> <span class="n">fly</span><span class="p">(</span><span class="n">const</span> <span class="n">Airport</span><span class="o">&amp;</span> <span class="n">destination</span><span class="p">}</span> <span class="o">=</span> <span class="nt">0</span><span class="o">;</span>
+    <span class="o">...</span>
+<span class="err">}</span><span class="o">;</span>
+<span class="nt">void</span> <span class="nt">Airplane</span><span class="o">:</span><span class="nd">:fly</span><span class="o">(</span><span class="nt">co</span> <span class="err">口</span><span class="nt">st</span> <span class="nt">Airport</span><span class="o">&amp;</span> <span class="nt">destination</span><span class="o">)</span> <span class="o">//</span><span class="nt">pure</span> <span class="nt">virtual</span> <span class="err">函数实现</span>
+<span class="p">{</span>
+    <span class="err">缺省行为，将飞机飞至指定的目的地</span>
+<span class="p">}</span>
+<span class="nt">class</span> <span class="nt">ModelA</span><span class="o">:</span> <span class="nt">public</span> <span class="nt">Airplane</span> <span class="p">{</span>
+<span class="n">public</span><span class="o">:</span>
+    <span class="n">virtual</span> <span class="n">void</span> <span class="n">fly</span><span class="p">(</span><span class="n">const</span> <span class="n">Airport</span><span class="o">&amp;</span> <span class="n">destination</span><span class="p">)</span>
+    <span class="err">{</span> <span class="n">Airplane</span><span class="o">::</span><span class="n">fly</span><span class="p">(</span><span class="n">destination</span><span class="p">);</span> <span class="p">}</span>
+<span class="err">}</span><span class="o">;</span>
+<span class="nt">class</span> <span class="nt">ModelB</span><span class="o">:</span> <span class="nt">public</span> <span class="nt">Airplane</span> <span class="p">{</span>
+<span class="n">public</span><span class="o">:</span>
+    <span class="n">virtual</span> <span class="n">void</span> <span class="n">fly</span><span class="p">(</span><span class="n">const</span> <span class="n">Airport</span><span class="o">&amp;</span> <span class="n">destination</span><span class="p">)</span>
+    <span class="err">{</span> <span class="n">Airplane</span><span class="o">::</span><span class="n">fly</span><span class="p">(</span><span class="n">destination</span><span class="p">);</span> <span class="p">}</span>
+<span class="err">}</span><span class="o">;</span>
+<span class="nt">class</span> <span class="nt">ModelC</span><span class="o">:</span> <span class="nt">public</span> <span class="nt">Airplane</span> <span class="p">{</span>
+<span class="n">public</span><span class="o">:</span>
+    <span class="n">virtual</span> <span class="n">void</span> <span class="n">fly</span><span class="p">(</span><span class="n">const</span> <span class="n">Airport</span><span class="o">&amp;</span> <span class="n">destination</span><span class="p">);</span>
+<span class="p">}</span><span class="o">;</span>
+<span class="nt">void</span> <span class="nt">ModelC</span><span class="o">:</span><span class="nd">:fly</span><span class="o">(</span><span class="nt">const</span> <span class="nt">Airport</span><span class="o">&amp;</span> <span class="nt">destination</span><span class="o">)</span>
+<span class="p">{</span>
+    <span class="err">将</span><span class="n">C</span> <span class="err">型飞机飞至指定的目的地</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>这几乎和前一个设计一模一样，只不过pure virtual 函数Airplane: : fly 替换了
+独立函数Airplane::defaultFly。本质上，现在的fly 被分割为两个基本要素:
+其声明部分表现的是接口(那是derived classes 必须使用的) .其定义部分则表现
+出缺省行为(那是derived classes 可能使用的，但只有在它们明确提出申请时才是)。
+如果合并fly 和defaultFly. 就丧失了"让两个函数享有不同保护级别"的机会:
+习惯上被设为protected 的函数CdefaultFly) 如今成了publicC 因为它在fly 之中)。
+最后，让我们看看Shape 的non-virtual 函数objectI D:   </p>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">Shape</span> {
+<span class="n">public:</span>
+    <span class="nb">int</span> <span class="n">objectID</span>( ) <span class="n">const</span>;
+    ...
+};
+</pre></div>
+
+
+<p>如果成员函数是个non-virtual 函数，意味是它并不打算在derived classes 中有
+不同的行为。实际上一个non-virtual 成员函数所表现的不变性Cinvarian t) 凌驾其
+特异性(specialization) ， 因为它表示不论derived class 变得多么特异化，它的行为
+都不可以改变。就其自身而言:
+·声明non-virtual 函数的目的是为了令derived classes 继承函数的接口及一份强制
+性实现。
+你可以把Shape:: objectID 的声明想做是: "每个Shape对象都有一个用来产
+生对象识别码的函数:此识别码总是采用相同计算方法，该方法由
+Shape::objectID的定义式决定，任何derived class 都不应该尝试改变其行为"。
+由于non-virtual 函数代表的意义是不变性Cinvariant) 凌驾特异性(specialization) ,
+所以它绝不该在derived class 中被重新定义。这也是条款36 所讨论的一个重点。
+pure virtual 函数、simple (impure) virtual 函数、non-virtual 函数之间的差异，使
+你得以精确指定你想要derived classes 继承的东西:只继承接口，或是继承接口和
+一份缺省实现，或是继承接口和一份强制实现。由于这些不同类型的声明意味根本
+意义并不相同的事情，当你声明你的成员函数时，必须谨慎选择。如果你确实履行，
+应该能够避免经验不足的class 设计者最常犯的两个错误。 <br />
+第一个错误是将所有函数声明为non-virtual。这使得derived classes 没有余裕空
+间进行特化工作。non-virtu剖析构函数尤其会带来问题(见条款7)。当然啦，设
+计一个并不想成为base class 的class 是绝对合理的，既然这样，将其所有成员函数
+都声明为non-virtual 也很适当。但这种声明如果不是忽略了virtual 和non-virtual 函
+-数之间的差异，就是过度担心virtual 函数的效率成本。实际上任何class 如果打算
+被用来当做一个base class ，都会拥有若干virtual 函数(再次见条款7)。
+如果你关心VI阳al 函数的成本，请容许我介绍所谓的80-20 法则(也可见条
+款30) 。这个法则说，一个典型的程序有80% 的执行时间花费在20毛的代码身上。
+此一法则十分重要，因为它意味，平均而言你的函数调用中可以有80毛是virtual
+而不冲击程序的大体效率。所以当你担心是否有能力负担virtual 函数的成本之前，
+请先将心力放在那举足轻重的20宅代码上头，它才是真正的关键。 <br />
+另一个常见错误是将所有成员函数声明为virtual。有时候这样做是正确的，例
+如条款31 的Interface classes 。然而这也可能是class 设计者缺乏坚定立场的前兆。
+某些函数就是不该在derived class 中被重新定义，果真如此你应该将那些函数声明
+为non-virtual 。没有人有权利妄称你的class 适用于任何人任何事任何物而他们只需
+花点时间重新定义你的函数就可以享受一切。如果你的不变性( invariant) 凌驾特
+异性(specialization) ， 别害怕说出来。</p>
+            
+            <section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://aleda.cn/article/2015/10/Effective C++/#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'aleda';
+        var disqus_identifier = 'http://aleda.cn/article/2015/10/Effective C++/';
+    var disqus_url = 'http://aleda.cn/article/2015/10/Effective C++/';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+            <hr/>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2015-10-06T19:04:00+08:00">Oct 6, 2015</time>
+            <h4>Category</h4>
+            <a class="category-link" href="http://aleda.cn/categories.html#code-reading-ref">code-reading</a>
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article">
+                <li><a href="http://aleda.cn/tags.html#code-reading-ref">code-reading
+                    <span>8</span>
+</a></li>
+                <li><a href="http://aleda.cn/tags.html#experience-ref">experience
+                    <span>12</span>
+</a></li>
+            </ul>
+<h4>Contact</h4>
+    <a href="http://github.com/Aleda" title="My Github Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-github sidebar-social-links"></i></a>
+    <a href="mailto:aledalee@foxmail.com" title="My Email Address" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-envelope sidebar-social-links"></i></a>
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+        <div id="push"></div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+            <script type="text/javascript">
+var disqus_shortname = 'aleda';
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+<script  language="javascript" type="text/javascript">
+function uncollapse() {
+    if (window.location.hash.match(/^#comment-\d+$/)) {
+        $('#disqus_thread').collapse('show');
+    }
+}
+</script>
+<script type="text/javascript" language="JavaScript">
+uncollapse();
+window.onhashchange=function(){
+    if (window.location.hash.match(/^#comment-\d+$/))
+        window.location.reload(true);
+}
+</script>
+<script>
+$('#disqus_thread').on('shown', function () {
+    var link = document.getElementsByClassName('accordion-toggle');
+    var old_innerHTML = link[0].innerHTML;
+    $(link[0]).fadeOut(500, function() {
+        $(this).text('Click here to hide comments').fadeIn(500);
+    });
+    $('#disqus_thread').on('hidden', function () {
+        $(link[0]).fadeOut(500, function() {
+            $(this).text(old_innerHTML).fadeIn(500);
+        });
+    })
+})
+</script>
+
+
+    </body>
+    <!-- Theme: Elegant built for Pelican
+    License : http://oncrashreboot.com/pelican-elegant -->
+</html>

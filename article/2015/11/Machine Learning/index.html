@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Aleda" />
+        <meta name="copyright" content="Aleda" />
+
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary">
+
+<meta name="keywords" content="machine-learning, experience, code-reading, " />
+
+<meta property="og:title" content="Machine Learning "/>
+<meta property="og:url" content="http://aleda.cn/article/2015/11/Machine Learning/" />
+<meta property="og:description" content="Machine Learning" />
+<meta property="og:site_name" content="Aleda | Make Different" />
+<meta property="og:article:author" content="Aleda" />
+<meta property="og:article:published_time" content="2015-11-14T17:05:00+08:00" />
+<meta name="twitter:title" content="Machine Learning ">
+<meta name="twitter:description" content="Machine Learning">
+
+        <title>Machine Learning  · Aleda | Make Different
+</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/pygments.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/tipuesearch/tipuesearch.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/elegant.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/custom.css" media="screen">
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://aleda.cn/"><span class=site-name><span style="color:black;">Aleda</span> |  <span style="color:#AA1032;"> Make Different </span></span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://aleda.cn">Home</a></li>
+                            <li ><a href="http://aleda.cn/categories.html">Categories</a></li>
+                            <li ><a href="http://aleda.cn/tags.html">Tags</a></li>
+                            <li ><a href="http://aleda.cn/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://aleda.cn/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page-header span10 offset2">
+    <h1><a href="http://aleda.cn/article/2015/11/Machine Learning/"> Machine Learning  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            
+            <h1>Machine Learning</h1>
+<h2><strong>Table of Contents</strong></h2>
+<ul>
+<li><a href="#1"><strong>1 Machine Learning</strong></a>    <ul>
+<li><a href="#1.1"><strong>1.1 Introduction</strong></a>    </li>
+<li><a href="#1.2"><strong>1.2 Courses</strong></a>   <ul>
+<li><a href="#1.2.1"><strong>1.2.1 Perceptron</strong></a></li>
+<li><a href="#1.2.2"><strong>1.2.2 DecitionTree</strong></a></li>
+<li><a href="#1.2.3"><strong>1.2.3 Naive Bayesian and KNN</strong></a></li>
+<li><a href="#1.2.4"><strong>1.2.4 Linear regression and Logistic Regression</strong></a></li>
+</ul>
+</li>
+<li><a href="#1.3"><strong>1.3 scikit-learn</strong></a></li>
+</ul>
+</li>
+</ul>
+<h2><strong>1 Machine Learning</strong></h2>
+<p>自己同大组的一个大牛讲MachineLearning的知识，自己听了之后感触颇深，做个笔记记录一下。 <br />
+用数学理论的推导和一系列思想，加上计算机可靠的，高性能的计算能力产出的就是我所认知的——Machine Learning。           </p>
+<h3><strong>1.1 Introduction</strong><span id="1.1"></span></h3>
+<h3><strong>1.2 Courses</strong><span id="1.2"></span></h3>
+<h4><strong>Courses 1: Perceptron.</strong><span id="1.2.1"></span></h4>
+<p>尝试引入这样的例子：   </p>
+<blockquote>
+<p>每个学生有各式各样的特征，例如：长相，成绩，爱好，性别等……那么，我们利用这些的特征怎样最准确的识别出哪位同学是<strong>学霸</strong>呢？ <br />
+对于纷繁复杂<strong>特征项</strong>来说，每个人识别学霸的方式可能不一样：   </p>
+</blockquote>
+<ul>
+<li>有些人，认为成绩好的就是学霸。</li>
+<li>有些人，认为成绩好并且爱好广泛的人才有可能是学霸</li>
+<li>……</li>
+</ul>
+<p>不能说那些人是错误的，他们只是想法不同而已。另外，可能学霸也不仅仅是一种固定属性。那怎么办？  <br />
+这个时候，可能权威的人（老师）将学霸<em>标记</em>出来，然后我们根据这些标记出来的学霸对这所有的学生，进行比较，选出一种比较靠谱的特征项鉴别方法。 <br />
+这整个的过程，想起来就是ML的基本思想吧。<br />
+另外，我们也可以分析出了机器学习的基本步骤：   </p>
+<ol>
+<li>标注样本，并将样本进行特征提取，得到已标注的特征向量；</li>
+<li>将已经标注的样本的特征向量随机分为训练集（80%）和测试集（20%）；</li>
+<li>使用机器学习算法训练训练集，得到模型M；</li>
+<li>使用测试集合测试模型M，得到测试结果的准确率和召回率；</li>
+</ol>
+<p>学习第一个基本的机器学习算法模型：感知器。 <br />
+感知器的基本模型是这样的： <br />
+<img alt="perceptron" src="/imgs/machine_learning/perceptron.jpg" /><br />
+解释起来就是，蓝色的球代表样本的一个个特征项乘上对应的特征项的权值比例然后求和，如果这个和大于某个指就输出1，否则输出0。然后和样本中的标注的值进行比较，对权值向量进行偏移。 <br />
+用公式表示出来就是：   <br />
+<img alt="perceptron_ori" src="/imgs/machine_learning/perceptron_ori.jpg" /> <br />
+化简后的问题就是：<br />
+<img alt="perceptron_sim" src="/imgs/machine_learning/perceptron_sim.jpg" /> <br />
+最终，化简的结果为： <br />
+<img alt="perception_fin" src="/imgs/machine_learning/perceptron_fin.jpg" /> <br />
+<a href="https://zh.wikipedia.org/wiki/%E6%84%9F%E7%9F%A5%E5%99%A8">感知器</a>是ML中的一个重要概念，模型类似于我们的神经网络，是一种<strong>二元<strong><em>*线性</em></strong>*分类</strong>的模型。 <br />
+它由以下的特点：  </p>
+<ul>
+<li>感知器算法是一种“错误驱动（error-driven）”的算法，在训练的时候，如果输出值是正确的，算法就不会有任何的调整。</li>
+<li>感知器算法是实时的。它逐条处理数据。</li>
+</ul>
+<p>自己用golang语言实现后是这样的： </p>
+<div class="highlight"><pre><span class="o">/**</span>
+<span class="o">*</span> <span class="nd">@file</span> <span class="n">perceptron</span><span class="o">.</span><span class="n">go</span>
+<span class="o">*</span> <span class="nd">@brief</span> <span class="n">concrete</span> <span class="n">a</span> <span class="n">perceptron</span><span class="o">.</span>
+<span class="o">*</span>        <span class="n">The</span> <span class="n">main</span> <span class="n">formula</span><span class="p">:</span> <span class="n">W_new</span> <span class="o">=</span> <span class="n">W_old</span> <span class="o">+</span> <span class="n">A</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">output</span><span class="p">)</span> <span class="o">*</span> <span class="n">Xi</span>
+<span class="o">*</span> <span class="nd">@author</span> <span class="n">Aleda</span><span class="p">(</span><span class="n">aledalee</span><span class="nd">@foxmail.com</span> <span class="o">|</span> <span class="n">aleda</span><span class="o">.</span><span class="n">cn</span><span class="p">)</span>
+<span class="o">*</span> <span class="nd">@version</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
+<span class="o">*</span> <span class="nd">@date</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span>
+<span class="o">*</span> <span class="nd">@input</span>
+<span class="mi">5</span> <span class="mi">5</span> <span class="mf">0.321</span> <span class="mi">100</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">0</span>
+<span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">1</span>
+<span class="o">-</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">8</span> <span class="mi">0</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">0</span>
+<span class="o">-</span><span class="mi">5</span> <span class="mi">8</span> <span class="mi">8</span> <span class="mi">7</span> <span class="mi">7</span> <span class="mi">1</span>
+<span class="mf">0.1</span> <span class="mf">0.2</span> <span class="mf">0.3</span> <span class="mf">0.4</span> <span class="mf">0.5</span> <span class="mf">0.6</span>
+<span class="o">*</span> <span class="nd">@output</span>
+<span class="o">...</span>
+<span class="o">-</span><span class="mf">7.283</span> <span class="mf">3.410</span> <span class="mf">14.103</span> <span class="mf">5.536</span> <span class="mf">2.747</span> <span class="o">-</span><span class="mf">12.561</span>
+<span class="o">-</span><span class="mf">7.283</span> <span class="mf">3.410</span> <span class="mf">14.103</span> <span class="mf">5.536</span> <span class="mf">2.747</span> <span class="o">-</span><span class="mf">12.561</span>
+<span class="o">*/</span>
+
+<span class="n">package</span> <span class="n">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="o">//</span><span class="s">&quot;bufio&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+<span class="p">)</span>
+
+<span class="n">const</span> <span class="p">(</span>
+    <span class="n">MAX_SAMPLES_NUM</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">+</span> <span class="mi">5</span>
+    <span class="n">MAX_FETURES_NUM</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">+</span> <span class="mi">5</span>
+<span class="p">)</span>
+
+<span class="o">//</span> <span class="nb">set</span> <span class="n">samples_arr</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">func</span> <span class="n">init_samples_arr</span><span class="p">(</span><span class="n">samples_arr</span> <span class="p">[][</span><span class="n">MAX_FETURES_NUM</span><span class="p">]</span><span class="nb">int</span><span class="p">,</span> <span class="n">samples_num</span> <span class="nb">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">samples_num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">samples_arr</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="nb">sum</span><span class="p">(</span><span class="n">samples_arr</span> <span class="p">[</span><span class="n">MAX_FETURES_NUM</span><span class="p">]</span><span class="nb">int</span><span class="p">,</span> <span class="n">weights_arr</span> <span class="p">[]</span><span class="n">float32</span><span class="p">,</span> <span class="n">arr_length</span> <span class="nb">int</span><span class="p">)</span> <span class="n">float32</span> <span class="p">{</span>
+    <span class="n">var</span> <span class="nb">sum</span> <span class="n">float32</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">arr_length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nb">sum</span> <span class="o">+=</span> <span class="n">float32</span><span class="p">(</span><span class="n">samples_arr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">weights_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">sum</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">get_weight_new</span><span class="p">(</span><span class="n">samples_arr</span> <span class="p">[</span><span class="n">MAX_FETURES_NUM</span><span class="p">]</span><span class="nb">int</span><span class="p">,</span> <span class="n">weights_arr</span> <span class="p">[]</span><span class="n">float32</span><span class="p">,</span> <span class="n">observation</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">arr_length</span> <span class="nb">int</span><span class="p">,</span> <span class="n">iterations_rate</span> <span class="n">float32</span><span class="p">,</span> <span class="n">output</span> <span class="nb">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">arr_length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">var</span> <span class="n">delta</span> <span class="n">float32</span> <span class="o">=</span> <span class="n">iterations_rate</span> <span class="o">*</span> <span class="n">float32</span><span class="p">((</span><span class="n">observation</span> <span class="o">-</span> <span class="n">output</span><span class="p">))</span> <span class="o">*</span> <span class="n">float32</span><span class="p">(</span><span class="n">samples_arr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">weights_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">weights_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">delta</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">print_weights</span><span class="p">(</span><span class="n">weights_arr</span> <span class="p">[]</span><span class="n">float32</span><span class="p">,</span> <span class="n">arr_length</span> <span class="nb">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">arr_length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%.3f</span><span class="s"> &quot;</span><span class="p">,</span> <span class="n">weights_arr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="p">}</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%.3f</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">weights_arr</span><span class="p">[</span><span class="n">arr_length</span><span class="p">])</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">Perceptron</span><span class="p">(</span><span class="n">samples_arr</span> <span class="p">[][</span><span class="n">MAX_FETURES_NUM</span><span class="p">]</span><span class="nb">int</span><span class="p">,</span> <span class="n">weights_arr</span> <span class="p">[]</span><span class="n">float32</span><span class="p">,</span> <span class="n">observations_arr</span> <span class="p">[]</span><span class="nb">int</span><span class="p">,</span>
+    <span class="n">fetures_num</span> <span class="nb">int</span><span class="p">,</span> <span class="n">samples_num</span> <span class="nb">int</span><span class="p">,</span> <span class="n">iterations_num</span> <span class="nb">int</span><span class="p">,</span> <span class="n">iterations_rate</span> <span class="n">float32</span><span class="p">)</span> <span class="nb">bool</span> <span class="p">{</span>
+    <span class="n">init_samples_arr</span><span class="p">(</span><span class="n">samples_arr</span><span class="p">,</span> <span class="n">samples_num</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">iterations_num</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="n">delta</span> <span class="p">:</span><span class="o">=</span> <span class="p">[</span><span class="n">MAX_FETURES_NUM</span><span class="p">]</span><span class="n">float32</span><span class="p">{</span><span class="mi">0</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">samples_num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="n">var</span> <span class="n">output</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">samples_arr</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">weights_arr</span><span class="p">,</span> <span class="n">fetures_num</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">fetures_num</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span> <span class="p">{</span>
+                <span class="n">delta</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">iterations_rate</span> <span class="o">*</span> <span class="n">float32</span><span class="p">(</span><span class="n">observations_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">output</span><span class="p">)</span> <span class="o">*</span>
+                    <span class="n">float32</span><span class="p">(</span><span class="n">samples_arr</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">])</span>
+            <span class="p">}</span>
+            <span class="o">//</span> <span class="n">Changint</span> <span class="ow">in</span> <span class="n">process</span><span class="o">.</span> <span class="n">more</span> <span class="n">quickly</span> <span class="n">convergence</span><span class="o">.</span>
+            <span class="o">//</span><span class="n">get_weight_new</span><span class="p">(</span><span class="n">samples_arr</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">weights_arr</span><span class="p">,</span> <span class="n">observations_arr</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="o">//</span>  <span class="n">fetures_num</span><span class="p">,</span> <span class="n">iterations_rate</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">fetures_num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="n">weights_arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">delta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">print_weights</span><span class="p">(</span><span class="n">weights_arr</span><span class="p">,</span> <span class="n">fetures_num</span><span class="p">)</span>
+        <span class="n">iterations_num</span><span class="o">--</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">true</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">var</span> <span class="n">fetures_num</span><span class="p">,</span> <span class="n">samples_num</span><span class="p">,</span> <span class="n">iterations_num</span> <span class="nb">int</span>
+    <span class="n">var</span> <span class="n">iterations_rate</span> <span class="n">float32</span>
+    <span class="n">samples_arr</span> <span class="p">:</span><span class="o">=</span> <span class="p">[</span><span class="n">MAX_SAMPLES_NUM</span><span class="p">][</span><span class="n">MAX_FETURES_NUM</span><span class="p">]</span><span class="nb">int</span><span class="p">{}</span>
+    <span class="n">weights_arr</span> <span class="p">:</span><span class="o">=</span> <span class="p">[</span><span class="n">MAX_FETURES_NUM</span><span class="p">]</span><span class="n">float32</span><span class="p">{}</span>
+    <span class="n">observations_arr</span> <span class="p">:</span><span class="o">=</span> <span class="p">[</span><span class="n">MAX_FETURES_NUM</span><span class="p">]</span><span class="nb">int</span><span class="p">{}</span>
+
+    <span class="n">var</span> <span class="n">handle_input</span> <span class="o">=</span> <span class="n">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d%d%f%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">fetures_num</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">samples_num</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">iterations_rate</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">iterations_num</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">samples_num</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="p">:</span><span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">fetures_num</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">{</span>
+                <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">samples_arr</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+            <span class="p">}</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">observations_arr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">fetures_num</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">{</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%f</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">weights_arr</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">handle_input</span><span class="p">()</span>
+    <span class="n">Perceptron</span><span class="p">(</span><span class="n">samples_arr</span><span class="p">[:],</span> <span class="n">weights_arr</span><span class="p">[:],</span> <span class="n">observations_arr</span><span class="p">[:],</span> <span class="n">fetures_num</span><span class="p">,</span> <span class="n">samples_num</span><span class="p">,</span>
+        <span class="n">iterations_num</span><span class="p">,</span> <span class="n">iterations_rate</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h4><strong>Courses 2: DecisionTree.</strong><span id="1.2.2"></span></h4>
+<p>决策树，搞ACM的时候也有听说过，不过自己学过没学过还真是忘了…… <br />
+<a href="https://zh.wikipedia.org/wiki/%E5%86%B3%E7%AD%96%E6%A0%91">决策树</a>，这里思考一下wikipedia，众人的智慧真的是强大的。<br />
+互联网上有很多很好的资源，我觉得讲得一定比我好，这里我只说一下，我自己的见解和理解。<br />
+首先，我们引入这样的一个例子： <br />
+<img alt="schedule" src="/imgs/machine_learning/schedule.jpg" /> <br />
+这里列出一个学生的日程表和最终他的activity，我们根据这些数据，怎么通过后续的"Deadline, Is there Data game, Bad Mood"等预测他的activity呢？ <br />
+决策树可以有效的解决：<br />
+决策树是通过<em>有效样本数据</em>构造出来模型，并用之<strong>预测</strong>和<strong>分类</strong>的一种数据结构。<br />
+一个简单的决策树，可能是这样的：<br />
+<img alt="decision_tree" src="/imgs/machine_learning/decisionTree.jpg" />   </p>
+<p>了解决策树之前，需要先了解了几个概念：  </p>
+<ul>
+<li>信息熵：熵是度量物质"混乱程度"的单位，信息熵就代表着<strong>信息的混乱程度</strong>。 <br />
+<img alt="entropy" src="/imgs/machine_learning/entropy.jpg" />   </li>
+<li>信息增益：衡量特征区分数据样本的能力。<br />
+<img alt="gain" src="/imgs/machine_learning/gain.jpg" />   </li>
+</ul>
+<p>一颗决策树的构造主观上有很多方法，正确cover所有样本的决策树可能也不止一种，那怎样选择合适的特征项进行构建呢？ <br />
+从sense上来看，该特征如果能够不结合其他的特征，<strong>直接<strong><em>*最可能判断</em><em>出activity的话，是最棒的，我们需要它！ 
+<img alt="what_features_to_choose" src="/imgs/machine_learning/whatToChoose.jpg" /><br />
+这里Is a Dota game？特征中，yes的信息熵为0，可以直接甄别出的activity是Dota，seletct it！ <br />
+那算法基本上就出来了： 构建tree的时候，</em>遍历*所有的特征，得出假定使用该特征构建tree的</strong>信息熵</strong>和，择最低构建，剩下的<strong>递归分治</strong>。 <br />
+特征的<strong>信息熵和</strong>计算方法：<br />
+<img alt="featrue_entropy" src="/imgs/machine_learning/featrueEntropy.jpg" />   <br />
+算法清楚之后，剩下的就是简单实现了，奉上自己golang实现的简单的ID3。 </p>
+<div class="highlight"><pre><span class="o">/**</span>
+<span class="o">*</span> <span class="nd">@file</span> <span class="n">decision_tree_id3</span><span class="o">.</span><span class="n">go</span>
+<span class="o">*</span> <span class="nd">@brief</span> <span class="n">Simple</span> <span class="n">inplementation</span> <span class="n">of</span> <span class="n">ID3</span>
+<span class="o">*</span> <span class="nd">@author</span> <span class="n">Aleda</span><span class="p">(</span><span class="n">aledalee</span><span class="nd">@foxmail.com</span> <span class="o">|</span> <span class="n">aleda</span><span class="o">.</span><span class="n">cn</span><span class="p">)</span>
+<span class="o">*</span> <span class="nd">@version</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
+<span class="o">*</span> <span class="nd">@date</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span>
+<span class="o">*</span> <span class="nd">@input</span>
+<span class="mi">3</span> <span class="mi">10</span>
+<span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">2</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">3</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">2</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="o">*</span> <span class="nd">@output</span>
+<span class="n">inner</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">---</span><span class="mi">0</span><span class="o">-&gt;</span><span class="n">inner</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="o">------</span><span class="mi">0</span><span class="o">-&gt;</span><span class="n">leaf</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">------</span><span class="mi">1</span><span class="o">-&gt;</span><span class="n">inner</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">---------</span><span class="mi">0</span><span class="o">-&gt;</span><span class="n">leaf</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">---------</span><span class="mi">1</span><span class="o">-&gt;</span><span class="n">leaf</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="o">------</span><span class="mi">2</span><span class="o">-&gt;</span><span class="n">leaf</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">---</span><span class="mi">1</span><span class="o">-&gt;</span><span class="n">leaf</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="o">*/</span>
+<span class="n">package</span> <span class="n">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;bufio&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;math&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+
+<span class="n">const</span> <span class="p">(</span>
+    <span class="n">MAX_FEATURES_NUM</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">+</span> <span class="mi">5</span>
+    <span class="n">MAX_SAMPLES_NUM</span>  <span class="o">=</span> <span class="mi">1000</span> <span class="o">+</span> <span class="mi">5</span>
+    <span class="n">MAX_ACTIVITY_NUM</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="n">MAX_CLASS_NUM</span>    <span class="o">=</span> <span class="mi">32</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="p">)</span>
+
+<span class="nb">type</span> <span class="n">DecisionTreeNode</span> <span class="n">struct</span> <span class="p">{</span>
+    <span class="n">featureId</span> <span class="nb">int</span>
+    <span class="n">nodeType</span>  <span class="nb">int</span> <span class="o">//</span> <span class="mi">0</span> <span class="o">=&gt;</span> <span class="n">DecisionNode</span><span class="p">;</span> <span class="mi">1</span> <span class="o">=&gt;</span> <span class="n">EndNode</span>
+    <span class="n">childs</span>    <span class="p">[]</span><span class="o">*</span><span class="n">DecisionTreeNode</span>
+<span class="p">}</span>
+
+<span class="nb">type</span> <span class="n">DecisionTreer</span> <span class="n">interface</span> <span class="p">{</span>
+    <span class="n">FindBestFeature</span><span class="p">([][]</span><span class="nb">int</span><span class="p">,</span> <span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="o">*</span><span class="nb">int</span><span class="p">)</span> <span class="nb">int</span>
+    <span class="n">BuildTree</span><span class="p">([][]</span><span class="nb">int</span><span class="p">,</span> <span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="p">[]</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span><span class="n">DecisionTreeNode</span>
+    <span class="n">IsEndNode</span><span class="p">([]</span><span class="nb">int</span><span class="p">,</span> <span class="p">[]</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+    <span class="n">GetSubSampleData</span><span class="p">([][]</span><span class="nb">int</span><span class="p">,</span> <span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="p">[][]</span><span class="nb">int</span><span class="p">,</span> <span class="p">[]</span><span class="nb">int</span><span class="p">)</span> <span class="nb">bool</span>
+    <span class="n">PrintTree</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="nb">type</span> <span class="n">DecisionTree</span> <span class="n">struct</span> <span class="p">{</span>
+    <span class="n">DecisionTreer</span>
+    <span class="n">root</span> <span class="o">*</span><span class="n">DecisionTreeNode</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">dt</span> <span class="o">*</span><span class="n">DecisionTree</span><span class="p">)</span> <span class="n">IsEndNode</span><span class="p">(</span><span class="n">markArr</span> <span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="n">classArr</span> <span class="p">[]</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">markArr</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="nb">len</span><span class="p">(</span><span class="n">classArr</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">true</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="p">}</span>
+    <span class="n">oldActivity</span> <span class="p">:</span><span class="o">=</span> <span class="n">markArr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">markArr</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">oldActivity</span> <span class="o">!=</span> <span class="n">markArr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">false</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">true</span><span class="p">,</span> <span class="n">oldActivity</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">ComputeEntropy</span><span class="p">(</span><span class="n">p</span> <span class="n">float64</span><span class="p">)</span> <span class="n">float64</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">Log2</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">CalEntropy</span><span class="p">(</span><span class="n">inputMap</span> <span class="nb">map</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="nb">int</span><span class="p">)</span> <span class="n">float64</span> <span class="p">{</span>
+    <span class="nb">sum</span> <span class="p">:</span><span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">allNum</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">num</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">inputMap</span> <span class="p">{</span>
+        <span class="n">allNum</span> <span class="o">+=</span> <span class="n">num</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">num</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">inputMap</span> <span class="p">{</span>
+        <span class="n">p</span> <span class="p">:</span><span class="o">=</span> <span class="n">float64</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">/</span> <span class="n">float64</span><span class="p">(</span><span class="n">allNum</span><span class="p">)</span>
+        <span class="nb">sum</span> <span class="o">+=</span> <span class="n">ComputeEntropy</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">sum</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">dt</span> <span class="o">*</span><span class="n">DecisionTree</span><span class="p">)</span> <span class="n">FindBestFeature</span><span class="p">(</span><span class="n">samplesArr</span> <span class="p">[][]</span><span class="nb">int</span><span class="p">,</span>
+    <span class="n">markArr</span> <span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="n">featureArrIndex</span> <span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="n">bestLeftArrIndex</span> <span class="o">*</span><span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="n">bestFeatureId</span> <span class="o">*</span><span class="nb">int</span><span class="p">)</span> <span class="nb">int</span> <span class="p">{</span>
+    <span class="n">samplesNum</span> <span class="p">:</span><span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">markArr</span><span class="p">)</span>
+    <span class="n">classNumArr</span> <span class="p">:</span><span class="o">=</span> <span class="n">make</span><span class="p">([]</span><span class="nb">int</span><span class="p">,</span> <span class="n">MAX_CLASS_NUM</span><span class="p">)</span>
+    <span class="n">activityNumArr</span> <span class="p">:</span><span class="o">=</span> <span class="n">make</span><span class="p">([]</span><span class="nb">map</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="nb">int</span><span class="p">,</span> <span class="n">MAX_CLASS_NUM</span><span class="p">)</span>
+    <span class="n">minEntropy</span> <span class="p">:</span><span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">MaxFloat64</span>
+    <span class="n">clearClassNumArrfunc</span> <span class="p">:</span><span class="o">=</span> <span class="n">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">classNumArr</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="n">classNumArr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">clearActivityNumArrfunc</span> <span class="p">:</span><span class="o">=</span> <span class="n">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">MAX_CLASS_NUM</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="n">activityNumArr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nil</span>
+            <span class="n">activityNumArr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">make</span><span class="p">(</span><span class="nb">map</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="nb">int</span><span class="p">,</span> <span class="n">MAX_ACTIVITY_NUM</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">featureArrIndex</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">origIndex</span> <span class="p">:</span><span class="o">=</span> <span class="n">featureArrIndex</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">clearClassNumArrfunc</span><span class="p">()</span>
+        <span class="n">clearActivityNumArrfunc</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">samplesNum</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">{</span>
+            <span class="n">classNumArr</span><span class="p">[</span><span class="n">samplesArr</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]]</span><span class="o">++</span>
+            <span class="n">activityNumArr</span><span class="p">[</span><span class="n">samplesArr</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]][</span><span class="n">markArr</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span><span class="o">++</span>
+        <span class="p">}</span>
+        <span class="n">bufio</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">Stdin</span><span class="p">)</span><span class="o">.</span><span class="n">ReadBytes</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="n">var</span> <span class="n">sumEntropy</span> <span class="n">float64</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">classId</span><span class="p">,</span> <span class="n">classNum</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">classNumArr</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">classNum</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+                <span class="k">continue</span>
+            <span class="p">}</span>
+            <span class="n">classIdChance</span> <span class="p">:</span><span class="o">=</span> <span class="n">float64</span><span class="p">(</span><span class="n">classNum</span><span class="p">)</span> <span class="o">/</span> <span class="n">float64</span><span class="p">(</span><span class="n">samplesNum</span><span class="p">)</span>
+            <span class="n">activityChance</span> <span class="p">:</span><span class="o">=</span> <span class="n">CalEntropy</span><span class="p">(</span><span class="n">activityNumArr</span><span class="p">[</span><span class="n">classId</span><span class="p">])</span>
+            <span class="n">sumEntropy</span> <span class="o">+=</span> <span class="n">classIdChance</span> <span class="o">*</span> <span class="n">activityChance</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">sumEntropy</span> <span class="o">&lt;</span> <span class="n">minEntropy</span> <span class="p">{</span>
+            <span class="n">minEntropy</span> <span class="o">=</span> <span class="n">sumEntropy</span>
+            <span class="o">*</span><span class="n">bestFeatureId</span> <span class="o">=</span> <span class="n">origIndex</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">classId</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">featureArrIndex</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">classId</span> <span class="o">==</span> <span class="o">*</span><span class="n">bestFeatureId</span> <span class="p">{</span>
+            <span class="k">continue</span>
+        <span class="p">}</span>
+        <span class="o">*</span><span class="n">bestLeftArrIndex</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="o">*</span><span class="n">bestLeftArrIndex</span><span class="p">,</span> <span class="n">classId</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">dt</span> <span class="o">*</span><span class="n">DecisionTree</span><span class="p">)</span> <span class="n">GetSubSampleData</span><span class="p">(</span><span class="n">samplesArr</span> <span class="p">[][]</span><span class="nb">int</span><span class="p">,</span> <span class="n">markArr</span> <span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="n">featureId</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">classId</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subSamplesArr</span> <span class="o">*</span><span class="p">[][]</span><span class="nb">int</span><span class="p">,</span> <span class="n">subMarkArr</span> <span class="o">*</span><span class="p">[]</span><span class="nb">int</span><span class="p">)</span> <span class="nb">bool</span> <span class="p">{</span>
+    <span class="n">lineNum</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">samplesArr</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">samplesArr</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">featureId</span><span class="p">]</span> <span class="o">!=</span> <span class="n">classId</span> <span class="p">{</span>
+            <span class="k">continue</span>
+        <span class="p">}</span>
+        <span class="o">*</span><span class="n">subSamplesArr</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="o">*</span><span class="n">subSamplesArr</span><span class="p">,</span> <span class="n">make</span><span class="p">([]</span><span class="nb">int</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">MAX_FEATURES_NUM</span><span class="p">))</span>
+        <span class="p">(</span><span class="o">*</span><span class="n">subMarkArr</span><span class="p">)</span> <span class="o">=</span> <span class="n">append</span><span class="p">((</span><span class="o">*</span><span class="n">subMarkArr</span><span class="p">),</span> <span class="n">markArr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">samplesArr</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span> <span class="n">j</span><span class="o">++</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">featureId</span> <span class="p">{</span>
+                <span class="k">continue</span>
+            <span class="p">}</span>
+            <span class="p">(</span><span class="o">*</span><span class="n">subSamplesArr</span><span class="p">)[</span><span class="n">lineNum</span><span class="p">]</span> <span class="o">=</span> <span class="n">append</span><span class="p">((</span><span class="o">*</span><span class="n">subSamplesArr</span><span class="p">)[</span><span class="n">lineNum</span><span class="p">],</span> <span class="n">samplesArr</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+        <span class="p">}</span>
+        <span class="n">lineNum</span><span class="o">++</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">true</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">dt</span> <span class="o">*</span><span class="n">DecisionTree</span><span class="p">)</span> <span class="n">BuildTree</span><span class="p">(</span><span class="n">samplesArr</span> <span class="p">[][]</span><span class="nb">int</span><span class="p">,</span> <span class="n">markArr</span> <span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="n">featureArrIndex</span> <span class="p">[]</span><span class="nb">int</span><span class="p">)</span> <span class="o">*</span><span class="n">DecisionTreeNode</span> <span class="p">{</span>
+    <span class="o">//</span><span class="n">samplesNum</span> <span class="p">:</span><span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">markArr</span><span class="p">)</span>
+    <span class="o">//</span><span class="n">featuresNum</span> <span class="p">:</span><span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samplesArr</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">node</span> <span class="p">:</span><span class="o">=</span> <span class="n">DecisionTreeNode</span><span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">make</span><span class="p">([]</span><span class="o">*</span><span class="n">DecisionTreeNode</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">MAX_CLASS_NUM</span><span class="o">/</span><span class="mi">2</span><span class="p">))}</span>
+    <span class="k">if</span> <span class="n">isEndNode</span><span class="p">,</span> <span class="n">activityNum</span> <span class="p">:</span><span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">IsEndNode</span><span class="p">(</span><span class="n">markArr</span><span class="p">,</span> <span class="n">featureArrIndex</span><span class="p">);</span> <span class="n">isEndNode</span> <span class="p">{</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">nodeType</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">featureId</span> <span class="o">=</span> <span class="n">activityNum</span>
+        <span class="k">return</span> <span class="o">&amp;</span><span class="n">node</span>
+    <span class="p">}</span>
+    <span class="n">bestFeatureId</span> <span class="p">:</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">bestLeftArrIndex</span> <span class="p">:</span><span class="o">=</span> <span class="n">make</span><span class="p">([]</span><span class="nb">int</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">MAX_FEATURES_NUM</span><span class="p">)</span>
+    <span class="n">dt</span><span class="o">.</span><span class="n">FindBestFeature</span><span class="p">(</span><span class="n">samplesArr</span><span class="p">,</span> <span class="n">markArr</span><span class="p">,</span> <span class="n">featureArrIndex</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bestLeftArrIndex</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bestFeatureId</span><span class="p">)</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">featureId</span> <span class="o">=</span> <span class="n">bestFeatureId</span>
+    <span class="n">indexId</span> <span class="p">:</span><span class="o">=</span> <span class="n">func</span><span class="p">()</span> <span class="nb">int</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">featureArrIndex</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">bestFeatureId</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="n">i</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="p">}()</span>
+    <span class="k">for</span> <span class="n">classId</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">bestLeftArrIndex</span> <span class="p">{</span>
+        <span class="n">subSamplesArr</span> <span class="p">:</span><span class="o">=</span> <span class="n">make</span><span class="p">([][]</span><span class="nb">int</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">MAX_SAMPLES_NUM</span><span class="p">)</span>
+        <span class="n">subMarkArr</span> <span class="p">:</span><span class="o">=</span> <span class="n">make</span><span class="p">([]</span><span class="nb">int</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">MAX_SAMPLES_NUM</span><span class="p">)</span>
+        <span class="n">dt</span><span class="o">.</span><span class="n">GetSubSampleData</span><span class="p">(</span><span class="n">samplesArr</span><span class="p">,</span> <span class="n">markArr</span><span class="p">,</span> <span class="n">indexId</span><span class="p">,</span> <span class="n">classId</span><span class="p">,</span>
+            <span class="o">&amp;</span><span class="n">subSamplesArr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subMarkArr</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">childs</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">childs</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">BuildTree</span><span class="p">(</span><span class="n">subSamplesArr</span><span class="p">,</span> <span class="n">subMarkArr</span><span class="p">,</span> <span class="n">bestLeftArrIndex</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">&amp;</span><span class="n">node</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">dt</span> <span class="o">*</span><span class="n">DecisionTree</span><span class="p">)</span> <span class="n">PrintTree</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span><span class="n">DecisionTreeNode</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="n">nil</span> <span class="o">||</span> <span class="n">p</span><span class="o">.</span><span class="n">featureId</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="p">{</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">nodeType</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">&quot;EndNode, Its activityNum: </span><span class="si">%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">featureId</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">&quot;FatherNode, featureId: </span><span class="si">%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">featureId</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">child</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">p</span><span class="o">.</span><span class="n">childs</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">&quot;father: &quot;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">featureId</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">childId: &quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">dt</span><span class="o">.</span><span class="n">PrintTree</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">var</span> <span class="n">featuresNum</span><span class="p">,</span> <span class="n">samplesNum</span> <span class="nb">int</span>
+    <span class="o">//</span><span class="n">var</span> <span class="n">samplesArr</span> <span class="p">[</span><span class="n">MAX_SAMPLES_NUM</span><span class="p">][</span><span class="n">MAX_FEATURES_NUM</span><span class="p">]</span><span class="nb">int</span>
+    <span class="n">var</span> <span class="n">samplesArr</span> <span class="p">[][]</span><span class="nb">int</span>
+    <span class="o">//</span><span class="n">var</span> <span class="n">markArr</span> <span class="p">[</span><span class="n">MAX_SAMPLES_NUM</span><span class="p">]</span><span class="nb">int</span>
+    <span class="n">var</span> <span class="n">markArr</span> <span class="p">[]</span><span class="nb">int</span>
+    <span class="n">var</span> <span class="n">featureArrIndex</span> <span class="p">[]</span><span class="nb">int</span>
+    <span class="n">handle_input</span> <span class="p">:</span><span class="o">=</span> <span class="n">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">featuresNum</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">samplesNum</span><span class="p">)</span>
+        <span class="n">samplesArr</span> <span class="o">=</span> <span class="n">make</span><span class="p">([][]</span><span class="nb">int</span><span class="p">,</span> <span class="n">samplesNum</span><span class="p">,</span> <span class="n">samplesNum</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">markArr</span> <span class="o">=</span> <span class="n">make</span><span class="p">([]</span><span class="nb">int</span><span class="p">,</span> <span class="n">samplesNum</span><span class="p">,</span> <span class="n">samplesNum</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">featureArrIndex</span> <span class="o">=</span> <span class="n">make</span><span class="p">([]</span><span class="nb">int</span><span class="p">,</span> <span class="n">featuresNum</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">featuresNum</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">{</span>
+            <span class="n">featureArrIndex</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">samplesNum</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="n">samplesArr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">make</span><span class="p">([]</span><span class="nb">int</span><span class="p">,</span> <span class="n">featuresNum</span><span class="p">,</span> <span class="n">featuresNum</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">featuresNum</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">{</span>
+                <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">samplesArr</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+            <span class="p">}</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">markArr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">handle_input</span><span class="p">()</span>
+    <span class="n">decisionTree</span> <span class="p">:</span><span class="o">=</span> <span class="n">DecisionTree</span><span class="p">{</span>
+        <span class="n">root</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">DecisionTreeNode</span><span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">make</span><span class="p">([]</span><span class="o">*</span><span class="n">DecisionTreeNode</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">MAX_FEATURES_NUM</span><span class="p">)},</span>
+    <span class="p">}</span>
+    <span class="n">decisionTree</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">decisionTree</span><span class="o">.</span><span class="n">BuildTree</span><span class="p">(</span><span class="n">samplesArr</span><span class="p">,</span> <span class="n">markArr</span><span class="p">,</span> <span class="n">featureArrIndex</span><span class="p">)</span>
+    <span class="n">decisionTree</span><span class="o">.</span><span class="n">PrintTree</span><span class="p">(</span><span class="n">decisionTree</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>但这里有些问题：  </p>
+<ul>
+<li>特征肯定不能太多，不然Tree很深，所以数据规模肯定不能太大。  </li>
+<li>对一些特殊的featrues，对于正确结果的导向性其实不强，但信息熵又非常低的，我们可以根据策略剪枝掉。经常做DFS,BFS的都知道，剪枝和不剪枝的算法的时间复杂度可以差出一个量级。 <br />
+...   </li>
+</ul>
+<p>TODO: 看一下see5的c实现。</p>
+<h4><strong>Courses 3: Bayesian and KNN.</strong><span id="1.2.3"></span></h4>
+<ol>
+<li>
+<p><strong>Naive Bayesian</strong>   <br />
+先把WIKI贴出来<a href="https://zh.wikipedia.org/wiki/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8">https://zh.wikipedia.org/wiki/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8</a>。 <br />
+核心思想是：  </p>
+</li>
+<li>
+<p>贝叶斯定理：
+P(A):事件A发生概率； P(B):事件B发生概率。 <br />
+P(A|B):在B发生条件下，事件A发生的概率; P(B|A):在A发生条件下，事件B发生的概率。 <br />
+P(A,B):事件A、B同时发生的概率。 <br />
+根据条件概率公式得到: <br />
+P(A,B)=P(A|B)<em>P(B); P(A,B)=P(B|A)</em>P(A) <br />
+则推出：<br />
+<img alt="bayesian" src="/imgs/machine_learning/bayesian.jpg" />    </p>
+</li>
+<li>特征条件独立：
+<img alt="bayesian2" src="/imgs/machine_learning/bayesian_2.jpg" />   </li>
+</ol>
+<p>根据这两个定理，我们可以推出：<br />
+<img alt="bayesian3" src="/imgs/machine_learning/bayesian_3.jpg" />  <br />
+所以，我们只要把各个特征对应活动的概率都统计出来就没有问题了。<br />
+优点：  </p>
+<ul>
+<li>由于提前算好概率，只需要做些运算比较，速度是非常快的；</li>
+<li>
+<p>每个特征的概率值都保存了下来，可以离线组合使用；
+缺点：</p>
+</li>
+<li>
+<p>无法处理基于特征组合所产生的变化结果；</p>
+</li>
+</ul>
+<p>go实现的代码：  </p>
+<div class="highlight"><pre><span class="o">/**</span>
+<span class="o">*</span> <span class="nd">@file</span> <span class="n">naive_bayesian</span><span class="o">.</span><span class="n">go</span>
+<span class="o">*</span> <span class="nd">@brief</span>
+<span class="o">*</span> <span class="nd">@author</span> <span class="n">Aleda</span><span class="p">(</span><span class="n">aledalee</span><span class="nd">@foxmail.com</span> <span class="o">|</span> <span class="n">aleda</span><span class="o">.</span><span class="n">cn</span><span class="p">)</span>
+<span class="o">*</span> <span class="nd">@version</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
+<span class="o">*</span> <span class="nd">@date</span> <span class="mi">2015</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">12</span>
+<span class="o">*</span> <span class="nd">@input</span><span class="p">:</span>
+<span class="mi">3</span> <span class="mi">10</span> <span class="mi">3</span> <span class="mi">4</span>
+<span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">2</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span>
+<span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">3</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">2</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span>
+<span class="mi">2</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="o">*</span> <span class="nd">@output</span><span class="p">:</span>
+<span class="mf">0.000000</span> <span class="mf">0.033333</span> <span class="mf">0.000000</span> <span class="mf">0.100000</span> <span class="mi">3</span>
+<span class="mf">0.060000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mi">0</span>
+<span class="mf">0.120000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mf">0.000000</span> <span class="mi">0</span>
+<span class="o">*/</span>
+
+<span class="n">package</span> <span class="n">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+<span class="p">)</span>
+
+<span class="n">const</span> <span class="p">(</span>
+    <span class="n">MAX_CLASS_NUM</span>    <span class="o">=</span> <span class="mi">32</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="n">MAX_ACTIVITY_NUM</span> <span class="o">=</span> <span class="mi">8</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="n">MAX_FEATURES_NUM</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="p">)</span>
+
+<span class="nb">type</span> <span class="n">Bayesianer</span> <span class="n">interface</span> <span class="p">{</span>
+    <span class="n">Build</span><span class="p">(</span><span class="n">samplesSlice</span> <span class="p">[][]</span><span class="nb">int</span><span class="p">,</span> <span class="n">markSlice</span> <span class="p">[]</span><span class="nb">int</span><span class="p">)</span> <span class="nb">int</span>
+    <span class="n">Test</span><span class="p">(</span><span class="n">featuresSlice</span> <span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="n">chanceSlice</span> <span class="p">[]</span><span class="n">float64</span><span class="p">)</span> <span class="nb">int</span>
+<span class="p">}</span>
+
+<span class="nb">type</span> <span class="n">Bayesian</span> <span class="n">struct</span> <span class="p">{</span>
+    <span class="n">Bayesianer</span>
+    <span class="n">chanceSlice</span>         <span class="p">[</span><span class="n">MAX_FEATURES_NUM</span><span class="p">][</span><span class="n">MAX_CLASS_NUM</span><span class="p">][</span><span class="n">MAX_ACTIVITY_NUM</span><span class="p">]</span><span class="n">float64</span>
+    <span class="n">activityChanceSlice</span> <span class="p">[</span><span class="n">MAX_ACTIVITY_NUM</span><span class="p">]</span><span class="n">float64</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">bys</span> <span class="o">*</span><span class="n">Bayesian</span><span class="p">)</span> <span class="n">Build</span><span class="p">(</span><span class="n">samplesSlice</span> <span class="p">[][]</span><span class="nb">int</span><span class="p">,</span> <span class="n">markSlice</span> <span class="p">[]</span><span class="nb">int</span><span class="p">)</span> <span class="nb">int</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">samplesSlice</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="p">}</span>
+    <span class="n">samplesNum</span> <span class="p">:</span><span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samplesSlice</span><span class="p">)</span>
+    <span class="n">var</span> <span class="n">featuresNum</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">featuresNum</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">samplesSlice</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="n">featuresNum</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="p">}</span>
+    <span class="n">countActivityArr</span> <span class="p">:</span><span class="o">=</span> <span class="p">[</span><span class="n">MAX_FEATURES_NUM</span><span class="p">][</span><span class="n">MAX_CLASS_NUM</span><span class="p">][</span><span class="n">MAX_ACTIVITY_NUM</span><span class="p">]</span><span class="nb">int</span><span class="p">{}</span>
+    <span class="n">countClassArr</span> <span class="p">:</span><span class="o">=</span> <span class="p">[</span><span class="n">MAX_FEATURES_NUM</span><span class="p">][</span><span class="n">MAX_CLASS_NUM</span><span class="p">]</span><span class="nb">int</span><span class="p">{}</span>
+    <span class="n">countArr</span> <span class="p">:</span><span class="o">=</span> <span class="p">[</span><span class="n">MAX_ACTIVITY_NUM</span><span class="p">]</span><span class="nb">int</span><span class="p">{}</span>
+    <span class="n">handle_count</span> <span class="p">:</span><span class="o">=</span> <span class="n">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">featuresNum</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">samplesSlice</span> <span class="p">{</span>
+                <span class="n">countActivityArr</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">samplesSlice</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]][</span><span class="n">markSlice</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">++</span>
+                <span class="n">countClassArr</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">samplesSlice</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]]</span><span class="o">++</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">samplesSlice</span> <span class="p">{</span>
+            <span class="n">countArr</span><span class="p">[</span><span class="n">markSlice</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">++</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">handle_count</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">featuresNum</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">MAX_CLASS_NUM</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">MAX_ACTIVITY_NUM</span><span class="p">;</span> <span class="n">k</span><span class="o">++</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="n">countArr</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+                    <span class="k">continue</span>
+                <span class="p">}</span>
+                <span class="n">bys</span><span class="o">.</span><span class="n">chanceSlice</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">float64</span><span class="p">(</span><span class="n">countActivityArr</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">])</span> <span class="o">/</span>
+                    <span class="n">float64</span><span class="p">(</span><span class="n">countArr</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">MAX_ACTIVITY_NUM</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">countArr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+            <span class="n">bys</span><span class="o">.</span><span class="n">activityChanceSlice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">float64</span><span class="p">(</span><span class="n">countArr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="n">float64</span><span class="p">(</span><span class="n">samplesNum</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">bys</span> <span class="o">*</span><span class="n">Bayesian</span><span class="p">)</span> <span class="n">Test</span><span class="p">(</span><span class="n">featuresSlice</span> <span class="p">[]</span><span class="nb">int</span><span class="p">,</span> <span class="n">chanceSlice</span> <span class="p">[]</span><span class="n">float64</span><span class="p">,</span> <span class="n">c</span> <span class="nb">int</span><span class="p">)</span> <span class="nb">int</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">probilityAns</span> <span class="p">:</span><span class="o">=</span> <span class="mf">1.0</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">v</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">featuresSlice</span> <span class="p">{</span>
+            <span class="n">probilityAns</span> <span class="o">*=</span> <span class="n">bys</span><span class="o">.</span><span class="n">chanceSlice</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">v</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">chanceSlice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">probilityAns</span> <span class="o">*</span> <span class="n">bys</span><span class="o">.</span><span class="n">activityChanceSlice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="n">bestActivity</span> <span class="p">:</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">maxChance</span> <span class="p">:</span><span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">chanceSlice</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">maxChance</span> <span class="o">&lt;</span> <span class="n">v</span> <span class="p">{</span>
+            <span class="n">maxChance</span> <span class="o">=</span> <span class="n">v</span>
+            <span class="n">bestActivity</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">bestActivity</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">var</span> <span class="n">featuresNum</span><span class="p">,</span> <span class="n">samplesNum</span><span class="p">,</span> <span class="n">testNum</span><span class="p">,</span> <span class="n">c</span> <span class="nb">int</span>
+    <span class="n">var</span> <span class="n">samplesSlice</span><span class="p">,</span> <span class="n">testSlice</span> <span class="p">[][]</span><span class="nb">int</span>
+    <span class="n">var</span> <span class="n">markSlice</span> <span class="p">[]</span><span class="nb">int</span>
+    <span class="n">handle_input</span> <span class="p">:</span><span class="o">=</span> <span class="n">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d%d%d%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">featuresNum</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">samplesNum</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">testNum</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">samplesSlice</span> <span class="o">=</span> <span class="n">make</span><span class="p">([][]</span><span class="nb">int</span><span class="p">,</span> <span class="n">samplesNum</span><span class="p">,</span> <span class="n">samplesNum</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">testSlice</span> <span class="o">=</span> <span class="n">make</span><span class="p">([][]</span><span class="nb">int</span><span class="p">,</span> <span class="n">testNum</span><span class="p">,</span> <span class="n">testNum</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">markSlice</span> <span class="o">=</span> <span class="n">make</span><span class="p">([]</span><span class="nb">int</span><span class="p">,</span> <span class="n">samplesNum</span><span class="p">,</span> <span class="n">samplesNum</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">samplesNum</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="n">samplesSlice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">make</span><span class="p">([]</span><span class="nb">int</span><span class="p">,</span> <span class="n">featuresNum</span><span class="p">,</span> <span class="n">featuresNum</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">featuresNum</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">{</span>
+                <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">samplesSlice</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+            <span class="p">}</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">markSlice</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">testNum</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="n">testSlice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">make</span><span class="p">([]</span><span class="nb">int</span><span class="p">,</span> <span class="n">featuresNum</span><span class="p">,</span> <span class="n">featuresNum</span><span class="o">+</span><span class="mi">5</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">featuresNum</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span> <span class="p">{</span>
+                <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">testSlice</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">handle_output</span> <span class="p">:</span><span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">chanceSlice</span> <span class="p">[]</span><span class="n">float64</span><span class="p">,</span> <span class="n">activity</span> <span class="nb">int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">v</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">chanceSlice</span> <span class="p">{</span>
+            <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%.6f</span><span class="s"> &quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">activity</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">handle_input</span><span class="p">()</span>
+    <span class="n">bayesian</span> <span class="p">:</span><span class="o">=</span> <span class="n">Bayesian</span><span class="p">{</span><span class="n">chanceSlice</span><span class="p">:</span> <span class="p">[</span><span class="n">MAX_FEATURES_NUM</span><span class="p">][</span><span class="n">MAX_CLASS_NUM</span><span class="p">][</span><span class="n">MAX_ACTIVITY_NUM</span><span class="p">]</span><span class="n">float64</span><span class="p">{},</span>
+        <span class="n">activityChanceSlice</span><span class="p">:</span> <span class="p">[</span><span class="n">MAX_ACTIVITY_NUM</span><span class="p">]</span><span class="n">float64</span><span class="p">{}}</span>
+    <span class="n">bayesian</span><span class="o">.</span><span class="n">Build</span><span class="p">(</span><span class="n">samplesSlice</span><span class="p">,</span> <span class="n">markSlice</span><span class="p">)</span>
+    <span class="n">handle_test</span> <span class="p">:</span><span class="o">=</span> <span class="n">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">var</span> <span class="n">activity</span> <span class="nb">int</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">testNum</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="n">ansSlice</span> <span class="p">:</span><span class="o">=</span> <span class="n">make</span><span class="p">([]</span><span class="n">float64</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="n">activity</span> <span class="o">=</span> <span class="n">bayesian</span><span class="o">.</span><span class="n">Test</span><span class="p">(</span><span class="n">testSlice</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ansSlice</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="n">handle_output</span><span class="p">(</span><span class="n">ansSlice</span><span class="p">,</span> <span class="n">activity</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">handle_test</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<ol>
+<li>
+<p><strong>KNN</strong> <br />
+WIKI：<a href="https://zh.wikipedia.org/wiki/%E6%9C%80%E8%BF%91%E9%84%B0%E5%B1%85%E6%B3%95">https://zh.wikipedia.org/wiki/%E6%9C%80%E8%BF%91%E9%84%B0%E5%B1%85%E6%B3%95</a><br />
+k最近邻，就是k个最近的邻居的意思。说的是每个样本都可以用它最接近的k个邻居来代表。
+KNN算法的核心思想：如果一个样本在特征空间中的k个最相邻的样本中的大多数属于某一个类别，
+则该样本也属于这个类别，并具有这个类别上样本的特性。 <br />
+K最近邻算法的不足：  </p>
+</li>
+<li>
+<p>计算量巨大，每次预测都需要计算待预测样本到已知样本的全部距离。  </p>
+</li>
+<li>预测时需要存储全部的样本点，无法进行大规模训练。  </li>
+<li>当样本不平衡时，可能导致预测更偏向数量较多的类别。  </li>
+</ol>
+<p>这个比较简单，就不实现了，贴一下别人实现的。</p>
+<div class="highlight"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+<span class="cp">#include &lt;math.h&gt;</span>
+<span class="cp">#include &lt;algorithm&gt;</span>
+<span class="cp">#include &lt;vector&gt;</span>
+
+<span class="cp">#define MAX_FEATURE_DIMENSION 1024</span>
+<span class="cp">#define MAX_SAMPLE_NUMBER 1024</span>
+<span class="cp">#define MAX_CLASS_NUMBER 8</span>
+
+<span class="k">struct</span> <span class="n">KNN</span><span class="p">{</span>
+    <span class="kt">double</span> <span class="n">distance</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">label</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kt">bool</span> <span class="nf">knn_cmp</span><span class="p">(</span><span class="n">KNN</span> <span class="n">a</span><span class="p">,</span> <span class="n">KNN</span> <span class="n">b</span><span class="p">){</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">distance</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">.</span><span class="n">distance</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">double</span> <span class="nf">compute_distance</span><span class="p">(</span><span class="kt">double</span> <span class="n">sample1</span><span class="p">[],</span> <span class="kt">double</span> <span class="n">sample2</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">feature_number</span><span class="p">){</span>
+    <span class="kt">double</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">feature_number</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="p">(</span><span class="n">sample1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">sample2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">sample1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">sample2</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">k_nearest_neighbors_predict</span><span class="p">(</span><span class="kt">double</span> <span class="n">train</span><span class="p">[][</span><span class="n">MAX_FEATURE_DIMENSION</span><span class="p">],</span>
+                                <span class="kt">int</span> <span class="n">label</span><span class="p">[],</span>
+                                <span class="kt">int</span> <span class="n">sample_number</span><span class="p">,</span>
+                                <span class="kt">int</span> <span class="n">K</span><span class="p">,</span>
+                                <span class="kt">double</span> <span class="n">test</span><span class="p">[],</span>
+                                <span class="kt">int</span> <span class="n">feature_number</span><span class="p">){</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">KNN</span><span class="o">&gt;</span> <span class="n">knn_vec</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sample_number</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">KNN</span> <span class="n">temp</span><span class="p">;</span>
+        <span class="n">temp</span><span class="p">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">compute_distance</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">test</span><span class="p">,</span> <span class="n">feature_number</span><span class="p">);</span>
+        <span class="n">temp</span><span class="p">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">knn_vec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">knn_vec</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">knn_vec</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">knn_cmp</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">class_count</span><span class="p">[</span><span class="n">MAX_CLASS_NUMBER</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">K</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">class_count</span><span class="p">[</span><span class="n">knn_vec</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">label</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">max_count</span>  <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">MAX_CLASS_NUMBER</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">max_count</span> <span class="o">&lt;</span> <span class="n">class_count</span><span class="p">[</span><span class="n">i</span><span class="p">]){</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+            <span class="n">max_count</span> <span class="o">=</span> <span class="n">class_count</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">split_data_to_train_and_test</span><span class="p">(</span><span class="kt">double</span> <span class="n">X</span><span class="p">[][</span><span class="n">MAX_FEATURE_DIMENSION</span><span class="p">],</span>
+                                    <span class="kt">int</span> <span class="n">y</span><span class="p">[</span><span class="n">MAX_SAMPLE_NUMBER</span><span class="p">],</span>
+                                    <span class="kt">int</span> <span class="n">sample_number</span><span class="p">,</span>
+                                    <span class="kt">int</span> <span class="n">feature_number</span><span class="p">,</span>
+                                    <span class="kt">double</span> <span class="n">train</span><span class="p">[][</span><span class="n">MAX_FEATURE_DIMENSION</span><span class="p">],</span>
+                                    <span class="kt">int</span> <span class="n">label</span><span class="p">[],</span>
+                                    <span class="kt">double</span> <span class="n">test</span><span class="p">[],</span>
+                                    <span class="kt">int</span> <span class="n">sample_id</span><span class="p">){</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">feature_number</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">test</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">sample_id</span><span class="p">][</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sample_id</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">feature_number</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">train</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">sample_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sample_number</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">feature_number</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">train</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="n">label</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">double</span> <span class="n">X</span><span class="p">[</span><span class="n">MAX_SAMPLE_NUMBER</span><span class="p">][</span><span class="n">MAX_FEATURE_DIMENSION</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">y</span><span class="p">[</span><span class="n">MAX_SAMPLE_NUMBER</span><span class="p">];</span>
+<span class="kt">double</span> <span class="n">train</span><span class="p">[</span><span class="n">MAX_SAMPLE_NUMBER</span><span class="p">][</span><span class="n">MAX_FEATURE_DIMENSION</span><span class="p">];</span>
+<span class="kt">int</span> <span class="n">label</span><span class="p">[</span><span class="n">MAX_SAMPLE_NUMBER</span><span class="p">];</span>
+<span class="kt">double</span> <span class="n">test</span><span class="p">[</span><span class="n">MAX_FEATURE_DIMENSION</span><span class="p">];</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">feature_number</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">sample_number</span><span class="p">;</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d %d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">feature_number</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sample_number</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sample_number</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">feature_number</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%lf&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]);</span>
+        <span class="p">}</span>
+        <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">best_K</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">max_right_count</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">K</span> <span class="o">&lt;=</span> <span class="n">sample_number</span><span class="p">;</span> <span class="n">K</span><span class="o">++</span><span class="p">){</span>
+        <span class="kt">int</span> <span class="n">right_count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sample_number</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">split_data_to_train_and_test</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_number</span><span class="p">,</span>
+                                        <span class="n">feature_number</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+            <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">k_nearest_neighbors_predict</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span>
+                                        <span class="n">sample_number</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">feature_number</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]){</span>
+                <span class="n">right_count</span><span class="o">++</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">max_right_count</span> <span class="o">&lt;=</span> <span class="n">right_count</span><span class="p">){</span>
+            <span class="n">max_right_count</span> <span class="o">=</span> <span class="n">right_count</span><span class="p">;</span>
+            <span class="n">best_K</span> <span class="o">=</span> <span class="n">K</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;K = %d, there is %d right predict.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">right_count</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;The best K is %d, there is %d right predict.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">best_K</span><span class="p">,</span> <span class="n">max_right_count</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h4><strong>Courses 4: Linear regression and Logistic Regression.</strong><span id="1.2.4"></span></h4>
+<p><a href="https://zh.wikipedia.org/wiki/%E7%B7%9A%E6%80%A7%E5%9B%9E%E6%AD%B8">线性回归</a>. <br />
+然后复习一下，导数和微积分的基本概念(回忆求导的方法和求偏导的方法)：<a href="https://zh.wikipedia.org/zh-cn/%E5%AF%BC%E6%95%B0">https://zh.wikipedia.org/zh-cn/%E5%AF%BC%E6%95%B0</a>    </p>
+<p>问题引入： <br />
+购房者在购买房屋时，可以在网上搜到了一些房屋信息，房屋中介也向他推荐了一些房子。那么，如何利用网络中已有的信息，选择性价比较高的房子？ <br />
+<img alt="LineRegression" src="/imgs/machine_learning/LineRegression.jpg" /><br />
+假设房价只与房子的面积有关，即价钱与面积是一个二元一次的方程。<br />
+<img alt="LineRegression" src="/imgs/machine_learning/LineRegression3.jpg" /> <br />
+<img alt="LineRegression" src="/imgs/machine_learning/LineRegression2.jpg" /> <br />
+对于多元来说：<br />
+<img alt="LineRegression" src="/imgs/machine_learning/LineRegression4.jpg" /> <br />
+未完待续</p>
+            
+            <section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://aleda.cn/article/2015/11/Machine Learning/#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'aleda';
+        var disqus_identifier = 'http://aleda.cn/article/2015/11/Machine Learning/';
+    var disqus_url = 'http://aleda.cn/article/2015/11/Machine Learning/';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+            <hr/>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2015-11-14T17:05:00+08:00">Nov 14, 2015</time>
+            <h4>Category</h4>
+            <a class="category-link" href="http://aleda.cn/categories.html#code-reading-ref">code-reading</a>
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article">
+                <li><a href="http://aleda.cn/tags.html#experience-ref">experience
+                    <span>12</span>
+</a></li>
+                <li><a href="http://aleda.cn/tags.html#machine-learning-ref">machine-learning
+                    <span>1</span>
+</a></li>
+            </ul>
+<h4>Contact</h4>
+    <a href="http://github.com/Aleda" title="My Github Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-github sidebar-social-links"></i></a>
+    <a href="mailto:aledalee@foxmail.com" title="My Email Address" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-envelope sidebar-social-links"></i></a>
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+        <div id="push"></div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+            <script type="text/javascript">
+var disqus_shortname = 'aleda';
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+<script  language="javascript" type="text/javascript">
+function uncollapse() {
+    if (window.location.hash.match(/^#comment-\d+$/)) {
+        $('#disqus_thread').collapse('show');
+    }
+}
+</script>
+<script type="text/javascript" language="JavaScript">
+uncollapse();
+window.onhashchange=function(){
+    if (window.location.hash.match(/^#comment-\d+$/))
+        window.location.reload(true);
+}
+</script>
+<script>
+$('#disqus_thread').on('shown', function () {
+    var link = document.getElementsByClassName('accordion-toggle');
+    var old_innerHTML = link[0].innerHTML;
+    $(link[0]).fadeOut(500, function() {
+        $(this).text('Click here to hide comments').fadeIn(500);
+    });
+    $('#disqus_thread').on('hidden', function () {
+        $(link[0]).fadeOut(500, function() {
+            $(this).text(old_innerHTML).fadeIn(500);
+        });
+    })
+})
+</script>
+
+
+    </body>
+    <!-- Theme: Elegant built for Pelican
+    License : http://oncrashreboot.com/pelican-elegant -->
+</html>

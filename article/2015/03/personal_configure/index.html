@@ -14,12 +14,12 @@
 
 <meta property="og:title" content="常用的linux-tools的配置文件汇总 "/>
 <meta property="og:url" content="http://aleda.cn/article/2015/03/personal_configure/" />
-<meta property="og:description" content="Linux下的terminal_tmux配置 Content of Table [1. Linux-Tools-Configure] 1.1 Introduction 1.2 Tmux 1.3 Screen 1.4 Vim 1.5 Emacs 1.6 bashrc 1. Linux-Tools-Configure 1.1 Introduction *inux对于做后端的工程师来说是会天天打交道的，理所应当的，Linux是 我们的首选； Linux下的许多工具的使用是很讲究技巧性的，有很多黑技能能够使得你的开发效率比别人快上几倍！ 这里列出来，我日常经常会用到的工具，以及他的一些常规性的配置。 1.2 Tmux Tmux是我用过的第二个terminal工具，以前一直是screen，但是有一点是 screen在我日常使用的版本中并不能竖向切屏，而tmux提供更友好的切屏，所以我尝试去使用它。 在create ..." />
+<meta property="og:description" content="Linux下的terminal_tmux配置 Content of Table [1. Linux-Tools-Configure] 1.1 Introduction 1.2 Tmux 1.3 Screen 1.4 Vim 1.5 Emacs 1.6 Bashrc 1.7 Samba 1. Linux-Tools-Configure 1.1 Introduction *inux对于做后端的工程师来说是会天天打交道的，理所应当的，Linux是 我们的首选； Linux下的许多工具的使用是很讲究技巧性的，有很多黑技能能够使得你的开发效率比别人快上几倍！ 这里列出来，我日常经常会用到的工具，以及他的一些常规性的配置。 1.2 Tmux Tmux是我用过的第二个terminal工具，以前一直是screen，但是有一点是 screen在我日常使用的版本中并不能竖向切屏 ..." />
 <meta property="og:site_name" content="Aleda | Make Different" />
 <meta property="og:article:author" content="Aleda" />
 <meta property="og:article:published_time" content="2015-03-27T10:12:00+08:00" />
 <meta name="twitter:title" content="常用的linux-tools的配置文件汇总 ">
-<meta name="twitter:description" content="Linux下的terminal_tmux配置 Content of Table [1. Linux-Tools-Configure] 1.1 Introduction 1.2 Tmux 1.3 Screen 1.4 Vim 1.5 Emacs 1.6 bashrc 1. Linux-Tools-Configure 1.1 Introduction *inux对于做后端的工程师来说是会天天打交道的，理所应当的，Linux是 我们的首选； Linux下的许多工具的使用是很讲究技巧性的，有很多黑技能能够使得你的开发效率比别人快上几倍！ 这里列出来，我日常经常会用到的工具，以及他的一些常规性的配置。 1.2 Tmux Tmux是我用过的第二个terminal工具，以前一直是screen，但是有一点是 screen在我日常使用的版本中并不能竖向切屏，而tmux提供更友好的切屏，所以我尝试去使用它。 在create ...">
+<meta name="twitter:description" content="Linux下的terminal_tmux配置 Content of Table [1. Linux-Tools-Configure] 1.1 Introduction 1.2 Tmux 1.3 Screen 1.4 Vim 1.5 Emacs 1.6 Bashrc 1.7 Samba 1. Linux-Tools-Configure 1.1 Introduction *inux对于做后端的工程师来说是会天天打交道的，理所应当的，Linux是 我们的首选； Linux下的许多工具的使用是很讲究技巧性的，有很多黑技能能够使得你的开发效率比别人快上几倍！ 这里列出来，我日常经常会用到的工具，以及他的一些常规性的配置。 1.2 Tmux Tmux是我用过的第二个terminal工具，以前一直是screen，但是有一点是 screen在我日常使用的版本中并不能竖向切屏 ...">
 
         <title>常用的linux-tools的配置文件汇总  · Aleda | Make Different
 </title>
@@ -78,7 +78,8 @@
 <li><a href="#1.3"><strong>1.3 Screen</strong></a>      </li>
 <li><a href="#1.3"><strong>1.4 Vim</strong></a>    </li>
 <li><a href="#1.5"><strong>1.5 Emacs</strong></a>     </li>
-<li><a href="#1.6"><strong>1.6 bashrc</strong></a>    </li>
+<li><a href="#1.6"><strong>1.6 Bashrc</strong></a>  </li>
+<li><a href="#1.7"><strong>1.7 Samba</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -241,72 +242,98 @@ Vim的一些神级插件，自己也在不断的摸索。目前用到的一些�
 </ul>
 <p>这些详细的说明及使用，我就不在这里赘述了，在github上，一搜就出来了。  <br />
 这里贴出我目前的vim配置:    </p>
-<div class="highlight"><pre>&quot; @BRIEF  : vimrc配置文件
-&quot; @AUTHOR : Aleda(aledalee@foxmail.com | aleda.cn)
-&quot; @DATE   : 2015-03-28 23:05
-&quot; @VERSION: 1.0.0
-&quot; @USAGE  :
-&quot; ===================Vundle Begin=============================
-set nocompatible              &quot; be iMproved, required
-filetype off                  &quot; required
-&quot; set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-&quot; let Vundle manage Vundle, required
-Plugin &#39;gmarik/Vundle.vim&#39;
-&quot; solarized color
-Plugin &#39;altercation/vim-colors-solarized&#39;
-&quot; taglist
-Plugin &#39;vim-scripts/taglist.vim&#39;
-&quot; DoxygenToolkit
-Plugin &#39;vim-scripts/DoxygenToolkit.vim&#39;
-&quot; NERD Tree
-Plugin &#39;scrooloose/nerdtree&#39;   
-&quot; scrooloose/syntastic 
-Plugin &#39;scrooloose/syntastic&#39;
-
-call vundle#end()
-&quot; ====================Vundle End==============================
+<p>" @BRIEF  : vimrc配置文件
+" @AUTHOR : Aleda(aledalee@foxmail.com | aleda.cn)
+" @DATE   : 2015-03-28 23:05
+" @VERSION: 1.0.0
+" @USAGE  :
+" ===================Vundle Begin=============================
+set nocompatible              " be iMproved, required
+filetype off                  " required
+" set the runtime path to include Vundle and initialize
+set rtp+=~/lishuo/.vim/bundle/Vundle.vim
+call vundle#begin()</p>
+<p>" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+" solarized color
+Plugin 'altercation/vim-colors-solarized'
+" taglist
+" Abandoned.
+" Plugin 'vim-scripts/taglist.vim'
+" DoxygenToolkit
+Plugin 'vim-scripts/DoxygenToolkit.vim'
+" NERD Tree
+Plugin 'scrooloose/nerdtree'
+" scrooloose/syntastic
+Plugin 'scrooloose/syntastic'
+" TagBar
+Plugin 'majutsushi/tagbar'
+" ack.vim
+Plugin 'mileszs/ack.vim'
+" ctrlp
+Plugin 'kien/ctrlp.vim'
+" neocomplete
+Plugin 'Shougo/neocomplete.vim'
+" Shougo/neosnippet
+Plugin 'Shougo/neosnippet'
+" Shougo/neosnippet-snippets
+Plugin 'Shougo/neosnippet-snippets'
+" honza/vim-snippets
+Plugin 'honza/vim-snippets'
+" vim-airline
+"Plugin 'bling/vim-airline'
+" plasticboy/vim-markdown
+Plugin 'plasticboy/vim-markdown'</p>
+<p>" ================= go =================
+" fatih/vim-go
+Plugin 'fatih/vim-go'</p>
+<p>call vundle#end()
+" This is Required... for go &amp; others
+filetype plugin on
+filetype indent on
+" ====================Vundle End==============================
 syntax enable
-&quot; ==================Solarized Color Theme=====================
-if has(&#39;gui_running&#39;)
+" ==================Solarized Color Theme=====================
+if has('gui_running')
     set background=light
 else
     set background=dark
 endif
 colorscheme solarized
-&quot; ==================Solarized Color Theme=====================
-&quot;
-&quot; =======================Tag lists============================
-&quot; Taglist为最后一个window时,exit
-let Tlist_Exit_OnlyWindow  = 1
-&quot; 在右边显示
-let Tlist_Use_Right_Window = 1
-&quot; =======================Tag lists============================
-&quot;
-&quot; =====================DoxgenToolkit==========================
-&quot; 作者信息
-let g:DoxygenToolkit_authorName=&quot;Aleda(aledalee@foxmail.com | aleda.cn)&quot;
-let g:DoxygenToolkit_blockHeader=&quot;--------------------------------------------------------------------------&quot;
-let g:DoxygenToolkit_blockFooter=&quot;----------------------------------------------------------------------------&quot;
-&quot; =====================DoxgenToolkit==========================
-&quot;
-&quot; =====================Basic Configures=======================
+" ==================Solarized Color Theme=====================
+"
+" =======================Tag lists============================
+" Taglist为最后一个window时,exit
+"let Tlist_Exit_OnlyWindow  = 1
+" 在右边显示
+"let Tlist_Use_Right_Window = 1
+" =======================Tag lists============================
+"
+" =====================DoxgenToolkit==========================
+" 作者信息
+let g:DoxygenToolkit_authorName="Aleda(aledalee@foxmail.com | aleda.cn)"
+let g:DoxygenToolkit_blockHeader="--------------------------------------------------------------------------"
+let g:DoxygenToolkit_blockFooter="----------------------------------------------------------------------------"
+" =====================DoxgenToolkit==========================
+"
+" =====================Basic Configures=======================
 syntax on
-&quot; 设置语法折叠
+" 设置语法折叠
 set foldmethod=syntax
-&quot; 启动Vim时候，默认关闭折叠
-set nofoldenable
+set foldmethod=indent
+" 启动Vim时候，默认关闭折叠
+set foldenable
 set nobackup
 set smarttab
+set smartcase
 set tabstop=4
 set shiftwidth=4
-set expandtab
+"set expandtab
 set autoindent
 set cindent
 retab
 set nu
+set ruler
 set hlsearch
 set incsearch
 set fileencodings=ucs-bom,utf-8,gbk,gb18030,cp936,big5,euc-jp,euc-kr,latin1
@@ -316,24 +343,206 @@ set fenc=utf-8
 set fencs=utf-8,usc-bom,gb2312,cp936
 set encoding=utf-8
 set termencoding=utf-8
-&quot; public auto indent
+"
+set showmatch                   " Show matching brackets/parenthesis
+set wildmenu
+set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
+set whichwrap=b,s,h,l,&lt;,&gt;,[,]   " Backspace and cursor keys wrap too
+set scrolljump=5
+set scrolloff=3
+set list
+set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
+" public auto indent
 set cino=g0
 set nocp
-&quot; 防止在vim方式下，鼠标选中默认成virtual
-if has(&#39;mouse&#39;)
+" @NOTICE: 防止vi和vim不兼容,导致退格不能用
+set backspace=indent,eol,start
+" 防止在vim方式下，鼠标选中默认成virtual
+if has('mouse')
     set mouse=
 endif
-&quot; =====================Basic Configures=======================
+let mapleader=","
+set showcmd
+set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+set cursorline
+set showmode
+highlight clear SignColumn      " SignColumn should match background
+highlight clear LineNr          " Current line number row will have same background color in relative mode
+" =====================Basic Configures=======================</p>
+<p>" ========================vim-airline=========================
+"let g:airline#extensions#tabline#enabled = 1
+if has('statusline')
+    set laststatus=2
+    " Broken down into easily includeable segments
+    set statusline=%&lt;%f\                     " Filename
+    set statusline+=%w%h%m%r                 " Options
+    set statusline+=\ [%{&amp;ff}/%Y]            " Filetype
+    set statusline+=\ [%{getcwd()}]          " Current dir
+    set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+endif</p>
+<p>"if !exists('g:airline_theme')
+    let g:airline_theme = 'solarized'
+"endif
+"if !exists('g:airline_powerline_fonts')
+    " Use the default set of separators with a few customizations
+    let g:airline_left_sep='›'  " Slightly fancier than '&gt;'
+    let g:airline_right_sep='‹' " Slightly fancier than '&lt;'
+"endif
+" ========================vim-airline=========================
+"
+" ======================neosnippet let=======================
+"Plugin key-mappings.
+"imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"xmap <C-k>     <Plug>(neosnippet_expand_target)
+"
+"SuperTab like snippets behavior.
+"imap <expr><TAB>
+"  \ pumvisible() ? "\<C-n>" :
+"  \ neosnippet#expandable_or_jumpable() ?
+"  \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+"smap <expr><TAB> neosnippet#expandable_or_jumpable() ? 
+"           \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+"
+"" For conceal markers.
+"if has('conceal')
+"  set conceallevel=2 concealcursor=niv
+"endif
+" ======================neosnippet let=======================
+"
+" ======================neocomplete&amp;snipts=======================
+"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '*ku*'</p>
+<p>" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'</p>
+<p>" <C-k> Complete Snippet
+" <C-k> Jump to next snippet point
+imap <silent><expr><C-k> neosnippet#expandable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
+            \ "\<C-e>" : "\<Plug>(neosnippet_expand_or_jump)")
+smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)</p>
+<p>inoremap <expr><C-g> neocomplete#undo_completion()
+inoremap <expr><C-l> neocomplete#complete_common_string()
+"inoremap <expr><CR> neocomplete#complete_common_string()</p>
+<p>" <CR>: close popup
+" <s-CR>: close popup and save indent.
+inoremap <expr><s-CR> pumvisible() ? neocomplete#smart_close_popup()."\<CR>" : "\<CR>"</p>
+<p>function! CleverCr()
+    if pumvisible()
+        if neosnippet#expandable()
+            let exp = "\<Plug>(neosnippet_expand)"
+            return exp . neocomplete#smart_close_popup()
+        else
+            return neocomplete#smart_close_popup()
+        endif
+    else
+        return "\<CR>"
+    endif
+endfunction</p>
+<p>" <CR> close popup and save indent or expand snippet
+imap <expr> <CR> CleverCr()
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><C-y> neocomplete#smart_close_popup()
+" <TAB>: completion.
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+inoremap <expr> <CR>       pumvisible()?"\<C-Y>":"\<CR>"
+" Courtesy of Matteo Cavalleri
+function! CleverTab()
+    if pumvisible()
+        return "\<C-n>"
+    endif
+    let substr = strpart(getline('.'), 0, col('.') - 1)
+    let substr = matchstr(substr, '[^ \t]<em>$')
+    if strlen(substr) == 0
+        " nothing to match on empty string
+        return "\<Tab>"
+    else
+        " existing text matching
+        if neosnippet#expandable_or_jumpable()
+            return "\<Plug>(neosnippet_expand_or_jump)"
+        else
+            return neocomplete#start_manual_complete()
+        endif
+    endif
+endfunction
+imap <expr> <Tab> CleverTab()
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]-&gt;\h\w</em>\|\h\w<em>::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] </em>\t]\%(.\|-&gt;)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] <em>\t]\%(.\|-&gt;)\|\h\w</em>::'
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w<em>-&gt;\h\w</em>\|\h\w*::'
+" ======================neocomplete&amp;snipts=======================</p>
+<p>" =======================Map Configures=======================
+nmap <C-e> :NERDTreeToggle<CR>
+map <C-n> :TagbarToggle<CR>
+nnoremap <silent> <leader>tt :TagbarToggle<CR>
+" =======================Map Configures=======================</p>
+<p>" =======================Auto cmd=============================
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+"=======================Auto cmd=============================</p>
+<p>" =======================NMap Configures======================
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>e <Plug>(go-rename)
+au FileType go nmap <Leader>q <Plug>(go-import)
+" =======================NMap Configures======================</p>
+<p>如果你<strong>喜欢</strong>它或者想尝试使用，请直接wget "http://aleda.cn/vimrc" -O ~/.vimrc 并在vim中<code>:PluginInstall</code>
+当然这里必须说说，比我这个还牛的<code>spf13</code>，大家自行github吧，我觉得不错。<br />
+下面写一些vim的<code>奇淫技巧</code>：   </p>
+<div class="highlight"><pre>* ctrl+y 在insert模式下复写上一行的内容。   
+* ctrl+a 光标当前的数字加1。
+* di(, di[, di{都可以删除在这些括号对之内的内容。
+*
 </pre></div>
 
 
-<p>如果你<strong>喜欢</strong>它或者想尝试使用，请直接wget "http://aleda.cn/vimrc" -O ~/.vimrc 并在vim中<code>:PluginInstall</code></p>
 <h4><strong>1.5 Emacs</strong><span id="1.5"></span></h4>
 <p>学习和使用Emacs要经历陡峭的学习曲线，需要的是你不懈的使用和钻研。
 对，它就想是一个不错的操作系统一样。  <br />
 你可以上网搜索关于Emacs的不错教材，来进行学习和钻研，但最重要的是
 你要有一颗平静的新去接受它，去不断的熟悉它。   </p>
-<h4><strong>1.6 bashrc</strong><span id="1.6"></span></h4>
+<h4><strong>1.6 Bashrc</strong><span id="1.6"></span></h4>
 <p>一个好的bashrc，可以更方便的帮助你在linux下去执行你想要做的事情，
 你可以设置你自己常用的命令，你可以去创造你经常使用的函数。  <br />
 甚至你可以去组织你去犯经常性的错误，我也是最近才想起来要做这件事情，
@@ -562,6 +771,62 @@ source $YOUR_WORK_ROOT/.bashrc    </p>
 
 <span class="cp"># ====================== global functions ======================== #</span>
 </pre></div>
+
+
+<h4><strong>1.7 Samba</strong><span id="1.7"></span></h4>
+<p>Samba是一个能让Linux系统应用Microsoft网络通讯协议的软件，而SMB是Server Message Block的缩写，即为服务器消息块 ，SMB主要是作为Microsoft的网络通讯协议，后来Samba将SMB通信协议应用到了Linux系统上，就形成了现在的Samba软件。后来微软又把 SMB 改名为 CIFS（Common Internet File System），即公共 Internet 文件系统，并且加入了许多新的功能，这样一来，使得Samba具有了更强大的功能。   </p>
+<p>Samba最大的功能就是可以用于Linux与windows系统直接的<strong>文件共享</strong>和打印共享，Samba既可以用于windows与Linux之间的文件共享，也可以用于Linux与Linux之间的资源共享，由于NFS(网络文件系统）可以很好的完成Linux与Linux之间的数据共享，因而 Samba较多的用在了Linux与Windows之间的数据共享上面。 <br />
+SMB是基于客户机/服务器型的协议，因而一台Samba服务器既可以充当文件共享服务器，也可以充当一个Samba的客户端，例如，一台在Linux 下已经架设好的Samba服务器，windows客户端就可以通过SMB协议共享Samba服务器上的资源文件，同时，Samba服务器也可以访问网络中 其它windows系统或者Linux系统共享出来的文件。 <br />
+Samba在windows下使用的是NetBIOS协议，如果你要使用Linux下共享出来的文件，请确认你的windows系统下是否安装了NetBIOS协议。
+组成Samba运行的有两个服务，一个是SMB，另一个是NMB；SMB是Samba的核心启动服务，主要负责建立 Linux Samba服务器与Samba客户机之间的对话， 验证用户身份并提供对文件和打印系统的访问，只有SMB服务启动，才能实现文件的共享，监听139 TCP端口；而NMB服务是负责解析用的，类似与DNS实现的功能，NMB可以把Linux系统共享的工作组名称与其IP对应起来，如果NMB服务没有启动，就只能通过IP来访问共享文件，监听137和138 UDP端口。
+例如，某台Samba服务器的IP地址为10.0.0.163，对应的工作组名称为davidsamba，那么在Windows的IE浏览器输入下面两条指令都可以访问共享文件。其实这就是Windows下查看Linux Samba服务器共享文件的方法。</p>
+<p>\10.0.0.163\共享目录名称
+　　\davidsamba\共享目录名称</p>
+<p>Samba服务器可实现如下功能：WINS和DNS服务； 网络浏览服务； Linux和Windows域之间的认证和授权； UNICODE字符集和域名映射；满足CIFS协议的UNIX共享等。
+以上摘自<a href="http://www.cnblogs.com/mchina/archive/2012/12/18/2816717.html">http://www.cnblogs.com/mchina/archive/2012/12/18/2816717.html</a>，这篇文章个人非常的喜欢，也非常赞赏博主的认真，无私的分享自己见解的精神，值得学习！   </p>
+<p>如果你离不开windows强大的IDE，不想去尝试VIM，EMACS，无疑samba可以帮你解脱！ <br />
+其实，个人觉得看上面的博客就已经OK了，多花点时间实践一下。<br />
+还是贴出来给看看吧。 <br />
+另外，你也可以直接访问：<code>http://aleda.cn/smb.conf</code></p>
+<div class="highlight"><pre># @Author: Aleda(aledalee@foxmai.com) 
+# @Date  : 2015-11-07 14:54
+# @Brief : personal smb.conf
+#
+#======================= Global Settings =====================================
+[global]
+workgroup = PRIVATE_FOR_ALEDA
+server string = Samba_Server-Aleda
+log file = /home/spider/lishuo/local/samba/log/samba_server.log
+max log size = 50
+security = user
+encrypt passwords = yes
+;smb passwd file = /home/spider/lishuo/.smbpasswd
+socket options = TCP_NODELAY SO_RCVBUF=8192 SO_SNDBUF=8192
+dns proxy = no 
+idmap uid = 16777216-33554431
+idmap gid = 16777216-33554431
+template shell = /bin/false
+winbind use default domain = no
+diplay charset = utf8
+unix charset = utf-8
+dos charset = utf-8
+[homes]
+   comment = Aleda&#39;s working directory
+   browseable = no
+   writable = yes
+[Profiles]
+    path = /home/profiles
+    browseable = no
+    guest ok = yes
+##! The Aleda&#39;s work env.
+[lishuo02]
+   path=/home/spider/lishuo
+   create mask = 0664
+   directory mask = 0775
+   writable = yes
+   valid users = spider lishuo02
+   browseable = yes
+</pre></div>
             
             <section>
 <div class="accordion" id="accordion2">
@@ -608,7 +873,7 @@ source $YOUR_WORK_ROOT/.bashrc    </p>
             <h4>Tags</h4>
             <ul class="list-of-tags tags-in-article">
                 <li><a href="http://aleda.cn/tags.html#experience-ref">experience
-                    <span>5</span>
+                    <span>12</span>
 </a></li>
             </ul>
 <h4>Contact</h4>

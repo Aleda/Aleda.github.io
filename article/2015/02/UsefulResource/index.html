@@ -71,20 +71,29 @@
             <h1>UsefulResource</h1>
 <h2><strong>Table of Contents</strong></h2>
 <ul>
-<li><a href="#1"><strong>1 leveldb</strong></a>    <ul>
+<li><a href="#1"><strong>1 UsefulResource</strong></a>    <ul>
 <li><a href="#1.1"><strong>1.1 Introduction</strong></a>       </li>
 <li><a href="#1.2"><strong>1.2 Books</strong></a><ul>
 <li><a href="#1.2.1"><strong>1.2.1 Python</strong></a></li>
 <li><a href="#1.2.2"><strong>1.2.2 Golang</strong></a></li>
 <li><a href="#1.2.3"><strong>1.2.3 C/C++</strong></a></li>
 <li><a href="#1.2.4"><strong>1.2.4 sed/awk</strong></a></li>
+<li><a href="#1.2.5"><strong>1.2.5 Network Programing</strong></a></li>
+</ul>
+</li>
+<li><a href="#1.3"><strong>1.3 Papers</strong></a><ul>
+<li><a href="#1.3"><strong>1.3.1 Distributed System</strong></a></li>
+</ul>
+</li>
+<li><a href="#1.4"><strong>1.4 Skill</strong></a><ul>
+<li><a href="#1.4.1"><strong>1.4.1 IO</strong></a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 <h3><strong>1.1 Introduction</strong><span id="1.1"></span></h3>
-<p>自己力荐的技术资源。   </p>
+<p>自己力荐的一些技术资源，包括基本的学习各类语言的书籍，机器学习的paper和书籍，分布式系统的经典paper等。     </p>
 <h3><strong>1.2 Books</strong><span id="1.2"></span></h3>
 <h4><strong>1.2.1 Python</strong><span id="1.2.1"></span></h4>
 <ul>
@@ -93,7 +102,8 @@
 <h4><strong>1.2.2 golang</strong><span id="1.2.2"></span></h4>
 <ul>
 <li><a href="/books/GoReading.pdf">golang学习笔记 by qyuhen</a>   </li>
-<li><a href="/books/50ShadesofGo.pdf">50 Shades of Go by kyle</a>   </li>
+<li><a href="/books/50ShadesofGo.pdf">50 Shades of Go by kyle</a>
+详细介绍了正常时间golang中需要注意的50个代表点，由易到难从beginner到advanced一一列举，英文写的，不过个人感觉，写的也很简单易懂。</li>
 <li><a href="https://github.com/PuerkitoBio/goquery">goquery by PuerkitoBio</a><br />
     goquery is great to handle normal html pages.   </li>
 <li><a href="https://github.com/sourcegraph/webloop">webloop by sourcegraph</a> <br />
@@ -101,7 +111,8 @@
 </ul>
 <h4><strong>1.2.3 C/C++</strong><span id="1.2.3"></span></h4>
 <ul>
-<li><a href="/books/Effective_C++.pdf">Effective C++ by 侯捷</a>  </li>
+<li><a href="/books/Effective_C++.pdf">Effective C++ by 侯捷</a><br />
+这本书就不说了，极力推荐这本书作为已经有了一定的C++开发经验继续重温。  </li>
 </ul>
 <h4><strong>1.2.4 sed/awk</strong><span id="1.2.3"></span></h4>
 <ul>
@@ -109,6 +120,25 @@
 <a href="http://www.grymoire.com/Unix/Sed.html">http://www.grymoire.com/Unix/Sed.html</a>  </li>
 <li><a href="/books/awk.pdf">awk grymoire</a><br />
 <a href="http://www.grymoire.com/Unix/Awk.html">http://www.grymoire.com/Unix/Awk.html</a>  </li>
+</ul>
+<h4><strong>1.2.5 Network Programming</strong><span id="1.2.5"></span></h4>
+<ul>
+<li>Unix Network Programming(<a href="/books/unp.pdf">unp.pdf</a>)
+<a href="http://dirlt.com/unp.html">http://dirlt.com/unp.html</a></li>
+</ul>
+<h3><strong>1.3 Papers</strong><span id="1.3"></span></h3>
+<p>一些著名的论文。</p>
+<h4><strong>1.3.1 Distribute System</strong><span id="1.3.1"></span></h4>
+<p>关于分布式架构的一些著名的论文，都是经典中的经典，里程碑中的里程碑。</p>
+<ol>
+<li>GFS——Google File System(<a href="/papers/DistributedSystem/gfs-sosp2003-cn.pdf">gfs-sosp2003-cn.pdf</a>,<a href="/papers/DistributedSystem/gfs-sosp2003-en.pdf">gfs-sosp2003-en.pdf</a>)</li>
+<li>MapReduce: Simplified Data Processing on Large Clusters(<a href="/papers/DistributedSystem/mapreduce-osdi04-cn.pdf">mapreduce-osdi04-cn.pdf</a>,<a href="/papers/DistributedSystem/mapreduce-osdi04-en.pdf">mapreduce-osdi04-en.pdf</a>)</li>
+<li>Bigtable: A Distributed Storage System for Structured Data(<a href="/papers/DistributedSystem/bigtable-osdi06-cn.pdf">bigtable-osdi06-cn.pdf</a>,<a href="/papers/DistributedSystem/bigtable-osdi06-en.pdf">bigtable-osdi06-en.pdf</a>)</li>
+</ol>
+<h3><strong>1.4 Skills</strong><span id="1.4"></span></h3>
+<h4><strong>1.4.1 IO</strong><span id="1.4.1"></span></h4>
+<ul>
+<li>读取<em>海量小文件</em>的时候，考虑将小文件进行合并进行处理。</li>
 </ul>
             
             <section>
@@ -156,10 +186,10 @@
             <h4>Tags</h4>
             <ul class="list-of-tags tags-in-article">
                 <li><a href="http://aleda.cn/tags.html#code-reading-ref">code-reading
-                    <span>8</span>
+                    <span>9</span>
 </a></li>
                 <li><a href="http://aleda.cn/tags.html#experience-ref">experience
-                    <span>12</span>
+                    <span>13</span>
 </a></li>
             </ul>
 <h4>Contact</h4>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Aleda" />
+        <meta name="copyright" content="Aleda" />
+
+        <meta property="og:type" content="article" />
+        <meta name="twitter:card" content="summary">
+
+<meta name="keywords" content="code-reading, experience, code-reading, " />
+
+<meta property="og:title" content="Thrift "/>
+<meta property="og:url" content="http://aleda.cn/article/2016/03/Thrift/" />
+<meta property="og:description" content="Thrift" />
+<meta property="og:site_name" content="Aleda | Make Different" />
+<meta property="og:article:author" content="Aleda" />
+<meta property="og:article:published_time" content="2016-03-01T16:28:00+08:00" />
+<meta name="twitter:title" content="Thrift ">
+<meta name="twitter:description" content="Thrift">
+
+        <title>Thrift  · Aleda | Make Different
+</title>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/pygments.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/tipuesearch/tipuesearch.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/elegant.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://aleda.cn/theme/css/custom.css" media="screen">
+    </head>
+    <body>
+        <div id="content-sans-footer">
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="http://aleda.cn/"><span class=site-name><span style="color:black;">Aleda</span> |  <span style="color:#AA1032;"> Make Different </span></span></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right top-menu">
+                            <li ><a href="http://aleda.cn">Home</a></li>
+                            <li ><a href="http://aleda.cn/categories.html">Categories</a></li>
+                            <li ><a href="http://aleda.cn/tags.html">Tags</a></li>
+                            <li ><a href="http://aleda.cn/archives.html">Archives</a></li>
+                            <li><form class="navbar-search" action="http://aleda.cn/search.html" onsubmit="return validateForm(this.elements['q'].value);"> <input type="text" class="search-query" placeholder="Search" name="q" id="tipue_search_input"></form></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span1"></div>
+                <div class="span10">
+<article>
+<div class="row-fluid">
+    <header class="page-header span10 offset2">
+    <h1><a href="http://aleda.cn/article/2016/03/Thrift/"> Thrift  </a></h1>
+    </header>
+</div>
+
+<div class="row-fluid">
+        <div class="span8 offset2 article-content">
+
+            
+            <h1>Thrift</h1>
+<ul>
+<li><a href="#1"><strong>1 Thrift</strong></a>    <ul>
+<li><a href="#1.1"><strong>1.1 Introduction</strong></a>    </li>
+<li><a href="#1.2"><strong>1.2 Features</strong></a></li>
+<li><a href="#1.3"><strong>1.3 Code Analysis</strong></a>   <ul>
+<li><a href="#1.3.1"><strong>1.3.1 .thrift file</strong></a></li>
+<li><a href="#1.3.2"><strong>1.3.2 transport</strong></a>  <ul>
+<li><a href="#1.3.2.1"><strong>1.3.2.1 C++</strong></a><ul>
+<li><a href="#1.3.2.1.1"><strong>1.3.2.1.1 API</strong></a></li>
+<li><a href="#1.3.2.1.2"><strong>1.3.2.1.1 transport</strong></a></li>
+</ul>
+</li>
+<li><a href="#1.3.2.2"><strong>1.3.2.2 Go</strong></a></li>
+<li><a href="#1.3.2.3"><strong>1.3.2.3 Python</strong></a></li>
+</ul>
+</li>
+<li><a href="#1.3.3"><strong>1.2.3 Naive Bayesian and KNN</strong></a></li>
+<li><a href="#1.3.4"><strong>1.2.4 Linear regression and Logistic Regression</strong></a>  </li>
+</ul>
+</li>
+<li><a href="#1.4"><strong>1.4 How to use it</strong></a>  <ul>
+<li><a href="#1.4.1"><strong>1.4.1 How to install thrift</strong></a>  </li>
+<li><a href="#1.4.2"><strong>1.4.2 Demos</strong></a></li>
+</ul>
+</li>
+<li><a href="#1.5"><strong>1.5 Experience</strong></a></li>
+</ul>
+</li>
+</ul>
+<h3><strong>1.1 Introduction</strong><span id="1.1"></span></h3>
+<p><a href="http://thrift.apache.org/">Thrift</a>官网这样介绍自己:   </p>
+<blockquote>
+<p>Thrift是这样的一个框架，支持跨语言，可扩展的的服务开发，结合代码生成引擎建立无缝且高效的RPC服务，代码生成引擎可以支持C++，Java，python，等主流开发语言。</p>
+</blockquote>
+<h3><strong>1.2 Features</strong><span id="1.2"></span></h3>
+<p>有必要弄清楚RPC的通用架构、固有组件等，并且思考，如果我自己设计的话，应该怎样设计。<br />
+推荐一篇介绍RPC基础知识、组件的<a href="http://blog.csdn.net/mindfloating/article/details/39473807">浅入</a>、<a href="http://blog.csdn.net/mindfloating/article/details/39474123">深出</a>。 </p>
+<h3><strong>1.3 Code Analysis</strong><span id="1.3"></span></h3>
+<p>从C++、Go、Python三种语言角度去分析异同点。</p>
+<h4><strong>1.3.1 .thrift file</strong><span id="1.3.1"></span></h4>
+<p>关于<a href="https://git-wip-us.apache.org/repos/asf/thrift/?p=thrift.git;a=blob;f=tutorial/tutorial.thrift;h=c4a96f02c81946abc7a1099f98b614475b0d20a5;hb=HEAD">.thrift</a>有一个比较好的英文站讲得不错，大家<a href="http://diwakergupta.github.io/thrift-missing-guide/#_versioning_compatibility">看看</a>。   </p>
+<ol>
+<li>
+<p>.thrift支持shell、C类型的注释，并且支持include 来包含其余的.thrift。</p>
+<div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * Thrift files can reference other Thrift files to include common struct</span>
+<span class="cm"> * and service definitions. These are found using the current path, or by</span>
+<span class="cm"> * searching relative to any paths specified with the -I compiler flag.</span>
+<span class="cm"> *</span>
+<span class="cm"> * Included objects are accessed using the name of the .thrift file as a</span>
+<span class="cm"> * prefix. i.e. shared.SharedObject</span>
+<span class="cm"> */</span><span class="w"></span>
+include<span class="w"> </span><span class="s">&quot;shared.thrift&quot;</span><span class="w"></span>
+</pre></div>
+
+
+</li>
+<li>
+<p>首先来看一下thrift支持些什么样的变量类型。</p>
+<div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * The first thing to know about are types. The available types in Thrift are:</span>
+<span class="cm"> *</span>
+<span class="cm"> *  bool        Boolean, one byte</span>
+<span class="cm"> *  i8 (byte)   Signed 8-bit integer</span>
+<span class="cm"> *  i16         Signed 16-bit integer</span>
+<span class="cm"> *  i32         Signed 32-bit integer</span>
+<span class="cm"> *  i64         Signed 64-bit integer</span>
+<span class="cm"> *  double      64-bit floating point value</span>
+<span class="cm"> *  string      String</span>
+<span class="cm"> *  binary      Blob (byte array) // Binary Large object 大对象</span>
+<span class="cm"> *  map&lt;t1,t2&gt;  Map from one type to another</span>
+<span class="cm"> *  list&lt;t1&gt;    Ordered list of one type 有序列表</span>
+<span class="cm"> *  set&lt;t1&gt;     Set of unique elements of one type</span>
+<span class="cm"> *</span>
+<span class="cm"> * Did you also notice that Thrift supports C style comments?</span>
+<span class="cm"> */</span><span class="w"></span>
+</pre></div>
+
+
+</li>
+<li>
+<p>thrift支持namespace隔离变量，但对于每种语言有不同的管理命名空间的方式，所以，需要在namespace名前加上语言名称。即：   </p>
+<div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * Thrift files can namespace, package, or prefix their output in various</span>
+<span class="cm"> * target languages.</span>
+<span class="cm"> */</span><span class="w"></span>
+namespace<span class="w"> </span>cpp<span class="w"> </span>tutorial<span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="err">类似于</span>namespace<span class="w"> </span>tutorial<span class="err">{}；</span><span class="w"></span>
+namespace<span class="w"> </span>d<span class="w"> </span>tutorial<span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="err">类似于</span>package<span class="w"> </span>tutorial<span class="err">；</span><span class="w"></span>
+namespace<span class="w"> </span>dart<span class="w"> </span>tutorial<span class="w"></span>
+namespace<span class="w"> </span>java<span class="w"> </span>tutorial<span class="w"></span>
+namespace<span class="w"> </span>php<span class="w"> </span>tutorial<span class="w"></span>
+namespace<span class="w"> </span>perl<span class="w"> </span>tutorial<span class="w"></span>
+namespace<span class="w"> </span>haxe<span class="w"> </span>tutorial<span class="w"></span>
+</pre></div>
+
+
+</li>
+<li>
+<p>支持typedef重新定义变量类型、常量与枚举等常用语义：   </p>
+<div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * Thrift lets you do typedefs to get pretty names for your types. Standard</span>
+<span class="cm"> * C style here.</span>
+<span class="cm"> */</span><span class="w"></span>
+typedef<span class="w"> </span>i32<span class="w"> </span>MyInteger<span class="w"></span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Thrift also lets you define constants for use across languages. Complex</span>
+<span class="cm"> * types and structs are specified using JSON notation.</span>
+<span class="cm"> */</span><span class="w"></span>
+const<span class="w"> </span>i32<span class="w"> </span>INT32CONSTANT<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">9853</span><span class="w"></span>
+const<span class="w"> </span>map<span class="o">&lt;</span>string<span class="o">,</span>string<span class="o">&gt;</span><span class="w"> </span>MAPCONSTANT<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="s">&#39;hello&#39;</span><span class="err">:</span><span class="s">&#39;world&#39;</span><span class="o">,</span><span class="w"> </span><span class="s">&#39;goodnight&#39;</span><span class="err">:</span><span class="s">&#39;moon&#39;</span><span class="err">}</span><span class="w"></span>
+
+<span class="cm">/**</span>
+<span class="cm"> * You can define enums, which are just 32 bit integers. Values are optional</span>
+<span class="cm"> * and start at 1 if not supplied, C style again.</span>
+<span class="cm"> */</span><span class="w"></span>
+enum<span class="w"> </span>Operation<span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">  </span>ADD<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">,</span><span class="w"></span>
+<span class="w">  </span>SUBTRACT<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="o">,</span><span class="w"></span>
+<span class="w">  </span>MULTIPLY<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="o">,</span><span class="w"></span>
+<span class="w">  </span>DIVIDE<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="err">，</span><span class="w"> </span>
+<span class="err">}</span><span class="w"></span>
+</pre></div>
+
+
+</li>
+<li>
+<p>支持结构体与异常，每个属性需要包含一个整数id，类型名，变量名，和一个可选的default value，并支持“optional”关键字，如果设置了“optional”，如果没设置的话，序列化的时候是不会包含的:   </p>
+<div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * Structs are the basic complex data structures. They are comprised of fields</span>
+<span class="cm"> * which each have an integer identifier, a type, a symbolic name, and an</span>
+<span class="cm"> * optional default value.</span>
+<span class="cm"> *</span>
+<span class="cm"> * Fields can be declared &quot;optional&quot;, which ensures they will not be included</span>
+<span class="cm"> * in the serialized output if they aren&#39;t set.  Note that this requires some</span>
+<span class="cm"> * manual management in some languages.</span>
+<span class="cm"> */</span><span class="w"></span>
+struct<span class="w"> </span>Work<span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">  </span><span class="m">1</span><span class="err">:</span><span class="w"> </span>i32<span class="w"> </span>num1<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="o">,</span><span class="w"></span>
+<span class="w">  </span><span class="m">2</span><span class="err">:</span><span class="w"> </span>i32<span class="w"> </span>num2<span class="o">,</span><span class="w"></span>
+<span class="w">  </span><span class="m">3</span><span class="err">:</span><span class="w"> </span>Operation<span class="w"> </span>op<span class="o">,</span><span class="w"></span>
+<span class="w">  </span><span class="m">4</span><span class="err">:</span><span class="w"> </span>optional<span class="w"> </span>string<span class="w"> </span>comment<span class="o">,</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Structs can also be exceptions, if they are nasty.</span>
+<span class="cm"> */</span><span class="w"></span>
+exception<span class="w"> </span>InvalidOperation<span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">  </span><span class="m">1</span><span class="err">:</span><span class="w"> </span>i32<span class="w"> </span>whatOp<span class="o">,</span><span class="w"></span>
+<span class="w">  </span><span class="m">2</span><span class="err">:</span><span class="w"> </span>string<span class="w"> </span>why<span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+</pre></div>
+
+
+</li>
+<li>
+<p>重点来了，要将service的定义规则了，关键字“service”加service名称，支持使用extends继承service，方法的命名仿C，参数要带id并且支持throw异常：   </p>
+<div class="highlight"><pre><span class="cm">/**</span>
+<span class="cm"> * Ahh, now onto the cool part, defining a service. Services just need a name</span>
+<span class="cm"> * and can optionally inherit from another service using the extends keyword.</span>
+<span class="cm"> */</span><span class="w"></span>
+service<span class="w"> </span>Calculator<span class="w"> </span>extends<span class="w"> </span>shared<span class="o">.</span>SharedService<span class="w"> </span><span class="err">{</span><span class="w"></span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * A method definition looks like C code. It has a return type, arguments,</span>
+<span class="cm">   * and optionally a list of exceptions that it may throw. Note that argument</span>
+<span class="cm">   * lists and exception lists are specified using the exact same syntax as</span>
+<span class="cm">   * field lists in struct or exception definitions.</span>
+<span class="cm">   */</span><span class="w"></span>
+
+<span class="w">   </span>void<span class="w"> </span>ping<span class="o">(),</span><span class="w"></span>
+
+<span class="w">   </span>i32<span class="w"> </span>add<span class="o">(</span><span class="m">1</span><span class="err">:</span>i32<span class="w"> </span>num1<span class="o">,</span><span class="w"> </span><span class="m">2</span><span class="err">:</span>i32<span class="w"> </span>num2<span class="o">),</span><span class="w"></span>
+
+<span class="w">   </span>i32<span class="w"> </span>calculate<span class="o">(</span><span class="m">1</span><span class="err">:</span>i32<span class="w"> </span>logid<span class="o">,</span><span class="w"> </span><span class="m">2</span><span class="err">:</span>Work<span class="w"> </span>w<span class="o">)</span><span class="w"> </span>throws<span class="w"> </span><span class="o">(</span><span class="m">1</span><span class="err">:</span>InvalidOperation<span class="w"> </span>ouch<span class="o">),</span><span class="w"></span>
+
+<span class="w">   </span><span class="cm">/**</span>
+<span class="cm">    * This method has a oneway modifier. That means the client only makes</span>
+<span class="cm">    * a request and does not listen for any response at all. Oneway methods</span>
+<span class="cm">    * must be void.</span>
+<span class="cm">    */</span><span class="w"></span>
+<span class="w">   </span>oneway<span class="w"> </span>void<span class="w"> </span>zip<span class="o">()</span><span class="w"></span>
+
+<span class="err">}</span><span class="w"></span>
+</pre></div>
+
+
+</li>
+</ol>
+<h4><strong>1.3.2 transport</strong><span id="1.3.2"></span></h4>
+<p>传输层</p>
+<h5><strong>1.3.2.1 C++</strong><span id="1.3.2.1"></span></h5>
+<h6><strong>1.3.2.1.1 API</strong><span id="1.3.2.1.1"></span></h6>
+<p>namespace apache::thrift
+<em> Thrift.h
+定义了一些debug的宏、Exception等。
+</em> TOutput.h
+处理输出，支持用户自定义输出方式，需要setOutputFunction，不设置也会默认输出时间进行包装。</p>
+<div class="highlight"><pre>    <span class="err">▼</span> <span class="nx">apache</span> <span class="o">:</span> <span class="nx">namespace</span>       
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>  <span class="err">▼</span> <span class="nx">thrift</span> <span class="o">:</span> <span class="nx">namespace</span>     
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>    <span class="err">▼</span> <span class="nx">TOutput</span> <span class="o">:</span> <span class="kr">class</span>      
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>        <span class="cp">[</span><span class="nx">prototypes</span><span class="cp">]</span>       
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>       <span class="o">+</span><span class="nx">perror</span><span class="p">(</span><span class="kr">const</span> <span class="kr">char</span><span class="o">*</span> <span class="nx">message</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">errno_copy</span><span class="p">)</span> <span class="c1">// messge + strerror_r</span>
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>       <span class="o">+</span><span class="nx">printf</span><span class="p">(</span><span class="kr">const</span> <span class="kr">char</span><span class="o">*</span> <span class="nx">message</span><span class="p">,</span> <span class="p">...)</span> <span class="c1">// f_ the printf string.</span>
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>       <span class="o">+</span><span class="nx">errorTimeWrapper</span><span class="p">(</span><span class="kr">const</span> <span class="kr">char</span><span class="o">*</span> <span class="nx">msg</span><span class="p">)</span> <span class="c1">// stderr the time.</span>
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>       <span class="o">+</span><span class="nx">strerror_s</span><span class="p">(</span><span class="kr">int</span> <span class="nx">errno_copy</span><span class="p">)</span> <span class="c1">// strerror_r, ret string</span>
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>        <span class="cp">[</span><span class="nx">functions</span><span class="cp">]</span>        
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>       <span class="o">+</span><span class="nx">TOutput</span><span class="p">()</span> <span class="c1">// 默认使用errorTimeWrapper当作输出函数</span>
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>       <span class="o">+</span><span class="nx">setOutputFunction</span><span class="p">(</span><span class="k">void</span> <span class="p">(</span><span class="o">*</span><span class="kd">function</span><span class="p">)(</span><span class="kr">const</span> <span class="kr">char</span><span class="o">*</span><span class="p">))</span>
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>       <span class="o">+</span><span class="nx">operator</span> <span class="p">()(</span><span class="kr">const</span> <span class="kr">char</span><span class="o">*</span> <span class="nx">message</span><span class="p">)</span> <span class="c1">// f_()</span>
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>       <span class="o">+</span><span class="nx">perror</span><span class="p">(</span><span class="kr">const</span> <span class="nx">std</span><span class="o">::</span><span class="nx">string</span><span class="o">&amp;</span> <span class="nx">message</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">errno_copy</span><span class="p">)</span> <span class="c1">// convert message into char*，and invoke perror(const char* message, int errno_copy)             </span>
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>        <span class="cp">[</span><span class="nx">members</span><span class="cp">]</span>          
+    <span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>       <span class="o">-</span><span class="nx">f_</span>
+</pre></div>
+
+
+<ul>
+<li>Texception.h <span id="Texception.h"></span></li>
+</ul>
+<h6><strong>1.3.2.1.2 TTransport.h</strong><span id="1.3.2.1.2"></span></h6>
+<p>暴露给用户的接口。包括：<br />
+* class TTransport
+这是整个传输层的顶层抽象类，之后所有的关于传输层的类都继承自它。来看看它都定义了哪些规范。  </p>
+<div class="highlight"><pre>    <span class="cp">#|@|▼ apache : namespace       </span>
+    <span class="cp">#|@|  ▼ thrift : namespace     </span>
+    <span class="cp">#|@|    ▼ transport : namespace</span>
+    <span class="cp">#|@|      ▼ TTransport : class </span>
+    <span class="cp">#|@|          [public functions]</span>
+    <span class="cp">#|@|         +~TTransport() </span><span class="c1">// 虚析构函数(virtual)</span>
+    <span class="cp">#|@|         +isOpen() </span><span class="c1">// 判断transport是否open(virtual)</span>
+    <span class="cp">#|@|         +peek() </span><span class="c1">// 检测是否还有数据读，或者对方链接是否可用（默认invoke isOpen）。(virtual 默认)</span>
+    <span class="cp">#|@|         +open() </span><span class="c1">//open the communications(virtual)   </span>
+    <span class="cp">#|@|         +close() </span><span class="c1">// close the communications(virtual)</span>
+    <span class="cp">#|@|         +read(uint8_t* buf, uint32_t len) </span><span class="c1">// 调用read_virt返回len到buf(非virtual)</span>
+    <span class="cp">#|@|         +read_virt(uint8_t* , uint32_t) </span><span class="c1">//virtual</span>
+    <span class="cp">#|@|         +readAll(uint8_t* buf, uint32_t len) </span><span class="c1">// 一次全部读完数据并读取len大小到buf中，调用readAll_virt。  </span>
+    <span class="cp">#|@|         +readAll_virt(uint8_t* buf, uint32_t len)  </span><span class="c1">//virtual</span>
+    <span class="cp">#|@|         +readEnd() </span><span class="c1">// 执行完read后，执行该函数。(virtual)    </span>
+    <span class="cp">#|@|         +write(const uint8_t* buf, uint32_t len) </span><span class="c1">// 调用write_virt 从buf中写len大小。</span>
+    <span class="cp">#|@|         +write_virt(const uint8_t* , uint32_t ) </span><span class="c1">//virtual</span>
+    <span class="cp">#|@|         +writeEnd() </span><span class="c1">// 写完之后调用。  </span>
+    <span class="cp">#|@|         +flush() </span><span class="c1">// 清空buffer中的数据。virtual</span>
+    <span class="cp">#|@|         +borrow(uint8_t* buf, uint32_t* len) </span><span class="c1">// 读取len个大小的数据到buf中，并且返回数据指针，但并不会删除，下次都这批数据还在。调用borrow_virt。</span>
+    <span class="cp">#|@|         +borrow_virt(uint8_t* , uint32_t* ) </span><span class="c1">// virtual </span>
+    <span class="cp">#|@|         +consume(uint32_t len) </span><span class="c1">// 删除len的数据，调用consume_virt        </span>
+    <span class="cp">#|@|         +consume_virt(uint32_t ) </span><span class="c1">// virtual</span>
+    <span class="cp">#|@|         +getOrigin() </span><span class="c1">// get origin of the transports call, 必须IP地址等，默认返回Unknown(virtual)</span>
+    <span class="p">[</span><span class="n">protected</span> <span class="n">functions</span><span class="p">]</span>
+    <span class="cp">#|@|         #TTransport() </span><span class="c1">// 构造函数，不能实例化。</span>
+</pre></div>
+
+
+<ul>
+<li>class TTransportFactory
+通用生成工厂：从一个transport生成对应的输入和输出流transport。</li>
+</ul>
+<h6><strong>1.3.2.1.3 TVirtualTransport.h</strong><span id="1.3.2.1.3"></span></h6>
+<ul>
+<li>class TTransportDefaults 
+namespace apache::thrift::transport: Helper class that provides default implementations of TTransport methods. 继承TTransport的默认实现。</li>
+<li>class TVirtualTransport</li>
+</ul>
+<h6><strong>1.3.2.1.4 TSocket.h</strong><span id="1.3.2.1.4"></span></h6>
+<ul>
+<li>class TSocket
+看看thrift中，对socket的实现方式和std中的有什么不同。<div class="highlight"><pre><span class="err">▼</span> <span class="nx">apache</span> <span class="o">:</span> <span class="nx">namespace</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>  <span class="err">▼</span> <span class="nx">thrift</span> <span class="o">:</span> <span class="nx">namespace</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>    <span class="err">▼</span> <span class="nx">transport</span> <span class="o">:</span> <span class="nx">namespace</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>      <span class="err">▼</span> <span class="nx">TSocket</span> <span class="o">:</span> <span class="kr">class</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>          <span class="cp">[</span><span class="nx">prototypes</span><span class="cp">]</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">TSocket</span><span class="p">()</span><span class="c1">// 默认构造函数</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">TSocket</span><span class="p">(</span><span class="kr">const</span> <span class="nx">std</span><span class="o">::</span><span class="nx">string</span><span class="o">&amp;</span> <span class="nx">host</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">port</span><span class="p">)</span> <span class="c1">// 传入host, port</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">TSocket</span><span class="p">(</span><span class="kr">const</span> <span class="nx">std</span><span class="o">::</span><span class="nx">string</span><span class="o">&amp;</span> <span class="nx">path</span><span class="p">)</span><span class="c1">// unix domain socket</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+~</span><span class="nx">TSocket</span><span class="p">()</span><span class="c1">//析构函数</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">TSocket</span><span class="p">(</span><span class="nx">THRIFT_SOCKET</span> <span class="nx">socket</span><span class="p">)</span><span class="c1">// 从其他的FD创建Socket</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">TSocket</span><span class="p">(</span><span class="nx">THRIFT_SOCKET</span> <span class="nx">socket</span><span class="p">,</span> <span class="nx">boost</span><span class="o">::</span><span class="nx">shared_ptr</span><span class="o">&lt;</span><span class="nx">THRIFT_SOCKET</span><span class="o">&gt;</span> <span class="nx">interruptListener</span><span class="p">)</span> <span class="c1">// 从其他的FD创建Socket，并且可以安全的关闭。</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">close</span><span class="p">()</span> <span class="c1">// close the socket</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">getCachedAddress</span><span class="p">(</span><span class="nx">socklen_t</span><span class="o">*</span> <span class="nx">len</span><span class="p">)</span> <span class="kr">const</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">getHost</span><span class="p">()</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">getOrigin</span><span class="p">()</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">getPeerAddress</span><span class="p">()</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">getPeerHost</span><span class="p">()</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">getPeerPort</span><span class="p">()</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">getPort</span><span class="p">()</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">getSocketInfo</span><span class="p">()</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">getUseLowMinRto</span><span class="p">()</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">isOpen</span><span class="p">()</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">-</span><span class="nx">local_open</span><span class="p">()</span><span class="c1">//区别于unix_open</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">open</span><span class="p">()</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="err">#</span><span class="nx">openConnection</span><span class="p">(</span><span class="nx">struct</span> <span class="nx">addrinfo</span><span class="o">*</span> <span class="nx">res</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">peek</span><span class="p">()</span> <span class="c1">// peek一个字符，看看链接是不是正常</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">read</span><span class="p">(</span><span class="nx">uint8_t</span><span class="o">*</span> <span class="nx">buf</span><span class="p">,</span> <span class="nx">uint32_t</span> <span class="nx">len</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">setCachedAddress</span><span class="p">(</span><span class="kr">const</span> <span class="nx">sockaddr</span><span class="o">*</span> <span class="nx">addr</span><span class="p">,</span> <span class="nx">socklen_t</span> <span class="nx">len</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">setConnTimeout</span><span class="p">(</span><span class="kr">int</span> <span class="nx">ms</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">setHost</span><span class="p">(</span><span class="nx">std</span><span class="o">::</span><span class="nx">string</span> <span class="nx">host</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">setKeepAlive</span><span class="p">(</span><span class="nx">bool</span> <span class="nx">keepAlive</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">setLinger</span><span class="p">(</span><span class="nx">bool</span> <span class="nx">on</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">linger</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">setMaxRecvRetries</span><span class="p">(</span><span class="kr">int</span> <span class="nx">maxRecvRetries</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">setNoDelay</span><span class="p">(</span><span class="nx">bool</span> <span class="nx">noDelay</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">setPort</span><span class="p">(</span><span class="kr">int</span> <span class="nx">port</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">setRecvTimeout</span><span class="p">(</span><span class="kr">int</span> <span class="nx">ms</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">setSendTimeout</span><span class="p">(</span><span class="kr">int</span> <span class="nx">ms</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">setSocketFD</span><span class="p">(</span><span class="nx">THRIFT_SOCKET</span> <span class="nx">fd</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">setUseLowMinRto</span><span class="p">(</span><span class="nx">bool</span> <span class="nx">useLowMinRto</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">-</span><span class="nx">unix_open</span><span class="p">()</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">write</span><span class="p">(</span><span class="kr">const</span> <span class="nx">uint8_t</span><span class="o">*</span> <span class="nx">buf</span><span class="p">,</span> <span class="nx">uint32_t</span> <span class="nx">len</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">write_partial</span><span class="p">(</span><span class="kr">const</span> <span class="nx">uint8_t</span><span class="o">*</span> <span class="nx">buf</span><span class="p">,</span> <span class="nx">uint32_t</span> <span class="nx">len</span><span class="p">)</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>        <span class="err">▼</span> <span class="o">&lt;</span><span class="nx">anonymous</span><span class="o">&gt;*</span> <span class="o">:</span> <span class="nx">union</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>            <span class="cp">[</span><span class="nx">members</span><span class="cp">]</span>      
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>            <span class="nx">ipv4</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>            <span class="nx">ipv6</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>          <span class="cp">[</span><span class="nx">functions</span><span class="cp">]</span>      
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="o">+</span><span class="nx">getSocketFD</span><span class="p">()</span>    
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>          <span class="cp">[</span><span class="nx">members</span><span class="cp">]</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="err">#</span><span class="nx">cachedPeerAddr_</span>  
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="err">#</span><span class="nx">connTimeout_</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="err">#</span><span class="nx">host_</span> <span class="c1">// host      </span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="err">#</span><span class="nx">interruptListener_</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="err">#</span><span class="nx">keepAlive_</span>       
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="err">#</span><span class="nx">lingerOn_</span>        
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="err">#</span><span class="nx">lingerVal_</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="err">#</span><span class="nx">maxRecvRetries_</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="err">#</span><span class="nx">noDelay_</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="err">#</span><span class="nx">path_</span>
+<span class="err">#</span><span class="o">|</span><span class="err">@</span><span class="o">|</span>         <span class="err">#</span><span class="nx">port_</span>
+</pre></div>
+
+
+</li>
+</ul>
+<h6><a href="#1.3.2.1.5"><strong>1.3.2.1.5 TTransportException.h</strong></a></h6>
+<p>可以看看Thrift的异常设计：
+<em> 内部有ExceptionType的枚举，对应着具体的异常信息，可个性化继承overload；
+</em> 结合<a href="#Texception.h">Base Exception</a>和strerror_r和时间一起作为一场输出信息；</p>
+<h6><strong>1.3.2.1.6 PlatformSocket.h</strong><span id="1.3.2.1.6"></span></h6>
+<p>对跨平台的一些宏的支持。</p>
+<h6><strong>1.3.2.1.7 TBuffereTransports.h</strong><span id="1.3.2.1.7"></span></h6>
+<h5><strong>1.3.2.2 glang</strong><span id="1.3.2.2"></span></h5>
+<h6><strong>1.3.2.2.1 transport.go</strong><span id="1.3.2.1.6"></span></h6>
+<p>定义了transport层的接口。</p>
+<div class="highlight"><pre><span class="n">package</span> <span class="n">thrift</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;errors&quot;</span>
+    <span class="s">&quot;io&quot;</span>
+<span class="p">)</span>
+<span class="o">//</span> <span class="err">实现一种出书层被打断的</span><span class="n">error</span>
+<span class="n">var</span> <span class="n">errTransportInterrupted</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">&quot;Transport Interrupted&quot;</span><span class="p">)</span>
+<span class="o">//</span> <span class="err">清空缓冲区</span>
+<span class="nb">type</span> <span class="n">Flusher</span> <span class="n">interface</span> <span class="p">{</span>
+    <span class="n">Flush</span><span class="p">()</span> <span class="p">(</span><span class="n">err</span> <span class="n">error</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nb">type</span> <span class="n">ReadSizeProvider</span> <span class="n">interface</span> <span class="p">{</span>
+    <span class="n">RemainingBytes</span><span class="p">()</span> <span class="p">(</span><span class="n">num_bytes</span> <span class="n">uint64</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="n">Encapsulates</span> <span class="n">the</span> <span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">layer</span>
+<span class="nb">type</span> <span class="n">TTransport</span> <span class="n">interface</span> <span class="p">{</span>
+    <span class="n">io</span><span class="o">.</span><span class="n">ReadWriteCloser</span>
+    <span class="n">Flusher</span>
+    <span class="n">ReadSizeProvider</span>
+
+    <span class="o">//</span> <span class="n">Opens</span> <span class="n">the</span> <span class="n">transport</span> <span class="k">for</span> <span class="n">communication</span>
+    <span class="n">Open</span><span class="p">()</span> <span class="n">error</span>
+
+    <span class="o">//</span> <span class="n">Returns</span> <span class="n">true</span> <span class="k">if</span> <span class="n">the</span> <span class="n">transport</span> <span class="ow">is</span> <span class="nb">open</span>
+    <span class="n">IsOpen</span><span class="p">()</span> <span class="nb">bool</span>
+<span class="p">}</span>
+
+<span class="nb">type</span> <span class="n">stringWriter</span> <span class="n">interface</span> <span class="p">{</span>
+    <span class="n">WriteString</span><span class="p">(</span><span class="n">s</span> <span class="n">string</span><span class="p">)</span> <span class="p">(</span><span class="n">n</span> <span class="nb">int</span><span class="p">,</span> <span class="n">err</span> <span class="n">error</span><span class="p">)</span>
+<span class="p">}</span>
+
+
+<span class="o">//</span> <span class="n">This</span> <span class="ow">is</span> <span class="s">&quot;enchanced&quot;</span> <span class="n">transport</span> <span class="k">with</span> <span class="n">extra</span> <span class="n">capabilities</span><span class="o">.</span> <span class="n">You</span> <span class="n">need</span> <span class="n">to</span> <span class="n">use</span> <span class="n">one</span> <span class="n">of</span> <span class="n">these</span>
+<span class="o">//</span> <span class="n">to</span> <span class="n">construct</span> <span class="n">protocol</span><span class="o">.</span>
+<span class="o">//</span> <span class="n">Notably</span><span class="p">,</span> <span class="n">TSocket</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">implement</span> <span class="n">this</span> <span class="n">interface</span><span class="p">,</span> <span class="ow">and</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">always</span> <span class="n">a</span> <span class="n">mistake</span> <span class="n">to</span> <span class="n">use</span>
+<span class="o">//</span> <span class="n">TSocket</span> <span class="n">directly</span> <span class="ow">in</span> <span class="n">protocol</span><span class="o">.</span>
+<span class="nb">type</span> <span class="n">TRichTransport</span> <span class="n">interface</span> <span class="p">{</span>
+    <span class="n">io</span><span class="o">.</span><span class="n">ReadWriter</span>
+    <span class="n">io</span><span class="o">.</span><span class="n">ByteReader</span>
+    <span class="n">io</span><span class="o">.</span><span class="n">ByteWriter</span>
+    <span class="n">stringWriter</span>
+    <span class="n">Flusher</span>
+    <span class="n">ReadSizeProvider</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h3><strong>1.4 How to use it</strong><span id="1.4"></span></h3>
+<p>增加一章，如果主要想了解怎样使用它的话，直接跳到这里吧。另外，把自己初期踩到的坑，发出来，防止后人继续踩。<br />
+当然，base肯定是<a href="http://thrift.apache.org/">它</a>。</p>
+<h4><strong>1.4.1 How to install thrift</strong> <span id="1.4.1"></span></h4>
+<p>base是<a href="http://thrift.apache.org/docs/install/">它</a>，看好requirement，缺什么就安装好什么。</p>
+<div class="highlight"><pre>##! 先通过automake生成configure，会检查你的automake版本。
+./bootstrap.sh
+##! 下面建议你一定要好好读读
+##! ./confiugre --help
+##! 有几点是你需要check的。
+##! * Installation directories 选项组: 你要安装到哪(--prefix=PREFIX)？有没有sudo权限？
+##! * Optional Features： 看看那几个default=yes的enable是不是你需要的？
+##! Optional Packages: 这个我认为是**一定**要看的，我猜大家都不想把每种语言的lib都编译一遍吧？这里面的编译依赖会弄到你吐的。你需要用什么就build什么。
+##! Some influential environment variables: 这个就**更得**看看了，每个人机器上肯定对每个环境都有不同的版本，低版本有时候是必须存在的，如果编译需要用到高的，改这些变量就行了。eg. export CXX=/home/.local/opt/gcc48/bin/g++
+##! 最后，eg.
+export CXX=/home/.local/opt/gcc48/bin/g++
+./configure --prefix=/home/local/thrift --with-php=no  --with-nodejs=no
+##! 然后编译
+make -j 3
+##! install
+make install
+</pre></div>
+
+
+<h4><strong>1.4.2 Demos</strong> <span id="1.4.2"></span></h4>
+<p>base肯定是<a href="http://thrift.apache.org/tutorial/">它</a>。<br />
+本想传一下自己的demo呢，但是觉得官方足以。挺容易理解的。  </p>
+<h3><strong>1.5 Experience</strong> <span id="1.5"></span></h3>
+<ul>
+<li>在整体设计上，考虑从宏的角度区分debug版本、多平台的版本。</li>
+<li>声明与实现在顺序上要保持一致。</li>
+<li>看一下<a href="http://blog.csdn.net/lmh12506/article/details/8457772">这篇文章</a>，关于SIGPIPE的处理问题。</li>
+<li>看一下<a href="http://my.oschina.net/moooofly/blog/175019">这个</a>关于likely和unlikely的一些说明。在GNUC下，可以使用__builtin_expect((), 0)表达式来优化分支选择结构。 </li>
+</ul>
+            
+            <section>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div class="accordion-heading">
+            <a class="accordion-toggle disqus-comment-count" data-toggle="collapse" data-parent="#accordion2"
+                href="http://aleda.cn/article/2016/03/Thrift/#disqus_thread">
+                Comments
+            </a>
+        </div>
+        <div id="disqus_thread" class="accordion-body collapse">
+            <div class="accordion-inner">
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'aleda';
+        var disqus_identifier = 'http://aleda.cn/article/2016/03/Thrift/';
+    var disqus_url = 'http://aleda.cn/article/2016/03/Thrift/';
+
+    (function() {
+         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+         dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+     })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+            <hr/>
+        </div>
+        <section>
+        <div class="span2" style="float:right;font-size:0.9em;">
+            <h4>Published</h4>
+            <time pubdate="pubdate" datetime="2016-03-01T16:28:00+08:00">Mar 1, 2016</time>
+            <h4>Category</h4>
+            <a class="category-link" href="http://aleda.cn/categories.html#code-reading-ref">code-reading</a>
+            <h4>Tags</h4>
+            <ul class="list-of-tags tags-in-article">
+                <li><a href="http://aleda.cn/tags.html#code-reading-ref">code-reading
+                    <span>9</span>
+</a></li>
+                <li><a href="http://aleda.cn/tags.html#experience-ref">experience
+                    <span>13</span>
+</a></li>
+            </ul>
+<h4>Contact</h4>
+    <a href="http://github.com/Aleda" title="My Github Profile" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-github sidebar-social-links"></i></a>
+    <a href="mailto:aledalee@foxmail.com" title="My Email Address" class="sidebar-social-links" target="_blank">
+    <i class="fa fa-envelope sidebar-social-links"></i></a>
+        </div>
+        </section>
+</div>
+</article>
+                </div>
+                <div class="span1"></div>
+            </div>
+        </div>
+        <div id="push"></div>
+    </div>
+<footer>
+<div id="footer">
+    <ul class="footer-content">
+        <li class="elegant-power">Powered by <a href="http://getpelican.com/" title="Pelican Home Page">Pelican</a>. Theme: <a href="http://oncrashreboot.com/pelican-elegant" title="Theme Elegant Home Page">Elegant</a> by <a href="http://oncrashreboot.com" title="Talha Mansoor Home Page">Talha Mansoor</a></li>
+    </ul>
+</div>
+</footer>            <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+        <script>
+            function validateForm(query)
+            {
+                return (query.length > 0);
+            }
+        </script>
+
+            <script type="text/javascript">
+var disqus_shortname = 'aleda';
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
+<script  language="javascript" type="text/javascript">
+function uncollapse() {
+    if (window.location.hash.match(/^#comment-\d+$/)) {
+        $('#disqus_thread').collapse('show');
+    }
+}
+</script>
+<script type="text/javascript" language="JavaScript">
+uncollapse();
+window.onhashchange=function(){
+    if (window.location.hash.match(/^#comment-\d+$/))
+        window.location.reload(true);
+}
+</script>
+<script>
+$('#disqus_thread').on('shown', function () {
+    var link = document.getElementsByClassName('accordion-toggle');
+    var old_innerHTML = link[0].innerHTML;
+    $(link[0]).fadeOut(500, function() {
+        $(this).text('Click here to hide comments').fadeIn(500);
+    });
+    $('#disqus_thread').on('hidden', function () {
+        $(link[0]).fadeOut(500, function() {
+            $(this).text(old_innerHTML).fadeIn(500);
+        });
+    })
+})
+</script>
+
+
+    </body>
+    <!-- Theme: Elegant built for Pelican
+    License : http://oncrashreboot.com/pelican-elegant -->
+</html>
